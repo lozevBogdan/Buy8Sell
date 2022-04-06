@@ -1,13 +1,13 @@
-package com.example.buysell;
+package com.example.sellbuy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BuysellApplication {
+public class SellBuyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BuysellApplication.class, args);
+        SpringApplication.run(SellBuyApplication.class, args);
     }
 
 }

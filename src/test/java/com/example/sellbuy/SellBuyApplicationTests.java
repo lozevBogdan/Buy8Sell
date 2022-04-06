@@ -1,10 +1,10 @@
-package com.example.buysell;
+package com.example.sellbuy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BuysellApplicationTests {
+class SellBuyApplicationTests {
 
     @Test
     void contextLoads() {
