@@ -3,7 +3,7 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: "jdbc:mysql://localhost:3306/sellBuy?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
     username: root
-    password: 6460
+    password: 6460okokok
 
 #  sql:
 #    init:
