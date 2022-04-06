@@ -9,13 +9,13 @@ import java.util.Set;
 @Table(name = "users")
 public class UserEntity extends BaseEntity{
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
+    @Column(nullable = false,unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -27,6 +27,7 @@ public class UserEntity extends BaseEntity{
     @Column(nullable = false)
     private String mobileNumber;
 
+    @Column
     @ManyToMany
     private Set<UserRoleEntity> roles = new HashSet<>();
 
@@ -143,5 +144,17 @@ public class UserEntity extends BaseEntity{
     public UserEntity setFavoriteProducts(Set<ProductEntity> favoriteProducts) {
         this.favoriteProducts = favoriteProducts;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "UserEntity{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                '}';
     }
 }
