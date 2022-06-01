@@ -19,6 +19,7 @@ public class CategoryEntity extends BaseEntity {
     @Column(nullable = false)
     private String description;
 
+    //  TODO: this should become a relation @OneToMany
     @ManyToMany
     private Set<ProductEntity> products = new HashSet<>();
 

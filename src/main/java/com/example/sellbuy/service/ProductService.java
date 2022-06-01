@@ -2,6 +2,8 @@ package com.example.sellbuy.service;
 
 public interface ProductService {
 
-    void initializeProductsAndPictures();
+    void initializeProducts();
+
+    void deleteFistProduct();
 
 }

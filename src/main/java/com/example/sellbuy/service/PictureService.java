@@ -7,4 +7,6 @@ public interface PictureService {
     void initializePictures();
 
     PictureEntity putInDb(PictureEntity picture1);
+
+    PictureEntity getFirstPicture();
 }

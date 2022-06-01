@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>BuySell</title>
@@ -7,6 +8,7 @@
 <body>
 <div>
     <h>"Successful load page!"</h>
+    <a  th:href="@{/deleteFirstProduct}" id="deleteButton" >Delete first product </a>
 </div>
 </body>
 </html>

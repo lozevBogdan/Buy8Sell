@@ -12,7 +12,6 @@ import java.util.Set;
 @Table(name = "products")
 public class ProductEntity extends BaseEntity {
 
-
     @Enumerated(EnumType.STRING)
     @Column(name = "_condition", nullable = false)
     private ConditionEnum condition;
@@ -29,13 +28,15 @@ public class ProductEntity extends BaseEntity {
     @ManyToOne
     private UserEntity seller;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<PictureEntity> pictures = new HashSet<>();
 
-    @OneToMany(mappedBy = "productEntity")
+    @OneToMany(mappedBy = "productEntity",cascade = CascadeType.ALL)
     private Set<CommentEntity> comments= new HashSet<>();
 
-    @ManyToMany(mappedBy = "products")
+
+    // TODO: this is shoud become a relation @Many to One. the product should ave one category
+    @ManyToMany(mappedBy = "products",cascade = CascadeType.ALL)
     private Set<CategoryEntity> categories= new HashSet<>();
 
     @ManyToMany

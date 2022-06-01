@@ -8,7 +8,6 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity{
-
     @Column(nullable = false, unique = true)
     private String username;
 

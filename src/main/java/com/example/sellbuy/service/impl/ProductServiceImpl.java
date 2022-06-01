@@ -30,33 +30,35 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public void initializeProductsAndPictures() {
+    public void initializeProducts() {
 
-        UserEntity ivan = userService.getByUsername("ivan");
-        UserEntity petyr = userService.getByUsername("petyr");
-        UserEntity gosho = userService.getByUsername("gosho");
+        if(productRepository.count() == 0) {
+            UserEntity ivan = userService.getByUsername("ivan");
+            UserEntity petyr = userService.getByUsername("petyr");
+            UserEntity gosho = userService.getByUsername("gosho");
 
+            PictureEntity picture1 = pictureService.getFirstPicture();
 
-        PictureEntity picture1 = new PictureEntity();
+            ProductEntity product1 = new ProductEntity();
+            product1.
+                    setCondition(ConditionEnum.NEW).
+                    setDescription("Perfect! German quality!").
+                    setPrice(BigDecimal.valueOf(1500)).
+                    setLocation("Sofiq, Bulgariq").
+                    setSeller(ivan).
+                    setPictures((Set.of(picture1)));
 
-        picture1.setUrl("https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FMercedes-Benz_S-Class&psig=AOvVaw2ogX5Lfr43z3Tn7vlNpqdk&ust=1649355177808000&source=images&cd=vfe&ved=0CAoQjRxqFwoTCPChhP-EgPcCFQAAAAAdAAAAABAD");
+            picture1.setProduct(product1);
 
-
-        ProductEntity product1 = new ProductEntity();
-        product1.
-                setCondition(ConditionEnum.NEW).
-                setDescription("Perfect! German quality!").
-                setPrice(BigDecimal.valueOf(1500)).
-                setLocation("Sofiq, Bulgariq").
-                setSeller(ivan);
-
-        picture1.setProduct(product1);
-        product1.setPictures((Set.of(picture1)));
-
-        pictureService.putInDb(picture1);
-        productRepository.save(product1);
+            productRepository.save(product1);
+        }
 
 
 
+    }
+
+    @Override
+    public void deleteFistProduct() {
+        productRepository.deleteAll();
     }
 }

@@ -7,13 +7,12 @@ import javax.persistence.*;
 @Entity
 @Table(name = "user_role")
 public class UserRoleEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private UserRoleEnum role;
 
     public UserRoleEntity() {

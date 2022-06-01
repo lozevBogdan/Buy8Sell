@@ -12,6 +12,7 @@ public class CommentEntity extends BaseEntity {
     @Column(nullable = false)
     private String textContent;
 
+    //TODO maybe this shoul become a UserEntity ??????????
     @Column(nullable = false)
     private String authorUsername;
 
