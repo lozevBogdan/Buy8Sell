@@ -7,7 +7,8 @@
     <title>Buy8Sell</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
@@ -19,16 +20,19 @@
         <div class="col-md-6">
             <div class="card px-5 py-5" id="form1">
                 <div class="form-data" v-if="!submitted">
-                    <div class="forms-inputs mb-4"> <span>Email or username</span> <input autocomplete="off" type="text" v-model="email" v-bind:class="{'form-control':true, 'is-invalid' : !validEmail(email) && emailBlured}" v-on:blur="emailBlured = true">
+                    <div class="forms-inputs mb-4"> <span>Email or username</span> <input autocomplete="off" type="text"
+                       v-model="email" v-bind:class="{'form-control':true, 'is-invalid' : !validEmail(email) && emailBlured}" v-on:blur="emailBlured = true">
                         <div class="invalid-feedback">A valid email is required!</div>
                     </div>
-                    <div class="forms-inputs mb-4"> <span>Password</span> <input autocomplete="off" type="password" v-model="password" v-bind:class="{'form-control':true, 'is-invalid' : !validPassword(password) && passwordBlured}" v-on:blur="passwordBlured = true">
+                    <div class="forms-inputs mb-4"> <span>Password</span> <input autocomplete="off" type="password"
+                  v-model="password" v-bind:class="{'form-control':true, 'is-invalid' : !validPassword(password) && passwordBlured}" v-on:blur="passwordBlured = true">
                         <div class="invalid-feedback">Password must be 8 character!</div>
                     </div>
                     <div class="mb-3"> <button v-on:click.stop.prevent="submit" class="btn btn-dark w-100">Login</button> </div>
                 </div>
                 <div class="success-data" v-else>
-                    <div class="text-center d-flex flex-column"> <i class='bx bxs-badge-check'></i> <span class="text-center fs-1">You have been logged in <br> Successfully</span> </div>
+                    <div class="text-center d-flex flex-column"> <i class='bx bxs-badge-check'></i>
+                        <span class="text-center fs-1">You have been logged in <br> Successfully</span> </div>
                 </div>
             </div>
         </div>
