@@ -132,3 +132,5 @@ body {
 forms-inputs input:focus{box-shadow: none;outline: none;border: 2px solid #000}
 .btn{height: 50px}.success-data{display: flex;flex-direction: column}
 .bxs-badge-check{font-size: 90px}
+
+

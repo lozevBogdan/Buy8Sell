@@ -8,14 +8,13 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class UserEntity extends BaseEntity{
-    @Column(nullable = false, unique = true)
-    private String username;
+
+    @Column(nullable = false,unique = true)
+    private String email;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false,unique = true)
-    private String email;
 
     @Column(nullable = false)
     private String firstName;
@@ -46,14 +45,6 @@ public class UserEntity extends BaseEntity{
     public UserEntity() {
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public UserEntity setUsername(String username) {
-        this.username = username;
-        return this;
-    }
 
     public String getPassword() {
         return password;
@@ -148,7 +139,6 @@ public class UserEntity extends BaseEntity{
     @Override
     public String toString() {
         return "UserEntity{" +
-                "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
