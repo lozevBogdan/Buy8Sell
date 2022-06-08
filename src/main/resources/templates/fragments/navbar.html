@@ -15,7 +15,7 @@
 
 <nav th:fragment="navbar"
      class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Buy8Sell</a>
+    <a class="navbar-brand" th:href="@{/}">Buy8Sell</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">
+                <a class="nav-link" th:href="@{/}">
                     <i class="fa fa-home"></i>
                     Home
                     <span class="sr-only">(current)</span>
@@ -70,7 +70,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/login">
+                <a class="nav-link" th:href="@{/users/login}">
 <!--                    <i class="bi bi-person-fill"></i>-->
 <!--                        <span class="badge badge-success">11</span>-->
                     </i>
@@ -78,13 +78,13 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/register">
+                <a class="nav-link" th:href="@{/users/register}">
                     </i>
                     Register
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" th:href="@{/users/logout}">
                     </i>
                     Logout
                 </a>

@@ -6,7 +6,6 @@ import com.example.sellbuy.model.entity.enums.UserRoleEnum;
 import com.example.sellbuy.repository.UserRepository;
 import com.example.sellbuy.repository.UserRoleRepository;
 import com.example.sellbuy.service.UserService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,7 +51,6 @@ public class UserServiceImpl implements UserService {
                     setLastName("Georgiev").
                     setEmail("gosho@abv.bg").
                     setMobileNumber("0888888888").
-                    setUsername("gosho").
                     setPassword("gosho");
 
             UserEntity user2 = new UserEntity();
@@ -61,7 +59,6 @@ public class UserServiceImpl implements UserService {
                     setLastName("Petrow").
                     setEmail("petyr@abv.bg").
                     setMobileNumber("0999999999").
-                    setUsername("petyr").
                     setPassword(("petyr"));
 
             UserEntity user3 = new UserEntity();
@@ -70,7 +67,6 @@ public class UserServiceImpl implements UserService {
                     setLastName("Ivanov").
                     setEmail("ivan@abv.bg").
                     setMobileNumber("08933333333").
-                    setUsername("ivan").
                     setPassword(("ivan"));
 
             UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ADMIN);
@@ -97,6 +93,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getByUsername(String username) {
 
-        return userRepository.findByUsername(username).orElse(null);
+        return userRepository.findByEmail(username).orElse(null);
     }
 }
