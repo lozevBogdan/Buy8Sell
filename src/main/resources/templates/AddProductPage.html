@@ -23,7 +23,8 @@
 
                 <div class="form-data">
 
-                    <form th:method="post" >
+                    <form   th:action="@{/products/add}"
+                            th:method="post" >
                         <!-- Condition input -->
                         <div class="form-outline mb-4">
                             <input th:name="condition" type="text" id="form2Example1" class="form-control" />
@@ -58,12 +59,8 @@
                         </div>
 
 
-
-
-
                         <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
-
+                        <input type="submit" class="btn btn-primary btn-block mb-4" value="Add Product"/>
 
                     </form>
                 </div>
