@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html">
+    <title>Buy8Sell</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+<nav th:replace="fragments/navbar::navbar"></nav>
+
+<div class="container mt-5">
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card px-5 py-5" id="form1">
+
+                <div class="form-data">
+
+                    <form th:method="post" >
+                        <!-- Condition input -->
+                        <div class="form-outline mb-4">
+                            <input th:name="condition" type="text" id="form2Example1" class="form-control" />
+                            <label class="form-label" for="form2Example1">Condition</label>
+                        </div>
+
+                        <!-- description input -->
+                        <div class="form-outline mb-4">
+                            <input th:name="description" type="text" id="form2Example2" class="form-control" />
+                            <label class="form-label" for="form2Example1">Description</label>
+                        </div>
+
+                        <!--  Price -->
+                        <div class="form-outline mb-4">
+                            <input th:name="price" type="number" id="form2Example3" class="form-control" />
+                            <label class="form-label" for="form2Example1">Price</label>
+                        </div>
+
+                        <!-- Location input -->
+                        <div class="form-outline mb-4">
+                            <input th:name="location" type="text" id="form2Example4" class="form-control" />
+                            <label class="form-label" for="form2Example1">Location</label>
+                        </div>
+
+                        <!-- Picture Url-->
+                        <div class="form-outline mb-4">
+                            <input th:name="pictureUrl" type="text" id="form2Example5" class="form-control" />
+                            <label class="form-label" for="form2Example1">Picture URL</label>
+
+                            <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                            <input class="form-control" type="file" id="formFileMultiple" multiple />
+                        </div>
+
+
+
+
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Add</button>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--        <p>or sign up with:</p>-->
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-facebook-f"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-google"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-twitter"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-github"></i>-->
+<!--        </button>-->
+
+</div>
+</form>
+
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+
+
+
+</html>
