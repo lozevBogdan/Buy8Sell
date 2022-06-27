@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<body>
+
+<nav th:replace="fragments/navbar::navbar"></nav>
+
+<div class="container mt-5">
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card px-5 py-5" id="form1">
+
+                <h2 class="text-center">Register</h2>
+                <p class="text-center hint-text">Create your account. It's free and only takes a minute.</p>
+
+                <div class="form-data">
+
+                    <form>
+
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="text" id="form2Example21" class="form-control" />
+                            <label class="form-label" for="form2Example21">First Name</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="text" id="form2Example115" class="form-control" />
+                            <label class="form-label" for="form2Example21">Last Name</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="email" id="form2Example13" class="form-control" />
+                            <label class="form-label" for="form2Example21">Email address</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="tel" id="form2Example132" class="form-control" />
+                            <label class="form-label" for="form2Example21">Mobile number</label>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input type="password" id="form2Example52" class="form-control" />
+                            <label class="form-label" for="form2Example2">Password</label>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            <input type="password" id="form2Example2" class="form-control" />
+                            <label class="form-label" for="form2Example2">Confirm Password</label>
+                        </div>
+
+
+
+
+                        <!-- Submit button -->
+                        <button type="button" class="btn btn-primary btn-block mb-4">Register</button>
+
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                            <p>Already you have a registration? <a th:href="@{/users/login}">Login</a></p>
+
+<!--                            <p>or sign up with:</p>-->
+<!--                            <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--                                <i class="fab fa-facebook-f"></i>-->
+<!--                            </button>-->
+
+<!--                            <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--                                <i class="fab fa-google"></i>-->
+<!--                            </button>-->
+
+<!--                            <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--                                <i class="fab fa-twitter"></i>-->
+<!--                            </button>-->
+
+<!--                            <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--                                <i class="fab fa-github"></i>-->
+<!--                            </button>-->
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--        <p>or sign up with:</p>-->
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-facebook-f"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-google"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-twitter"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-github"></i>-->
+<!--        </button>-->
+
+    </div>
+</form>
+
+<th:block th:replace="fragments/scripts::scripts"></th:block>
+
+</body>
+
+
+
+</html>

@@ -20,6 +20,9 @@ public class ProductEntity extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
     private BigDecimal price;
 
     @Column(nullable = false)
@@ -57,6 +60,15 @@ public class ProductEntity extends BaseEntity {
 
     public ProductEntity setCondition(ConditionEnum condition) {
         this.condition = condition;
+        return this;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public ProductEntity setTitle(String title) {
+        this.title = title;
         return this;
     }
 
