@@ -15,7 +15,17 @@ public class UserController {
 
     @GetMapping("/users/register")
     public String registerPage(){
-        return "registerPage";
+        return "registerPage2";
+    }
+
+    @GetMapping("/users/favorites")
+    public String favorites(){
+        return "favorites";
+    }
+
+    @GetMapping("/users/messages")
+    public String messages(){
+        return "messages";
     }
 
 }
