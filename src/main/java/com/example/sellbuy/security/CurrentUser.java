@@ -32,6 +32,11 @@ public class CurrentUser {
         return this;
     }
 
+    public void logInCurrUser(Long id,String email){
+        this.id = id;
+        this.email = email;
+    }
+
     public boolean isLogged(){
         return (this.id != null && this.email != null);
     }

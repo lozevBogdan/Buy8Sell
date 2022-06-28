@@ -9,6 +9,7 @@ import com.example.sellbuy.repository.UserRepository;
 import com.example.sellbuy.security.CurrentUser;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -16,6 +17,7 @@ import java.util.*;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private final UserRepository userRepository;
     private final UserRoleServiceImpl userRoleService;
     private final CurrentUser currentUser;
@@ -89,12 +91,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public void loginUser(UserLoginBindingModel userLoginBindingModel) {
 
-        Optional<UserEntity> userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
-                userLoginBindingModel.getPassword());
+        UserEntity userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
+                userLoginBindingModel.getPassword()).get();
 
-        this.currentUser.
-                setId(userByEmailAndPassword.get().getId()).
-                setEmail(userByEmailAndPassword.get().getEmail());
+        Long id = userByEmailAndPassword.getId();
+        String email = userByEmailAndPassword.getEmail();
+
+
+      currentUser.logInCurrUser(id,email);
+
     }
 
     @Override
@@ -102,6 +107,8 @@ public class UserServiceImpl implements UserService {
             this.currentUser.
                     setEmail(null).
                     setId(null);
+
+
     }
 
     @Override
@@ -136,7 +143,16 @@ public class UserServiceImpl implements UserService {
 
         newUser.setRoles(roles);
 
+
        newUser =  this.userRepository.save(newUser);
 
+    }
+
+    @Override
+    public UserEntity getCurrentLoggedInUserEntity() {
+
+        Long id = currentUser.getId();
+        UserEntity currentLoggedInUser = this.userRepository.findById(id).get();
+        return  currentLoggedInUser;
     }
 }

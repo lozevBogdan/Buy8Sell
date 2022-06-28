@@ -19,4 +19,6 @@ public interface UserService {
     boolean isExistUserWithEmailAndPassword(String email,String password);
 
     void makeNewRegistration(UserRegisterBindingModel userRegisterBindingModel);
+
+    UserEntity getCurrentLoggedInUserEntity();
 }
