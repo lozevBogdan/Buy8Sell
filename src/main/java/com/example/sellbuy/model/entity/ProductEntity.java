@@ -28,7 +28,7 @@ public class ProductEntity extends BaseEntity {
     @Column(nullable = false)
     private String location;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity seller;
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -38,9 +38,8 @@ public class ProductEntity extends BaseEntity {
     private Set<CommentEntity> comments= new HashSet<>();
 
 
-    // TODO: this is shoud become a relation @Many to One. the product should ave one category
-    @ManyToMany(mappedBy = "products",cascade = CascadeType.ALL)
-    private Set<CategoryEntity> categories= new HashSet<>();
+    @ManyToOne
+    private CategoryEntity category ;
 
     @ManyToMany
     private Set<UserEntity> fans= new HashSet<>();
@@ -126,12 +125,12 @@ public class ProductEntity extends BaseEntity {
         return this;
     }
 
-    public Set<CategoryEntity> getCategories() {
-        return categories;
+    public CategoryEntity getCategory() {
+        return category;
     }
 
-    public ProductEntity setCategories(Set<CategoryEntity> categories) {
-        this.categories = categories;
+    public ProductEntity setCategory(CategoryEntity category) {
+        this.category = category;
         return this;
     }
 
@@ -160,5 +159,18 @@ public class ProductEntity extends BaseEntity {
     public ProductEntity setPromo(boolean promo) {
         isPromo = promo;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductEntity{" +
+                "condition=" + condition +
+                ", description='" + description + '\'' +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", location='" + location + '\'' +
+                ", views=" + views +
+                ", isPromo=" + isPromo +
+                '}';
     }
 }
