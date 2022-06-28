@@ -25,19 +25,19 @@ public class UserEntity extends BaseEntity{
     private String mobileNumber;
 
     @Column
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(mappedBy = "seller",fetch = FetchType.EAGER)
     private Set<ProductEntity> products= new HashSet<>();
 
-    @OneToMany(mappedBy = "sender")
+    @OneToMany(mappedBy = "sender",fetch = FetchType.EAGER)
     private Set<MessageEntity> sendMessages= new HashSet<>();
 
-    @OneToMany(mappedBy = "receiver")
+    @OneToMany(mappedBy = "receiver",fetch = FetchType.EAGER)
     private Set<MessageEntity> receiverMessages= new HashSet<>();
 
-    @ManyToMany(mappedBy = "fans")
+    @ManyToMany(mappedBy = "fans",fetch = FetchType.EAGER)
     private Set<ProductEntity> favoriteProducts = new HashSet<>();
 
 
@@ -145,11 +145,6 @@ public class UserEntity extends BaseEntity{
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
-                ", roles=" + roles +
-                ", products=" + products +
-                ", sendMessages=" + sendMessages +
-                ", receiverMessages=" + receiverMessages +
-                ", favoriteProducts=" + favoriteProducts +
                 '}';
     }
 }
