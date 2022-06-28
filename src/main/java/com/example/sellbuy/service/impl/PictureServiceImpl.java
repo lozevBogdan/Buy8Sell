@@ -30,7 +30,7 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public PictureEntity putInDb(PictureEntity picture1) {
+    public PictureEntity addPictureEntity(PictureEntity picture1) {
         return pictureRepository.save(picture1);
     }
 

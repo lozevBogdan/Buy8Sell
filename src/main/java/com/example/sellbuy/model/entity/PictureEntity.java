@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "pictures")
 public class PictureEntity extends BaseEntity {
 
-    @Column(nullable = false)
+    @Column
     @Lob
     private String url;
 
