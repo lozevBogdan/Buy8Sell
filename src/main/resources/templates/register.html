@@ -18,46 +18,66 @@
 
                 <div class="form-data">
 
-                    <form>
-
+                    <form th:method="post"
+                          th:object="${userRegisterBindingModel}"
+                          th:action="@{/users/register}">
 
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="text" id="form2Example21" class="form-control" />
+                            <input th:field="*{firstName}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="text" id="form2Example21" class="form-control" />
                             <label class="form-label" for="form2Example21">First Name</label>
+                            <small class="invalid-feedback text-danger">First name must between 3 na 20 characters! </small>
                         </div>
 
                         <div class="form-outline mb-4">
-                            <input type="text" id="form2Example115" class="form-control" />
+                            <input th:field="*{lastName}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="text" id="form2Example115" class="form-control" />
                             <label class="form-label" for="form2Example21">Last Name</label>
+                            <small class="invalid-feedback text-danger">Last name must between 3 na 20 characters! </small>
                         </div>
 
                         <div class="form-outline mb-4">
-                            <input type="email" id="form2Example13" class="form-control" />
+                            <input  th:field="*{email}"
+                                    th:errorclass="'is-invalid alert-danger'"
+                                    type="email" id="form2Example13" class="form-control" />
                             <label class="form-label" for="form2Example21">Email address</label>
+                            <small class="invalid-feedback text-danger">The email should be valid and can not be null! </small>
+                            <small th:if="${emailIsNotFree}" class="invalid-feedback text-danger"> This email is registered already! </small>
                         </div>
 
                         <div class="form-outline mb-4">
-                            <input type="tel" id="form2Example132" class="form-control" />
+                            <input  th:field="*{mobileNumber}"
+                                    th:errorclass="'is-invalid alert-danger'"
+                                    type="tel" id="form2Example132" class="form-control" />
                             <label class="form-label" for="form2Example21">Mobile number</label>
+                            <small class="invalid-feedback text-danger">The mobile number should be ten numbers and can not be null! </small>
                         </div>
 
                         <div class="form-outline mb-4">
-                            <input type="password" id="form2Example52" class="form-control" />
+                            <input th:field="*{password}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="password" id="form2Example52" class="form-control" />
                             <label class="form-label" for="form2Example2">Password</label>
+                            <small class="invalid-feedback text-danger">The password should be between 3 and 20 symbols and can not be null! </small>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <input type="password" id="form2Example2" class="form-control" />
+                            <input th:field="*{confirmPassword}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="password" id="form2Example2" class="form-control" />
                             <label class="form-label" for="form2Example2">Confirm Password</label>
+                            <small th:if="${passwordsNotMach}" class="invalid-feedback text-danger">Passwords do not match! </small>
                         </div>
 
 
 
 
                         <!-- Submit button -->
-                        <button type="button" class="btn btn-primary btn-block mb-4">Register</button>
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
 
                         <!-- Register buttons -->
                         <div class="text-center">
