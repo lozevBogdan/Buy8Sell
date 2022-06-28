@@ -1,6 +1,6 @@
-package com.example.sellbuy.dto;
+package com.example.sellbuy.model.binding;
 
-public class AddProductDto {
+public class ProductBindingModel {
 
     // todo: this shoul become a conditionEnum type
     private String condition;
@@ -13,7 +13,7 @@ public class AddProductDto {
         return condition;
     }
 
-    public AddProductDto setCondition(String condition) {
+    public ProductBindingModel setCondition(String condition) {
         this.condition = condition;
         return this;
     }
@@ -22,7 +22,7 @@ public class AddProductDto {
         return description;
     }
 
-    public AddProductDto setDescription(String description) {
+    public ProductBindingModel setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -31,7 +31,7 @@ public class AddProductDto {
         return price;
     }
 
-    public AddProductDto setPrice(int price) {
+    public ProductBindingModel setPrice(int price) {
         this.price = price;
         return this;
     }
@@ -40,7 +40,7 @@ public class AddProductDto {
         return location;
     }
 
-    public AddProductDto setLocation(String location) {
+    public ProductBindingModel setLocation(String location) {
         this.location = location;
         return this;
     }
@@ -49,7 +49,7 @@ public class AddProductDto {
         return pictureUrl;
     }
 
-    public AddProductDto setPictureUrl(String pictureUrl) {
+    public ProductBindingModel setPictureUrl(String pictureUrl) {
         this.pictureUrl = pictureUrl;
         return this;
     }

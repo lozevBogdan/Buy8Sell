@@ -46,7 +46,8 @@ public class ProductServiceImpl implements ProductService {
                     setPrice(BigDecimal.valueOf(1500)).
                     setLocation("Sofiq, Bulgariq").
                     setSeller(ivan).
-                    setPictures((Set.of(picture1)));
+                    setPictures((Set.of(picture1))).
+                    setTitle("shampoo");
 
             picture1.setProduct(product1);
 

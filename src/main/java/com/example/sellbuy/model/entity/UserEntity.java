@@ -15,7 +15,6 @@ public class UserEntity extends BaseEntity{
     @Column(nullable = false)
     private String password;
 
-
     @Column(nullable = false)
     private String firstName;
 
@@ -136,14 +135,21 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
+
+
     @Override
     public String toString() {
         return "UserEntity{" +
+                "email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
+                ", roles=" + roles +
+                ", products=" + products +
+                ", sendMessages=" + sendMessages +
+                ", receiverMessages=" + receiverMessages +
+                ", favoriteProducts=" + favoriteProducts +
                 '}';
     }
 }
