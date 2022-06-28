@@ -1,6 +1,6 @@
 package com.example.sellbuy.web;
 
-import com.example.sellbuy.dto.AddProductDto;
+import com.example.sellbuy.model.binding.ProductBindingModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +22,9 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String allProducts(AddProductDto addProductDto){
+    public String allProducts(ProductBindingModel productBindingModel){
 
-        System.out.println(addProductDto);
+        System.out.println(productBindingModel);
         return "add-new-product";
     }
 
