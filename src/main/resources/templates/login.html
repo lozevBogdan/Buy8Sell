@@ -14,17 +14,32 @@
                 <h2 class="text-center">Login</h2>
                 <div class="form-data">
 
-                    <form>
+                    <form th:method="post"
+                    th:object="${userLoginBindingModel}"
+                    th:action="@{/users/login}">
+
+                        <th:block th:if="${invalidCredentials}">
+                            <div class="text-danger">Invalid credentials! </div>
+                            <div class="text-danger">Incorrect username or password!</div>
+                        </th:block>
+
                         <!-- Email input -->
                         <div class="form-outline mb-4">
-                            <input type="email" id="form2Example1" class="form-control" />
+                            <input th:field="*{email}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="email" id="form2Example1" class="form-control" />
                             <label class="form-label" for="form2Example1">Email address</label>
+                            <small class="invalid-feedback text-danger">The email should be valid and can not be null! </small>
                         </div>
 
                         <!-- Password input -->
                         <div class="form-outline mb-4">
-                            <input type="password" id="form2Example2" class="form-control" />
+                            <input th:field="*{password}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="password" id="form2Example2" class="form-control" />
                             <label class="form-label" for="form2Example2">Password</label>
+                            <small class="invalid-feedback text-danger">The password should be between 3 and 20 symbols and can not be null! </small>
+
                         </div>
 
                         <!-- 2 column grid layout for inline styling -->
@@ -50,7 +65,7 @@
                         </div>
 
                         <!-- Submit button -->
-                        <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
 
                         <!-- Register buttons -->
                         <div class="text-center">
@@ -74,7 +89,8 @@
 <!--                            </button>-->
 
                         </div>
-                    </form> </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
