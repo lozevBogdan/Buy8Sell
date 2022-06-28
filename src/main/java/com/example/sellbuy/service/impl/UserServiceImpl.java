@@ -1,43 +1,32 @@
 package com.example.sellbuy.service.impl;
 
+import com.example.sellbuy.model.binding.UserLoginBindingModel;
+import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
 import com.example.sellbuy.repository.UserRepository;
-import com.example.sellbuy.repository.UserRoleRepository;
+import com.example.sellbuy.security.CurrentUser;
 import com.example.sellbuy.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
-    // private final PasswordEncoder passwordEncoder;
+    private final UserRoleServiceImpl userRoleService;
+    private final CurrentUser currentUser;
+    private final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepository userRepository, UserRoleRepository userRoleRepository){      //PasswordEncoder passwordEncoder) {
+
+    public UserServiceImpl(UserRepository userRepository, UserRoleServiceImpl userRoleService, CurrentUser currentUser, ModelMapper modelMapper){
         this.userRepository = userRepository;
-        //this.passwordEncoder = passwordEncoder;
-        this.userRoleRepository = userRoleRepository;
-    }
-
-
-    private void initializeRoles() {
-        if (userRoleRepository.count() ==0){
-
-            UserRoleEntity adminRole = new UserRoleEntity();
-            UserRoleEntity userRole = new UserRoleEntity();
-
-            adminRole.setRole(UserRoleEnum.ADMIN);
-            userRole.setRole(UserRoleEnum.USER);
-
-            userRoleRepository.saveAll(List.of(adminRole,userRole));
-
-
-        }
+        this.userRoleService = userRoleService;
+        this.currentUser = currentUser;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -69,8 +58,8 @@ public class UserServiceImpl implements UserService {
                     setMobileNumber("08933333333").
                     setPassword(("ivan"));
 
-            UserRoleEntity adminRole = userRoleRepository.findByRole(UserRoleEnum.ADMIN);
-            UserRoleEntity userRole = userRoleRepository.findByRole(UserRoleEnum.USER);
+            UserRoleEntity adminRole = this.userRoleService.findByRole(UserRoleEnum.ADMIN);
+            UserRoleEntity userRole = this.userRoleService.findByRole(UserRoleEnum.USER);
 
             user1.setRoles(Set.of(adminRole,userRole));
             user2.setRoles(Set.of(userRole));
@@ -86,13 +75,68 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void initializeUsersAndRoles() {
-        initializeRoles();
+        this.userRoleService.initializeRoles();
         initializeUsers();
     }
 
     @Override
     public UserEntity getByUsername(String username) {
+        return userRepository.
+                findByEmail(username).
+                orElse(null);
+    }
 
-        return userRepository.findByEmail(username).orElse(null);
+    @Override
+    public void loginUser(UserLoginBindingModel userLoginBindingModel) {
+
+        Optional<UserEntity> userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
+                userLoginBindingModel.getPassword());
+
+        this.currentUser.
+                setId(userByEmailAndPassword.get().getId()).
+                setEmail(userByEmailAndPassword.get().getEmail());
+    }
+
+    @Override
+    public void logoutCurrentUser() {
+            this.currentUser.
+                    setEmail(null).
+                    setId(null);
+    }
+
+    @Override
+    public boolean isEmailFree(String email) {
+        return this.userRepository.findByEmail(email).isEmpty();
+    }
+
+    @Override
+    public boolean isExistUserWithEmailAndPassword(String email, String password) {
+        return this.userRepository.
+                findByEmailAndPassword(email,password).
+                isEmpty();
+    }
+
+    @Override
+    public void makeNewRegistration(UserRegisterBindingModel userRegisterBindingModel) {
+
+        UserEntity newUser = this.modelMapper.map(userRegisterBindingModel,UserEntity.class);
+
+        Set<UserRoleEntity> roles = new HashSet<>();
+
+        if(this.userRepository.count() == 0){
+            UserRoleEntity adminRoleEntity =
+                    this.userRoleService.findByRole(UserRoleEnum.ADMIN);
+            roles.add(adminRoleEntity);
+        }
+
+        UserRoleEntity useRoleEntity =
+                this.userRoleService.findByRole(UserRoleEnum.USER);
+
+        roles.add(useRoleEntity);
+
+        newUser.setRoles(roles);
+
+       newUser =  this.userRepository.save(newUser);
+
     }
 }
