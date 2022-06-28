@@ -34,6 +34,8 @@
                 </a>
             </li>
 
+            <th:block th:if="${@currentUser.isLogged()}">
+
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/products/promotions/all}">
                     <i class="fa fa-envelope-o">
@@ -74,11 +76,14 @@
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
             </li>
+       <th:block/>
+
         </ul>
 
 
         <ul class="navbar-nav ">
 
+            <th:block th:if="${@currentUser.isLogged()}">
                     <li class="nav-item">
                 <a class="nav-link" th:href="@{/users/messages}">
                     <i class="fa fa-bell">
@@ -86,9 +91,9 @@
                     </i>
                     Messages
                 </a>
-            </li>
+                    </li>
 
-            <li class="nav-item">
+                 <li class="nav-item">
                 <a class="nav-link" th:href="@{/users/favorites}">
                     <i class="fa fa-bell">
                         <span class="badge badge-danger">11</span>
@@ -106,33 +111,42 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/users/login}">
-<!--                    <i class="bi bi-person-fill"></i>-->
-<!--                        <span class="badge badge-success">11</span>-->
-                    </i>
-                    Log in
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/users/register}">
-                    </i>
-                    Register
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" th:href="@{/users/logout}">
-                    </i>
-                    Logout
-                </a>
-            </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users/logout}">
+                        </i>
+                        Logout
+                    </a>
+                </li>
+            </th:block>
+
+
+            <th:block th:if="${!@currentUser.isLogged()}">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users/login}">
+                        <!--                    <i class="bi bi-person-fill"></i>-->
+                        <!--                        <span class="badge badge-success">11</span>-->
+                        </i>
+                        Log in
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/users/register}">
+                        </i>
+                        Register
+                    </a>
+                </li>
+            </th:block>
+
+
 
         </ul>
 
+        <th:block th:if="${@currentUser.isLogged()}">
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
+        </th:block>
 
     </div>
 </nav>
