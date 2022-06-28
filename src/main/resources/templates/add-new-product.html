@@ -24,51 +24,94 @@
                 <div class="form-data">
 
                     <form   th:action="@{/products/add}"
-                            th:method="post" >
+                            th:method="post"
+                            th:object="${productAddBindingModel}" >
 
                         <!-- Title input -->
                         <div class="form-outline mb-4">
-                            <input th:name="title" type="text" id="form2Example13" class="form-control" />
-                            <label class="form-label" for="form2Example1">Title</label>
+                            <input th:field="*{title}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                   type="text" id="title" class="form-control" />
+                            <label class="form-label" for="title">Title</label>
+                            <small  class="invalid-feedback text-danger">Please write title of the product with length between 3 and 20 symbols!</small>
                         </div>
 
                         <!-- Condition input -->
                         <div class="form-outline mb-4">
-                            <input th:name="condition" type="text" id="form2Example1" class="form-control" />
-                            <label class="form-label" for="form2Example1">Condition</label>
+                            <select th:field="*{condition}"
+                                    th:errorclass="'is-invalid alert-danger'"
+                                    class="browser-default custom-select" id="condition" name="style">
+
+                                <option value="">Select category</option>
+                                <option th:each=" condition : ${T(com.example.sellbuy.model.entity.enums.ConditionEnum).values()}"
+                                        th:value="${condition}" th:text="${condition}">Condition</option>
+                            </select>
+                            <label class="form-label" for="condition">Condition</label>
+                            <small  class="invalid-feedback text-danger">You should choose condition of the product!</small>
+                        </div>
+
+                        <!-- Category input -->
+                        <div class="form-outline mb-4">
+                        <select th:field="*{category}"
+                                th:errorclass="'is-invalid alert-danger'"
+                                class="browser-default custom-select" id="category" name="style">
+
+                            <option value="">Select category</option>
+                            <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
+                                    th:value="${category}" th:text="${category}">Category</option>
+                        </select>
+                            <label class="form-label" for="category">Category</label>
+                        <small  class="invalid-feedback text-danger">You should choose category!</small>
                         </div>
 
                         <!-- description input -->
                         <div class="form-outline mb-4">
-                            <input th:name="description" type="text" id="form2Example2" class="form-control" />
-                            <label class="form-label" for="form2Example1">Description</label>
+                            <textarea th:field="*{description}"
+                                      th:errorclass="'is-invalid alert-danger'"
+                                      id="description" class="form-control"></textarea>
+                            <label class="form-label" for="description">Description</label>
+                            <small  class="invalid-feedback text-danger">You should write some description of the product! Min length of description 5 symbols!</small>
                         </div>
 
                         <!--  Price -->
                         <div class="form-outline mb-4">
-                            <input th:name="price" type="number" id="form2Example3" class="form-control" />
-                            <label class="form-label" for="form2Example1">Price</label>
+                            <input th:field="*{price}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                   type="number" id="price" class="form-control" />
+                            <label class="form-label" for="price">Price</label>
+                            <small  class="invalid-feedback text-danger">Price should be positive!</small>
                         </div>
 
                         <!-- Location input -->
                         <div class="form-outline mb-4">
-                            <input th:name="location" type="text" id="form2Example4" class="form-control" />
-                            <label class="form-label" for="form2Example1">Location</label>
+                            <input th:field="*{location}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                   type="text" id="locaion" class="form-control" />
+                            <label class="form-label" for="locaion">Location</label>
+                            <small  class="invalid-feedback text-danger">You must indicate where the product is located!</small>
                         </div>
 
                         <!-- Picture Url-->
                         <div class="form-outline mb-4">
-                            <input th:name="pictureUrl" type="text" id="form2Example5" class="form-control" />
-                            <label class="form-label" for="form2Example1">Picture URL</label>
+                            <input th:field="*{urlPicture}"
+                                   type="text" id="picture_url" class="form-control" />
+                            <label class="form-label" for="picture_url">Picture URL</label>
 
-                            <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                            <input class="form-control" type="file" id="formFileMultiple" multiple />
+<!--                            for upload a picture from computer-->
+<!--                            <label for="formFileMultiple" class="form-label">Multiple files input example</label>-->
+<!--                            <input class="form-control" type="file" id="formFileMultiple" multiple />-->
+
                         </div>
 
+                        <!-- Check box -->
                         <div class=" cow mb-4 form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-                            <label class="form-check-label" for="form2Example31"> Make a promotion </label>
 
+                            <input th:field="*{isPromo}"
+                                   th:checked="*{isPromo}"
+                                   th:value="${true}"
+                                   class="form-check-input" type="checkbox"
+                                   id="checkBoxIsPromo"/>
+                            <label class="form-check-label" for="checkBoxIsPromo"> Make a promotion </label>
                         </div>
 
 
