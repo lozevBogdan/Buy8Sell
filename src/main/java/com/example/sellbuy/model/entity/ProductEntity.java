@@ -25,7 +25,6 @@ public class ProductEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-
     @ManyToOne(cascade = CascadeType.ALL)
     private LocationEntity location;
 
