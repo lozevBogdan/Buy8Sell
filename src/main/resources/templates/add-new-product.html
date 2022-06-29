@@ -42,7 +42,7 @@
                                     th:errorclass="'is-invalid alert-danger'"
                                     class="browser-default custom-select" id="condition" name="style">
 
-                                <option value="">Select category</option>
+                                <option value="">Select condition</option>
                                 <option th:each=" condition : ${T(com.example.sellbuy.model.entity.enums.ConditionEnum).values()}"
                                         th:value="${condition}" th:text="${condition}">Condition</option>
                             </select>
@@ -83,12 +83,19 @@
                         </div>
 
                         <!-- Location input -->
+
                         <div class="form-outline mb-4">
-                            <input th:field="*{location}"
-                                   th:errorclass="'is-invalid alert-danger'"
-                                   type="text" id="locaion" class="form-control" />
-                            <label class="form-label" for="locaion">Location</label>
+                            <select th:field="*{location}"
+                                    th:errorclass="'is-invalid alert-danger'"
+                                    class="browser-default custom-select" id="location" name="style">
+
+                                <option value="">Select location</option>
+                                <option th:each=" location : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
+                                        th:value="${location}" th:text="${location}">Category</option>
+                            </select>
+                            <label class="form-label" for="location">Location</label>
                             <small  class="invalid-feedback text-danger">You must indicate where the product is located!</small>
+
                         </div>
 
                         <!-- Picture Url-->
