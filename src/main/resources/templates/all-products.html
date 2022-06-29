@@ -54,9 +54,9 @@
                     <div class="form-group">
                         <label>CATEGORY</label>
                         <select class="form-control hasCustomSelect" style="-webkit-appearance: menulist-button; width: 231px; position: absolute; opacity: 0; height: 34px; font-size: 12px;">
-                            <option value="">Select category</option>
+                            <option value="" selected>All categories</option>
                             <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
-                                    th:value="${category}" th:text="${category}">Category</option>
+                                    th:value="${category}" th:text="${category}">All categories</option>
                         </select>
                         <span class="customSelect form-control" style="display: inline-block;"><span class="customSelectInner" style="width: 209px; display: inline-block;">Categories</span></span>
                     </div>
@@ -64,9 +64,9 @@
                     <div class="form-group">
                         <label>LOCATION</label>
                         <select class="form-control hasCustomSelect" style="-webkit-appearance: menulist-button; width: 231px; position: absolute; opacity: 0; height: 34px; font-size: 12px;">
-                            <option value="">Select location</option>
-                            <option th:each=" category : ${locations}"
-                                    th:value="${category}" th:text="${category}">Category</option>
+                            <option value="" selected>All locations</option>
+                            <option th:each=" loation : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
+                                    th:value="${loation}" th:text="${loation}">All locations</option>
                         </select>
                         <span class="customSelect form-control" style="display: inline-block;"><span class="customSelectInner" style="width: 209px; display: inline-block;">Categories</span></span>
                     </div>
