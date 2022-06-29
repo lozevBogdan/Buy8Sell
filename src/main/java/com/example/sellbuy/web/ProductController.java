@@ -115,7 +115,8 @@ public class ProductController {
 
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         System.out.println();
-        return "redirect:/products/all";
+
+        return "all-products";
     }
 
 
