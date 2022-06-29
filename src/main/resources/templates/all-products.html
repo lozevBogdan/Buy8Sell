@@ -30,60 +30,89 @@
 
             <div class="panel-body">
 
-                <form role="form product-form">
+                <form th:action="@{/products/all}"
+                      th:method="post"
+                      th:object="${productSearchingBindingModel}"
+
+                      role="form product-form">
 
                     <div class="form-group">
-                        <label>Search</label>
-                        <input type="text" placeholder="Search by title" class="form-control" />
+                        <label>SEARCH</label>
+                        <input th:field="*{title}"
+                                type="text" placeholder="Search by title" class="form-control" />
                     </div>
 
                     <div class="form-group">
-                        <label>Price</label>
-                        <input type="number" placeholder="min" class="form-control" />
-                        <input type="number" placeholder="max" class="form-control" />
+                        <label>PRICE</label>
+                        <input th:field="*{min}"
+                               th:errorclass="is-invalid"
+                                type="number" placeholder="Minimum price" class="form-control" />
+                        <small class="invalid-feedback text-danger">Minimum price should be bigger than zero! </small>
 
-<!--                        <select class="form-control hasCustomSelect" style="-webkit-appearance:-->
-<!--                         menulist-button; width: 231px; position: absolute; opacity: 0; height: 34px; font-size: 12px;">-->
-<!--                            <input type="number" placeholder="min" class="form-control" />-->
-<!--                            <input type="number" placeholder="max" class="form-control" />-->
+                        <input th:field="*{max}"
+                               th:errorclass="is-invalid"
+                                type="number" placeholder="Maximim price" class="form-control" />
+                        <small class="invalid-feedback text-danger">Maximum price should be bigger than zero! </small>
+                        <small th:if="${isMinBiggerThanMax}" class="text-danger">Maximum price should be bigger than minimum! </small>
+                    </div>
+
+<!--                    <div class="form-group">-->
+<!--                        <label>CATEGORY</label>-->
+<!--                        <select th:field="*{category}"-->
+<!--                                class="form-control hasCustomSelect" style="-webkit-appearance: menulist-button; width: 231px; position: absolute; opacity: 0; height: 34px; font-size: 12px;">-->
+<!--                            <option value="" selected>All categories</option>-->
+<!--                            <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"-->
+<!--                                    th:value="${category}" th:text="${category}">All categories</option>-->
 <!--                        </select>-->
-<!--                        <span class="customSelect form-control" style="display: inline-block;"><span class="customSelectInner" style="width: 209px; display: inline-block;">Wallmart</span></span>-->
-<!--                   -->
-                    </div>
+<!--                        <span class="customSelect form-control" style="display: inline-block;">-->
+<!--                            <span class="customSelectInner" style="width: 209px; display: inline-block;">CATEGORIES</span>-->
+<!--                        </span>-->
+<!--                    </div>-->
+
 
                     <div class="form-group">
+                        <div class="text-white label-holder d-flex justify-content-center">
+                            <label for="style" class="h4 mb-2">Style</label>
+                        </div>
                         <label>CATEGORY</label>
-                        <select class="form-control hasCustomSelect" style="-webkit-appearance: menulist-button; width: 231px; position: absolute; opacity: 0; height: 34px; font-size: 12px;">
-                            <option value="" selected>All categories</option>
+                        <select th:field="*{category}"
+                                th:errorclass="'is-invalid alert-danger'"
+                                class="browser-default custom-select" id="style" name="style">
+                            <option value="">SELECT CATEGORY</option>
                             <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
-                                    th:value="${category}" th:text="${category}">All categories</option>
+                                    th:value="${category}" th:text="${category}">Category</option>
                         </select>
-                        <span class="customSelect form-control" style="display: inline-block;"><span class="customSelectInner" style="width: 209px; display: inline-block;">Categories</span></span>
                     </div>
 
                     <div class="form-group">
+                        <div class="text-white label-holder d-flex justify-content-center">
+                            <label for="style" class="h4 mb-2">Style</label>
+                        </div>
                         <label>LOCATION</label>
-                        <select class="form-control hasCustomSelect" style="-webkit-appearance: menulist-button; width: 231px; position: absolute; opacity: 0; height: 34px; font-size: 12px;">
-                            <option value="" selected>All locations</option>
-                            <option th:each=" loation : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
-                                    th:value="${loation}" th:text="${loation}">All locations</option>
+                        <select th:field="*{location}"
+                                th:errorclass="'is-invalid alert-danger'"
+                                class="browser-default custom-select" id="style" name="style">
+                            <option value="">SELECT CATEGORY</option>
+                            <option th:each=" location : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
+                                    th:value="${location}" th:text="${location}">Location</option>
                         </select>
-                        <span class="customSelect form-control" style="display: inline-block;"><span class="customSelectInner" style="width: 209px; display: inline-block;">Categories</span></span>
                     </div>
 
                     <div class="form-group">
-                        <label>ORDER BY</label>
-                        <select class="form-control hasCustomSelect" style="-webkit-appearance: menulist-button; width: 231px; position: absolute; opacity: 0; height: 34px; font-size: 12px;">
-                            <option value="">Order by</option>
+                        <div class="text-white label-holder d-flex justify-content-center">
+                            <label for="style" class="h4 mb-2">Style</label>
+                        </div>
+                        <label>SORT BY</label>
+                        <select th:field="*{orderBy}"
+                                th:errorclass="'is-invalid alert-danger'"
+                                class="browser-default custom-select" id="style" name="style">
+                            <option value="">SELECT CATEGORY</option>
                             <option th:each=" orderBy : ${T(com.example.sellbuy.model.entity.enums.OrderBYEnum).values()}"
-                                    th:value="${orderBy}" th:text="${orderBy}"></option>
+                                    th:value="${orderBy}" th:text="${orderBy}">OrderBy</option>
                         </select>
-                        <span class="customSelect form-control" style="display: inline-block;"><span class="customSelectInner" style="width: 209px; display: inline-block;">Order by</span></span>
                     </div>
                     <button class="btn btn-primary" type="submit">SEARCH</button>
                 </form>
-
-
             </div>
         </section>
 
