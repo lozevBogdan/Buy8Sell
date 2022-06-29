@@ -1,6 +1,7 @@
 package com.example.sellbuy.service.impl;
 
 import com.example.sellbuy.model.entity.PictureEntity;
+import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.repository.PictureRepository;
 import com.example.sellbuy.service.PictureService;
 import org.springframework.stereotype.Service;
@@ -38,4 +39,11 @@ public class PictureServiceImpl implements PictureService {
     public PictureEntity getFirstPicture() {
         return pictureRepository.findAll().get(0);
     }
+
+    @Override
+    public PictureEntity addPictureInDb(PictureEntity pictureEntity) {
+
+        return this.pictureRepository.save(pictureEntity);
+    }
+
 }
