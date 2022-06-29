@@ -25,8 +25,9 @@ public class ProductEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(nullable = false)
-    private String location;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    private LocationEntity location;
 
     @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity seller;
@@ -89,17 +90,17 @@ public class ProductEntity extends BaseEntity {
         return this;
     }
 
-    public String getLocation() {
+    public UserEntity getSeller() {
+        return seller;
+    }
+
+    public LocationEntity getLocation() {
         return location;
     }
 
-    public ProductEntity setLocation(String location) {
+    public ProductEntity setLocation(LocationEntity location) {
         this.location = location;
         return this;
-    }
-
-    public UserEntity getSeller() {
-        return seller;
     }
 
     public ProductEntity setSeller(UserEntity seller) {

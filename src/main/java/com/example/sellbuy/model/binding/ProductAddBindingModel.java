@@ -2,6 +2,7 @@ package com.example.sellbuy.model.binding;
 
 import com.example.sellbuy.model.entity.enums.CategoryEnum;
 import com.example.sellbuy.model.entity.enums.ConditionEnum;
+import com.example.sellbuy.model.entity.enums.LocationEnum;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -26,8 +27,7 @@ public class ProductAddBindingModel {
     private BigDecimal price;
 
     @NotNull
-    @Size(min = 3)
-    private String location;
+    private LocationEnum location;
 
 
     private String urlPicture;
@@ -87,11 +87,15 @@ public class ProductAddBindingModel {
         return this;
     }
 
-    public String getLocation() {
+    public LocationEnum getLocation() {
         return location;
     }
 
-    public ProductAddBindingModel setLocation(String location) {
+    public boolean isPromo() {
+        return isPromo;
+    }
+
+    public ProductAddBindingModel setLocation(LocationEnum location) {
         this.location = location;
         return this;
     }

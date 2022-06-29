@@ -1,16 +1,11 @@
 package com.example.sellbuy.service.impl;
 
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
-import com.example.sellbuy.model.entity.CategoryEntity;
-import com.example.sellbuy.model.entity.PictureEntity;
-import com.example.sellbuy.model.entity.ProductEntity;
-import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.model.entity.*;
 import com.example.sellbuy.model.entity.enums.ConditionEnum;
+import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.repository.ProductRepository;
-import com.example.sellbuy.service.CategoryService;
-import com.example.sellbuy.service.PictureService;
-import com.example.sellbuy.service.ProductService;
-import com.example.sellbuy.service.UserService;
+import com.example.sellbuy.service.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +21,15 @@ public class ProductServiceImpl implements ProductService {
     private final UserService userService;
     private final CategoryService categoryService;
     private final ModelMapper modelMapper;
+    private final LocationService locationService;
 
-    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService, UserService userService, CategoryService categoryService, ModelMapper modelMapper) {
+    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService, UserService userService, CategoryService categoryService, ModelMapper modelMapper, LocationService locationService) {
         this.productRepository = productRepository;
         this.pictureService = pictureService;
         this.userService = userService;
         this.categoryService = categoryService;
         this.modelMapper = modelMapper;
+        this.locationService = locationService;
     }
 
     @Override
@@ -48,11 +45,14 @@ public class ProductServiceImpl implements ProductService {
             PictureEntity picture1 = pictureService.getFirstPicture();
 
             ProductEntity product1 = new ProductEntity();
+
+            LocationEntity location = this.locationService.findByLocation(LocationEnum.SOFIA_GRAD);
+
             product1.
                     setCondition(ConditionEnum.NEW).
                     setDescription("Perfect! German quality!").
                     setPrice(BigDecimal.valueOf(1500)).
-                    setLocation("Sofiq, Bulgariq").
+                    setLocation(location).
                     setSeller(ivan).
                     setPictures((Set.of(picture1))).
                     setTitle("shampoo");

@@ -31,7 +31,7 @@ public class ProductController {
 
     @GetMapping("/all")
     public String productsPage(){
-        return "all-products2";
+        return "all-products";
     }
 
 
