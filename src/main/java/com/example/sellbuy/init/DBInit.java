@@ -1,9 +1,6 @@
 package com.example.sellbuy.init;
 
-import com.example.sellbuy.service.CategoryService;
-import com.example.sellbuy.service.PictureService;
-import com.example.sellbuy.service.ProductService;
-import com.example.sellbuy.service.UserService;
+import com.example.sellbuy.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -14,21 +11,25 @@ public class DBInit implements CommandLineRunner {
     private final ProductService productService;
     private final PictureService pictureService;
     private final CategoryService categoryService;
+    private final LocationService locationService;
 
-    public DBInit(UserService userService, ProductService productService, PictureService pictureService, CategoryService categoryService) {
+    public DBInit(UserService userService, ProductService productService, PictureService pictureService, CategoryService categoryService, LocationService locationService) {
         this.userService = userService;
         this.productService = productService;
         this.pictureService = pictureService;
         this.categoryService = categoryService;
+        this.locationService = locationService;
     }
 
     @Override
     public void run(String... args) throws Exception {
 
+        this.locationService.initializeLocations();
         this.userService.initializeUsersAndRoles();
         this.pictureService.initializePictures();
         this.productService.initializeProducts();
         this.categoryService.initializedCategories();
+
 
     }
 }
