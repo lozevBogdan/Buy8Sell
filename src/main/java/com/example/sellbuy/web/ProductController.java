@@ -7,6 +7,7 @@ import com.example.sellbuy.service.PictureService;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -38,13 +39,21 @@ public class ProductController {
         return new ProductSearchingBindingModel();
     }
 
-    @ModelAttribute
-    public List<ProductSearchViewModel> productSearchViewModels(){
-        return new LinkedList<>();
-    }
+//    @ModelAttribute
+//    public List<ProductSearchViewModel> productSearchViewModelList(){
+//        return new LinkedList<>();
+//    }
 
     @GetMapping("/all")
-    public String productsPage(){
+    public String productsPage(Model model){
+
+        List<ProductSearchViewModel> productSearchViewModelList =
+                this.productService.filterBy(new ProductSearchingBindingModel());
+
+        if (!model.containsAttribute("productSearchViewModelList")){
+            model.addAttribute("productSearchViewModelList",productSearchViewModelList);
+        }
+
         return "all-products";
     }
 
@@ -79,7 +88,7 @@ public class ProductController {
     @PostMapping("/all")
     public String login(@Valid ProductSearchingBindingModel productSearchingBindingModel,
                         BindingResult bindingResult,
-                        RedirectAttributes redirectAttributes){
+                        RedirectAttributes redirectAttributes, Model model){
 
         boolean isMinBiggerThanMax = false;
 
@@ -101,11 +110,12 @@ public class ProductController {
             return "redirect:/products/all";
         }
 
-        List<ProductSearchViewModel> productSearchViewModels =
+        List<ProductSearchViewModel> productSearchViewModelList =
                 this.productService.filterBy(productSearchingBindingModel);
 
+        model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         System.out.println();
-        return "redirect:/products/add";
+        return "redirect:/products/all";
     }
 
 
