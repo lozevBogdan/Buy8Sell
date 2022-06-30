@@ -22,4 +22,6 @@ public interface ProductService {
 
     void addProductEntity(ProductEntity product);
     public boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product);
+
+    void deleteProductById(Long id);
 }

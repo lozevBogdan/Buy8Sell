@@ -2,6 +2,7 @@ package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
+import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
 import com.example.sellbuy.service.PictureService;
 import com.example.sellbuy.service.ProductService;
@@ -46,14 +47,11 @@ public class ProductController {
 
     @GetMapping("/all")
     public String productsPage(Model model){
-
         List<ProductSearchViewModel> productSearchViewModelList =
                 this.productService.filterBy(new ProductSearchingBindingModel());
-
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
         }
-
         return "all-products";
     }
 
@@ -62,6 +60,21 @@ public class ProductController {
     public String allProducts(){
         return "add-new-product";
     }
+
+
+    @PostMapping("/delete/{id}")
+    public String deleteProduct(@PathVariable Long id){
+        //todo: delete method doesnt work!
+        this.productService.deleteProductById(id);
+
+        return String.format("redirect:/users/%d/products",
+                this.userService.getCurrentLoggedInUserEntity().getId());
+    }
+
+
+
+
+
 
     @PostMapping("/add")
     public String add(@RequestParam(defaultValue = "false") boolean isPromo,
@@ -79,11 +92,12 @@ public class ProductController {
             return "redirect:/products/add";
         }
 
-        this.productService.addProductBindingModel(productAddBindingModel);
+        ProductEntity newProduct =
+                this.productService.addProductBindingModel(productAddBindingModel);
 
-        return "redirect:/products/add";
+        return String.format("redirect:/users/%d/products",
+                userService.getCurrentLoggedInUserEntity().getId());
     }
-
 
     @PostMapping("/all")
     public String all(@Valid ProductSearchingBindingModel productSearchingBindingModel,

@@ -83,15 +83,21 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity addProductBindingModel(ProductAddBindingModel productAddBindingModel) {
 
-        ProductEntity newProduct = this.modelMapper.map(productAddBindingModel,ProductEntity.class);
+        ProductEntity newProduct =
+                this.modelMapper.map(productAddBindingModel,ProductEntity.class);
 
-        CategoryEntity categoryEntity = this.categoryService.findByCategory(productAddBindingModel.getCategory());
+        CategoryEntity categoryEntity =
+                this.categoryService.findByCategory(productAddBindingModel.getCategory());
 
-        UserEntity seller = this.userService.getCurrentLoggedInUserEntity();
+        UserEntity seller =
+                this.userService.getCurrentLoggedInUserEntity();
+
+        LocationEntity location = this.locationService.findByLocation(productAddBindingModel.getLocation());
 
         newProduct.
                 setSeller(seller).
-                setCategory(categoryEntity);
+                setCategory(categoryEntity).
+                setLocation(location);
 
         categoryEntity.getProducts().add(newProduct);
 
@@ -99,8 +105,7 @@ public class ProductServiceImpl implements ProductService {
         pictureEntity.setProduct(newProduct).setUrl(productAddBindingModel.getUrlPicture());
 
        // pictureEntity = this.pictureService.addPictureInDb(pictureEntity);
-
-        newProduct.getPictures().add(pictureEntity);
+     newProduct.getPictures().add(pictureEntity);
 
       newProduct = this.productRepository.save(newProduct);
 
@@ -241,6 +246,12 @@ public class ProductServiceImpl implements ProductService {
         }
 
         return false;
+    }
+
+    @Override
+    public void deleteProductById(Long id) {
+
+         this.productRepository.deleteById(id);
     }
 
 }
