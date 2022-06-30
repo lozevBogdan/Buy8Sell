@@ -156,14 +156,15 @@
 <!--                                type="button" class="btn btn-danger">Add to favorites</a>-->
                     </div>
 
-
                     <div class="panel-body text-center">
                         <h4>
                             <a th:href="@{/products/{id}(id=*{id})}" th:text="*{title}" class="pro-title">
                                tittle
                             </a>
                         </h4>
+                        <h5 th:if="*{isPromo()}"> <span class="badge badge-warning">PROMO</span></h5>
                         <p class="price" th:text="|*{price} BGN|">$300.00</p>
+
                     </div>
                 </section>
             </div>
