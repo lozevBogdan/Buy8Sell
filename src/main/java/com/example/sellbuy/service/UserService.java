@@ -32,4 +32,6 @@ public interface UserService {
     void addFavorProduct(ProductEntity product);
 
     Set<ProductEntity> getFavorListOf(Long id);
+
+    Set<ProductEntity> getMyProductsById(Long id);
 }

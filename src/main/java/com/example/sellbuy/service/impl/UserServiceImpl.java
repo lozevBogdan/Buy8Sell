@@ -186,4 +186,9 @@ public class UserServiceImpl implements UserService {
 
         return favoriteProducts;
     }
+
+    @Override
+    public Set<ProductEntity> getMyProductsById(Long id) {
+        return this.userRepository.findById(id).get().getProducts();
+    }
 }

@@ -71,6 +71,21 @@ public class UserController {
 
     }
 
+    @GetMapping("/{id}/products")
+    public String myProducts(@PathVariable Long id, Model model){
+
+        Set<ProductEntity> myProducts = this.userService.getMyProductsById(id);
+
+        List<ProductSearchViewModel> myProductsSearchViewModelList =
+                this.returnFavors(myProducts);
+
+        if (!model.containsAttribute("myProductsSearchViewModelList")){
+            model.addAttribute("myProductsSearchViewModelList",myProductsSearchViewModelList);
+        }
+        return "my-products";
+
+    }
+
     private  List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts){
         List<ProductSearchViewModel> returnedList = new LinkedList<>();
         for (ProductEntity product : favorProducts) {
@@ -207,17 +222,5 @@ public class UserController {
     }
 
 
-
-    @GetMapping("/messages")
-    public String messages(){
-        return "chats-all";
-    }
-
-
-    @GetMapping("/logout")
-    public String logout(){
-        this.userService.logoutCurrentUser();
-        return  "redirect:/";
-    }
 
 }
