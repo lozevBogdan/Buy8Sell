@@ -151,8 +151,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getCurrentLoggedInUserEntity() {
 
+        UserEntity currentLoggedInUser = null;
+
         Long id = currentUser.getId();
-        UserEntity currentLoggedInUser = this.userRepository.findById(id).get();
+        if(id != null) {
+            currentLoggedInUser = this.userRepository.findById(id).get();
+        }
         return  currentLoggedInUser;
     }
 }

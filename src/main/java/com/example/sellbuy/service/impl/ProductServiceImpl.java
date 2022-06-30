@@ -185,12 +185,14 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
+        UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntity();
+
 
         for (ProductEntity product : allProducts) {
 
          ProductSearchViewModel productSearchViewModel = this.modelMapper.map(product,ProductSearchViewModel.class);
 
-            String pictureUrl;
+         String pictureUrl;
 
          if(product.getPictures().size() == 0){
          pictureUrl="https://www.kuleuven.be/communicatie/congresbureau/fotos-en-afbeeldingen/no-image.png/image";
@@ -201,6 +203,13 @@ public class ProductServiceImpl implements ProductService {
 
            productSearchViewModel.setMainPicture(pictureUrl);
 
+         // Check for favorites products for current user
+
+         if(currentLoggedInUserEntity != null){
+             if(currentLoggedInUserEntity.getFavoriteProducts().contains(product)){
+                 productSearchViewModel.setProductIsFavorInCurrentUser(true);
+             }
+         }
            returnedList.add(productSearchViewModel);
         }
 

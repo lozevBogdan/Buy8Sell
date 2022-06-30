@@ -19,6 +19,16 @@ public class ProductSearchViewModel {
     private CategoryEntity category ;
     private String mainPicture;
     private boolean isPromo;
+    private boolean isProductIsFavorInCurrentUser =false;
+
+    public boolean isProductIsFavorInCurrentUser() {
+        return isProductIsFavorInCurrentUser;
+    }
+
+    public ProductSearchViewModel setProductIsFavorInCurrentUser(boolean productIsFavorInCurrentUser) {
+        isProductIsFavorInCurrentUser = productIsFavorInCurrentUser;
+        return this;
+    }
 
     public Long getId() {
         return id;
