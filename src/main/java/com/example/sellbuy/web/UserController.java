@@ -4,14 +4,20 @@ import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.model.view.ProductSearchViewModel;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/users")
@@ -19,10 +25,13 @@ public class UserController {
 
     private final UserService userService;
     private final ProductService productService;
+    private final ModelMapper modelMapper;
 
-    public UserController(UserService userService, ProductService productService) {
+
+    public UserController(UserService userService, ProductService productService, ModelMapper modelMapper) {
         this.userService = userService;
         this.productService = productService;
+        this.modelMapper = modelMapper;
     }
 
     @ModelAttribute
@@ -44,6 +53,62 @@ public class UserController {
     public String register(){
         return "register";
     }
+
+
+    @GetMapping("/{id}/favorites")
+    public String getAllFavorites(@PathVariable Long id, Model model){
+
+        Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
+
+
+        List<ProductSearchViewModel> productSearchViewModelList =
+              this.returnFavors(favorList);
+
+        if (!model.containsAttribute("productSearchViewModelList")){
+            model.addAttribute("productSearchViewModelList",productSearchViewModelList);
+        }
+            return "favorites-products";
+
+    }
+
+    private  List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts){
+
+        List<ProductSearchViewModel> returnedList = new LinkedList<>();
+
+        for (ProductEntity product : favorProducts) {
+
+            ProductSearchViewModel productSearchViewModel =
+                    this.modelMapper.map(product, ProductSearchViewModel.class);
+
+
+            String pictureUrl;
+
+            if(product.getPictures().size() == 0){
+                pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
+            }else {
+                pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
+            }
+
+            productSearchViewModel.setMainPicture(pictureUrl);
+
+            UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntity();
+
+
+            // Check for favorites products for current user
+            if(currentLoggedInUserEntity != null){
+
+                Set<ProductEntity> favoriteProducts = currentLoggedInUserEntity.getFavoriteProducts();
+
+                if(this.productService.isConsist(favoriteProducts,product)){
+                    productSearchViewModel.setProductIsFavorInCurrentUser(true);
+                    System.out.println();
+                }
+            }
+            returnedList.add(productSearchViewModel);
+        }
+            return returnedList;
+    }
+
 
     @PostMapping("/register")
     public String register(@Valid UserRegisterBindingModel userRegisterBindingModel,
@@ -125,10 +190,30 @@ public class UserController {
         }
     }
 
-    @GetMapping("/favorites")
-    public String favorites(){
-        return "favorites-products";
+
+    @PostMapping("/remove/favorites/{id}")
+    public String removeFromFavorites(@PathVariable Long id){
+
+        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntity();
+
+        if(currentUser == null){
+            return "redirect:/users/login";
+        }else {
+            System.out.println();
+            ProductEntity product = this.productService.findById(id);
+            product.getFans().remove(currentUser);
+
+
+            //  this.userService.addFavorProduct(product);
+            currentUser.getFavoriteProducts().remove(product);
+            System.out.println();
+            currentUser = this.userService.addInDb(currentUser);
+
+            return "redirect:/products/all";
+        }
     }
+
+
 
     @GetMapping("/messages")
     public String messages(){

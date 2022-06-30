@@ -4,6 +4,10 @@ import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.model.view.ProductSearchViewModel;
+
+import java.util.List;
+import java.util.Set;
 
 public interface UserService {
 
@@ -26,4 +30,6 @@ public interface UserService {
     UserEntity addInDb(UserEntity currentUser);
 
     void addFavorProduct(ProductEntity product);
+
+    Set<ProductEntity> getFavorListOf(Long id);
 }

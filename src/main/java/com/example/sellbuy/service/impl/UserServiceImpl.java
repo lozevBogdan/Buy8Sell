@@ -6,6 +6,7 @@ import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
+import com.example.sellbuy.model.view.ProductSearchViewModel;
 import com.example.sellbuy.repository.UserRepository;
 import com.example.sellbuy.security.CurrentUser;
 import com.example.sellbuy.service.UserService;
@@ -175,5 +176,14 @@ public class UserServiceImpl implements UserService {
         UserEntity byId = this.userRepository.findById(currentUser.getId()).get();
         byId.getFavoriteProducts().add(product);
         userRepository.save(byId);
+    }
+
+    @Override
+    public Set<ProductEntity> getFavorListOf(Long id) {
+
+        Set<ProductEntity> favoriteProducts =
+                this.userRepository.findById(id).get().getFavoriteProducts();
+
+        return favoriteProducts;
     }
 }

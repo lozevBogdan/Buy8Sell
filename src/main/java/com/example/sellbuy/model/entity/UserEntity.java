@@ -136,8 +136,20 @@ public class UserEntity extends BaseEntity{
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        UserEntity that = (UserEntity) o;
 
+        return getEmail() != null ? getEmail().equals(that.getEmail()) : that.getEmail() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getEmail() != null ? getEmail().hashCode() : 0;
+    }
 
     @Override
     public String toString() {
