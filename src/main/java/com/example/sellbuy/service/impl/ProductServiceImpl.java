@@ -193,7 +193,7 @@ public class ProductServiceImpl implements ProductService {
             String pictureUrl;
 
          if(product.getPictures().size() == 0){
-         pictureUrl="https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg";
+         pictureUrl="https://www.kuleuven.be/communicatie/congresbureau/fotos-en-afbeeldingen/no-image.png/image";
 
          }else {
              pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
