@@ -195,7 +195,7 @@ public class ProductServiceImpl implements ProductService {
          String pictureUrl;
 
          if(product.getPictures().size() == 0){
-         pictureUrl="https://www.kuleuven.be/communicatie/congresbureau/fotos-en-afbeeldingen/no-image.png/image";
+         pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
 
          }else {
              pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
