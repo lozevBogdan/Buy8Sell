@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -25,7 +26,7 @@ public class ProductEntity extends BaseEntity {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private LocationEntity location;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -34,14 +35,14 @@ public class ProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<PictureEntity> pictures = new HashSet<>();
 
-    @OneToMany(mappedBy = "productEntity",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "productEntity",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<CommentEntity> comments= new HashSet<>();
 
 
     @ManyToOne
     private CategoryEntity category ;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserEntity> fans= new HashSet<>();
 
     @Column
@@ -160,6 +161,8 @@ public class ProductEntity extends BaseEntity {
         isPromo = promo;
         return this;
     }
+
+
 
     @Override
     public String toString() {

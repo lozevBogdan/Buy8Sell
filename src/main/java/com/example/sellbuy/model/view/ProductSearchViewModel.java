@@ -19,7 +19,7 @@ public class ProductSearchViewModel {
     private CategoryEntity category ;
     private String mainPicture;
     private boolean isPromo;
-    private boolean isProductIsFavorInCurrentUser =false;
+    private boolean isProductIsFavorInCurrentUser = false;
 
     public boolean isProductIsFavorInCurrentUser() {
         return isProductIsFavorInCurrentUser;

@@ -37,7 +37,7 @@ public class UserEntity extends BaseEntity{
     @OneToMany(mappedBy = "receiver",fetch = FetchType.EAGER)
     private Set<MessageEntity> receiverMessages= new HashSet<>();
 
-    @ManyToMany(mappedBy = "fans",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "fans",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private Set<ProductEntity> favoriteProducts = new HashSet<>();
 
 

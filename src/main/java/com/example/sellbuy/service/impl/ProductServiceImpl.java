@@ -185,34 +185,59 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-        UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntity();
-
-
         for (ProductEntity product : allProducts) {
 
-         ProductSearchViewModel productSearchViewModel = this.modelMapper.map(product,ProductSearchViewModel.class);
+         ProductSearchViewModel productSearchViewModel =
+                 this.modelMapper.map(product,ProductSearchViewModel.class);
 
          String pictureUrl;
 
          if(product.getPictures().size() == 0){
-         pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
-
+                 pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
          }else {
              pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
          }
 
            productSearchViewModel.setMainPicture(pictureUrl);
 
-         // Check for favorites products for current user
+            UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntity();
 
+
+            // Check for favorites products for current user
          if(currentLoggedInUserEntity != null){
-             if(currentLoggedInUserEntity.getFavoriteProducts().contains(product)){
+
+             Set<ProductEntity> favoriteProducts = currentLoggedInUserEntity.getFavoriteProducts();
+
+             if(isConsist(favoriteProducts,product)){
                  productSearchViewModel.setProductIsFavorInCurrentUser(true);
+                 System.out.println();
              }
          }
            returnedList.add(productSearchViewModel);
         }
 
+
         return returnedList;
     }
+
+    @Override
+    public ProductEntity findById(Long productId) {
+        return this.productRepository.findById(productId).get();
+    }
+
+    @Override
+    public void addProductEntity(ProductEntity product) {
+        this.productRepository.save(product);
+    }
+    private boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product){
+
+        for (ProductEntity productEntity : productEntitySet) {
+            if(productEntity.getId() == product.getId()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

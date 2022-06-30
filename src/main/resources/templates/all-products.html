@@ -131,18 +131,24 @@
                         <img th:src="*{mainPicture}"
                              width="250" height="220" />
 
-                        <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
-                            <a type="button" th:href="@{/users/add/favorites/{id}(id=*{id})}" class="btn btn-danger bi bi-heart" >
-                                <i class="bi bi-heart"></i>Add to favorites
-                            </a>
-                        </th:block>
+                            <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
 
-                        <th:block th:if="*{isProductIsFavorInCurrentUser()}">
-                            <a type="button" th:href="@{/users/add/favorites/{id}(id=*{id})}" class="btn btn-danger bi bi-heart" >
-                                <i class="bi bi-heart"></i>Remove from favorites
-                            </a>
-                        </th:block>
+                                <form th:method="post"
+                                      th:action="@{/users/add/favorites/{id}(id=*{id})}">
+                                   <button
+                                      type="submit" class="btn btn-danger bi bi-heart" >Add to favorites
+                                   </button>
+                                </form>
+                            </th:block>
 
+                            <th:block th:if="*{isProductIsFavorInCurrentUser()}">
+                                <form th:method="post"
+                                      th:action="@{/users/remove/favorites/{id}(id=*{id})}">
+                                <button  type="submit" class="btn btn-danger bi bi-heart" >
+                                    <i class="bi bi-heart"></i>Remove from favorites
+                                </button>
+                                </form>
+                            </th:block>
 
 
 

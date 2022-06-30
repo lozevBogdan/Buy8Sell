@@ -64,7 +64,7 @@ public class ProductController {
     }
 
     @PostMapping("/add")
-    public String login(@RequestParam(defaultValue = "false") boolean isPromo,
+    public String add(@RequestParam(defaultValue = "false") boolean isPromo,
                         @Valid ProductAddBindingModel productAddBindingModel,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes){
@@ -86,20 +86,17 @@ public class ProductController {
 
 
     @PostMapping("/all")
-    public String login(@Valid ProductSearchingBindingModel productSearchingBindingModel,
+    public String all(@Valid ProductSearchingBindingModel productSearchingBindingModel,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes, Model model){
 
         boolean isMinBiggerThanMax = false;
-
 
         if (productSearchingBindingModel.getMin() != null && productSearchingBindingModel.getMax() != null) {
 
             isMinBiggerThanMax =
                     productSearchingBindingModel.getMin() > productSearchingBindingModel.getMax();
         }
-
-        System.out.println();
 
         if (bindingResult.hasErrors() || isMinBiggerThanMax) {
             redirectAttributes.addFlashAttribute("productSearchingBindingModel", productSearchingBindingModel);
@@ -114,7 +111,6 @@ public class ProductController {
                 this.productService.filterBy(productSearchingBindingModel);
 
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-        System.out.println();
 
         return "all-products";
     }

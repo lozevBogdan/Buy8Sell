@@ -16,4 +16,8 @@ public interface ProductService {
     ProductEntity addProductBindingModel(ProductAddBindingModel productAddBindingModel);
 
     List<ProductSearchViewModel> filterBy(ProductSearchingBindingModel productSearchingBindingModel);
+
+    ProductEntity findById(Long productId);
+
+    void addProductEntity(ProductEntity product);
 }

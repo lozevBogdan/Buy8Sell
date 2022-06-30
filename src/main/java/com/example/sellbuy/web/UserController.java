@@ -2,13 +2,13 @@ package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
+import com.example.sellbuy.model.entity.ProductEntity;
+import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -18,9 +18,11 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final ProductService productService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, ProductService productService) {
         this.userService = userService;
+        this.productService = productService;
     }
 
     @ModelAttribute
@@ -100,6 +102,27 @@ public class UserController {
         userService.loginUser(userLoginBindingModel);
 
         return "redirect:/";
+    }
+
+    @PostMapping("/add/favorites/{id}")
+    public String addFavorites(@PathVariable Long id){
+
+        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntity();
+
+        if(currentUser == null){
+            return "redirect:/users/login";
+        }else {
+
+            ProductEntity product = this.productService.findById(id);
+            product.getFans().add(currentUser);
+          //  this.productService.addProductEntity(product);
+
+          //  this.userService.addFavorProduct(product);
+            currentUser.getFavoriteProducts().add(product);
+            currentUser = this.userService.addInDb(currentUser);
+
+            return "redirect:/products/all";
+        }
     }
 
     @GetMapping("/favorites")

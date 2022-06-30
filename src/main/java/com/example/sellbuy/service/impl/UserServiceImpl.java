@@ -2,6 +2,7 @@ package com.example.sellbuy.service.impl;
 
 import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
+import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
@@ -154,9 +155,25 @@ public class UserServiceImpl implements UserService {
         UserEntity currentLoggedInUser = null;
 
         Long id = currentUser.getId();
+
         if(id != null) {
             currentLoggedInUser = this.userRepository.findById(id).get();
         }
+        System.out.println();
         return  currentLoggedInUser;
+    }
+
+    @Override
+    public UserEntity addInDb(UserEntity userEntity) {
+        this.userRepository.save(userEntity);
+        return userEntity;
+    }
+
+    @Override
+    public void addFavorProduct(ProductEntity product) {
+
+        UserEntity byId = this.userRepository.findById(currentUser.getId()).get();
+        byId.getFavoriteProducts().add(product);
+        userRepository.save(byId);
     }
 }

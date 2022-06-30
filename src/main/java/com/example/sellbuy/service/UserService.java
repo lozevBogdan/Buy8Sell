@@ -2,6 +2,7 @@ package com.example.sellbuy.service;
 
 import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
+import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 
 public interface UserService {
@@ -21,4 +22,8 @@ public interface UserService {
     void makeNewRegistration(UserRegisterBindingModel userRegisterBindingModel);
 
     UserEntity getCurrentLoggedInUserEntity();
+
+    UserEntity addInDb(UserEntity currentUser);
+
+    void addFavorProduct(ProductEntity product);
 }
