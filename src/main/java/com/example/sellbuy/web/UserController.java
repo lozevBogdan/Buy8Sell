@@ -72,27 +72,18 @@ public class UserController {
     }
 
     private  List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts){
-
         List<ProductSearchViewModel> returnedList = new LinkedList<>();
-
         for (ProductEntity product : favorProducts) {
-
             ProductSearchViewModel productSearchViewModel =
                     this.modelMapper.map(product, ProductSearchViewModel.class);
-
-
             String pictureUrl;
-
             if(product.getPictures().size() == 0){
                 pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
             }else {
                 pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
             }
-
             productSearchViewModel.setMainPicture(pictureUrl);
-
             UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntity();
-
 
             // Check for favorites products for current user
             if(currentLoggedInUserEntity != null){
@@ -199,17 +190,19 @@ public class UserController {
         if(currentUser == null){
             return "redirect:/users/login";
         }else {
-            System.out.println();
+
             ProductEntity product = this.productService.findById(id);
             product.getFans().remove(currentUser);
+            this.productService.addProductEntity(product);
 
 
             //  this.userService.addFavorProduct(product);
             currentUser.getFavoriteProducts().remove(product);
-            System.out.println();
+
             currentUser = this.userService.addInDb(currentUser);
 
-            return "redirect:/products/all";
+
+            return String.format("redirect:/users/%d/favorites",currentUser.getId());
         }
     }
 
