@@ -128,8 +128,9 @@
                 <section class="panel">
 
                     <div class="pro-img-box">
-                        <img th:src="*{mainPicture}" />
-                        <a th:href="@{/products/{id}(id=*{id})}" class="adtocart">
+                        <img th:src="*{mainPicture}"
+                             width="250" height="220" />
+                        <a th:href="@{/products/{id}(id=*{id})}" class="adtocart" >
                             <i class="fa fa-shopping-cart"></i>
                         </a>
                     </div>
