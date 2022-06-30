@@ -99,18 +99,28 @@
 
                 <a class="nav-link" th:href="@{/users/{id}/favorites(id=${@currentUser.id})}">
                     <i class="fa fa-bell">
-                        <span class="badge badge-danger">11</span>
+                        <span class="badge badge-danger" >11</span>
                     </i>
                     Favorites
                 </a>
             </li>
+
+                <li class="nav-item">
+
+                    <a class="nav-link" th:href="@{/users/{id}/products(id=${@currentUser.id})}">
+                        <i class="fa fa-bell">
+                            <span class="badge badge-danger" >11</span>
+                        </i>
+                        My products
+                    </a>
+                </li>
 
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/products/add}">
                     <!--                    <i class="bi bi-person-fill"></i>-->
                     <!--                        <span class="badge badge-success">11</span>-->
                     </i>
-                    Add
+                    Add Product
                 </a>
             </li>
 
