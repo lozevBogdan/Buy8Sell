@@ -6,6 +6,7 @@ import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProductService {
 
@@ -20,4 +21,5 @@ public interface ProductService {
     ProductEntity findById(Long productId);
 
     void addProductEntity(ProductEntity product);
+    public boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product);
 }

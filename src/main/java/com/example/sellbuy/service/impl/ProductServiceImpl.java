@@ -229,7 +229,10 @@ public class ProductServiceImpl implements ProductService {
     public void addProductEntity(ProductEntity product) {
         this.productRepository.save(product);
     }
-    private boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product){
+
+
+
+    public boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product){
 
         for (ProductEntity productEntity : productEntitySet) {
             if(productEntity.getId() == product.getId()){
