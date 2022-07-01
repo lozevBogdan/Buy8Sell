@@ -28,7 +28,7 @@ public class UserEntity extends BaseEntity{
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "seller",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "seller",fetch = FetchType.EAGER)
     private Set<ProductEntity> products= new HashSet<>();
 
     @OneToMany(mappedBy = "sender",fetch = FetchType.EAGER)

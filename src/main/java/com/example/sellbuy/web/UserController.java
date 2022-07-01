@@ -49,6 +49,12 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/logout")
+    public String logout(){
+        this.userService.logoutCurrentUser();
+        return "redirect:/";
+    }
+
     @GetMapping("/register")
     public String register(){
         return "register";
