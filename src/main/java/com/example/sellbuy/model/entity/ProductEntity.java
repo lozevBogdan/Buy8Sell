@@ -29,7 +29,7 @@ public class ProductEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private LocationEntity location;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private UserEntity seller;
 
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -37,7 +37,6 @@ public class ProductEntity extends BaseEntity {
 
     @OneToMany(mappedBy = "productEntity",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Set<CommentEntity> comments= new HashSet<>();
-
 
     @ManyToOne
     private CategoryEntity category ;
@@ -177,28 +176,5 @@ public class ProductEntity extends BaseEntity {
                 '}';
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
 
-        ProductEntity product = (ProductEntity) o;
-
-        if (getViews() != product.getViews()) return false;
-        if (isPromo() != product.isPromo()) return false;
-        if (getDescription() != null ? !getDescription().equals(product.getDescription()) : product.getDescription() != null)
-            return false;
-        if (getTitle() != null ? !getTitle().equals(product.getTitle()) : product.getTitle() != null) return false;
-        return getPrice() != null ? getPrice().equals(product.getPrice()) : product.getPrice() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getDescription() != null ? getDescription().hashCode() : 0;
-        result = 31 * result + (getTitle() != null ? getTitle().hashCode() : 0);
-        result = 31 * result + (getPrice() != null ? getPrice().hashCode() : 0);
-        result = 31 * result + getViews();
-        result = 31 * result + (isPromo() ? 1 : 0);
-        return result;
-    }
 }
