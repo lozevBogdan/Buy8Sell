@@ -180,10 +180,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Set<ProductEntity> getFavorListOf(Long id) {
-
         Set<ProductEntity> favoriteProducts =
                 this.userRepository.findById(id).get().getFavoriteProducts();
-
         return favoriteProducts;
     }
 

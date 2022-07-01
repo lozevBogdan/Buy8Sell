@@ -60,6 +60,11 @@ public class UserController {
         return "register";
     }
 
+    @GetMapping("/messages")
+    public String messages(){
+    return "chats-all";
+    }
+
 
     @GetMapping("/{id}/favorites")
     public String getAllFavorites(@PathVariable Long id, Model model){
@@ -127,7 +132,6 @@ public class UserController {
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes){
 
-
 //todo thi shoud be replece with Spring security propurties
 
 //        if(this.userService.isUserLoggedIn()){
@@ -175,7 +179,6 @@ public class UserController {
             return "redirect:/users/login";
         }
 
-
         userService.loginUser(userLoginBindingModel);
 
         return "redirect:/";
@@ -202,7 +205,6 @@ public class UserController {
         }
     }
 
-
     @PostMapping("/remove/favorites/{id}")
     public String removeFromFavorites(@PathVariable Long id){
 
@@ -215,14 +217,10 @@ public class UserController {
             ProductEntity product = this.productService.findById(id);
             product.getFans().remove(currentUser);
             this.productService.addProductEntity(product);
-
-
             //  this.userService.addFavorProduct(product);
             currentUser.getFavoriteProducts().remove(product);
 
             currentUser = this.userService.addInDb(currentUser);
-
-
             return String.format("redirect:/users/%d/favorites",currentUser.getId());
         }
     }
