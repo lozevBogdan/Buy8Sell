@@ -85,7 +85,9 @@ public class UserController {
     @GetMapping("/{id}/products")
     public String myProducts(@PathVariable Long id, Model model){
 
-        Set<ProductEntity> myProducts = this.userService.getMyProductsById(id);
+        Set<ProductEntity> myProducts = this.productService.findProductsByUserId(id);
+
+//        Set<ProductEntity> myProducts = this.userService.getMyProductsById(id);
 
         List<ProductSearchViewModel> myProductsSearchViewModelList =
                 this.returnFavors(myProducts);
@@ -98,11 +100,16 @@ public class UserController {
     }
 
     private  List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts){
+
         List<ProductSearchViewModel> returnedList = new LinkedList<>();
+
         for (ProductEntity product : favorProducts) {
+
             ProductSearchViewModel productSearchViewModel =
                     this.modelMapper.map(product, ProductSearchViewModel.class);
+
             String pictureUrl;
+
             if(product.getPictures().size() == 0){
                 pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
             }else {

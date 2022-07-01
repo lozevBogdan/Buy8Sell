@@ -235,8 +235,6 @@ public class ProductServiceImpl implements ProductService {
         this.productRepository.save(product);
     }
 
-
-
     public boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product){
 
         for (ProductEntity productEntity : productEntitySet) {
@@ -248,10 +246,16 @@ public class ProductServiceImpl implements ProductService {
         return false;
     }
 
+
     @Override
     public void deleteProductById(Long id) {
 
-         this.productRepository.deleteById(id);
+        this.productRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<ProductEntity> findProductsByUserId(Long id) {
+        return this.productRepository.findProductsBySellerId(id);
     }
 
 }
