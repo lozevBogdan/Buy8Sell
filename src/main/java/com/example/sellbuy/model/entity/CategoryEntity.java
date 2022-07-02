@@ -19,9 +19,6 @@ public class CategoryEntity extends BaseEntity {
     @Column(nullable = false)
     private String description;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<ProductEntity> products = new HashSet<>();
-
     public CategoryEntity() {
     }
 
@@ -43,12 +40,4 @@ public class CategoryEntity extends BaseEntity {
         return this;
     }
 
-    public Set<ProductEntity> getProducts() {
-        return products;
-    }
-
-    public CategoryEntity setProducts(Set<ProductEntity> products) {
-        this.products = products;
-        return this;
-    }
 }

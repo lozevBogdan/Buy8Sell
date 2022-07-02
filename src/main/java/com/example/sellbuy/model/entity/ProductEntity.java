@@ -29,17 +29,17 @@ public class ProductEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     private LocationEntity location;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne
     private UserEntity seller;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
     private Set<PictureEntity> pictures = new HashSet<>();
 
-    @OneToMany(mappedBy = "productEntity",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "productEntity",fetch = FetchType.EAGER)
     private Set<CommentEntity> comments= new HashSet<>();
 
     @ManyToOne
-    private CategoryEntity category ;
+    private CategoryEntity category;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserEntity> fans= new HashSet<>();

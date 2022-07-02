@@ -28,7 +28,7 @@ public class UserEntity extends BaseEntity{
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<UserRoleEntity> roles = new HashSet<>();
 
-    @OneToMany(mappedBy = "seller",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "seller",fetch = FetchType.EAGER)
     private Set<ProductEntity> products= new HashSet<>();
 
     @OneToMany(mappedBy = "sender",fetch = FetchType.EAGER)
@@ -37,7 +37,7 @@ public class UserEntity extends BaseEntity{
     @OneToMany(mappedBy = "receiver",fetch = FetchType.EAGER)
     private Set<MessageEntity> receiverMessages= new HashSet<>();
 
-    @ManyToMany(mappedBy = "fans",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "fans",fetch = FetchType.EAGER)
     private Set<ProductEntity> favoriteProducts = new HashSet<>();
 
 
