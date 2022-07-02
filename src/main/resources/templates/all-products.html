@@ -80,7 +80,7 @@
                         <select th:field="*{location}"
                                 th:errorclass="'is-invalid alert-danger'"
                                 class="browser-default custom-select" id="style" name="style">
-                            <option value="">SELECT LOCATION</option>
+                            <option value="">All</option>
                             <option th:each=" location : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
                                     th:value="${location}" th:text="${location}">Location</option>
                         </select>
