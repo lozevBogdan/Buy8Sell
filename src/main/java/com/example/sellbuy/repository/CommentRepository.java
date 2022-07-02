@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity,Long> {
 
+    void deleteByProductEntityId(Long id);
 }
