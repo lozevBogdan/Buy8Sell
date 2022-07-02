@@ -21,13 +21,10 @@ public class UserRoleServiceImpl implements UserRoleService {
     public void initializeRoles() {
 
         if (this.userRoleRepository.count() == 0) {
-
             UserRoleEntity adminRole = new UserRoleEntity();
             UserRoleEntity userRole = new UserRoleEntity();
-
             adminRole.setRole(UserRoleEnum.ADMIN);
             userRole.setRole(UserRoleEnum.USER);
-
             userRoleRepository.saveAll(List.of(adminRole, userRole));
         }
 

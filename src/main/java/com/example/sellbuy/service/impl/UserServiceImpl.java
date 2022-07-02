@@ -35,16 +35,15 @@ public class UserServiceImpl implements UserService {
 
 
     private void initializeUsers() {
-
         if(userRepository.count() == 0) {
 
             UserEntity user1 = new UserEntity();
             user1.
-                    setFirstName("Georgi").
-                    setLastName("Georgiev").
-                    setEmail("gosho@abv.bg").
+                    setFirstName("Bogdan").
+                    setLastName("Lozev").
+                    setEmail("lozev.bogdan@abv.bg").
                     setMobileNumber("0888888888").
-                    setPassword("gosho");
+                    setPassword("123");
 
             UserEntity user2 = new UserEntity();
             user2.
@@ -84,9 +83,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getByUsername(String username) {
+    public UserEntity getByEmail(String email) {
         return userRepository.
-                findByEmail(username).
+                findByEmail(email).
                 orElse(null);
     }
 
@@ -166,8 +165,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity addInDb(UserEntity userEntity) {
-        this.userRepository.save(userEntity);
-        return userEntity;
+        return  this.userRepository.save(userEntity);
     }
 
     @Override
@@ -188,5 +186,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<ProductEntity> getMyProductsById(Long id) {
         return this.userRepository.findById(id).get().getProducts();
+    }
+
+    @Override
+    public void deleteByProductIdFrom(Long id) {
+        UserEntity currentLoggedInUserEntity = this.getCurrentLoggedInUserEntity();
+
+        Set<ProductEntity> products = currentLoggedInUserEntity.getProducts();
+
+        for (ProductEntity product : products) {
+            if(product.getId() == id){
+                products.remove(product);
+                break;
+            }
+        }
+
+        currentLoggedInUserEntity.setProducts(products);
+        this.userRepository.save(currentLoggedInUserEntity);
+
     }
 }

@@ -4,16 +4,14 @@ import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
-import com.example.sellbuy.model.view.ProductSearchViewModel;
 
-import java.util.List;
 import java.util.Set;
 
 public interface UserService {
 
     void initializeUsersAndRoles();
 
-    UserEntity getByUsername(String username);
+    UserEntity getByEmail(String email);
 
     void loginUser(UserLoginBindingModel userLoginBindingModel);
 
@@ -34,4 +32,6 @@ public interface UserService {
     Set<ProductEntity> getFavorListOf(Long id);
 
     Set<ProductEntity> getMyProductsById(Long id);
+
+    void deleteByProductIdFrom(Long id);
 }

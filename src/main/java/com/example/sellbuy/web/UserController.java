@@ -121,7 +121,8 @@ public class UserController {
             // Check for favorites products for current user
             if(currentLoggedInUserEntity != null){
 
-                Set<ProductEntity> favoriteProducts = currentLoggedInUserEntity.getFavoriteProducts();
+                Set<ProductEntity> favoriteProducts =
+                        currentLoggedInUserEntity.getFavoriteProducts();
 
                 if(this.productService.isConsist(favoriteProducts,product)){
                     productSearchViewModel.setProductIsFavorInCurrentUser(true);
@@ -202,12 +203,11 @@ public class UserController {
 
             ProductEntity product = this.productService.findById(id);
             product.getFans().add(currentUser);
-          //  this.productService.addProductEntity(product);
+            this.productService.addProductEntity(product);
 
-          //  this.userService.addFavorProduct(product);
             currentUser.getFavoriteProducts().add(product);
             currentUser = this.userService.addInDb(currentUser);
-
+            System.out.println();
             return "redirect:/products/all";
         }
     }
