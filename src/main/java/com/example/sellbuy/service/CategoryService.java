@@ -11,4 +11,6 @@ public interface CategoryService {
     CategoryEntity findByCategory(CategoryEnum category);
 
     CategoryEntity updateCategory(CategoryEntity category);
+
+    void deleteByProductId(Long id);
 }
