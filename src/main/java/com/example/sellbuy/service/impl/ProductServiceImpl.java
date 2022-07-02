@@ -14,9 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.Min;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -28,44 +26,45 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final PictureService pictureService;
     private final UserService userService;
+
     private final CategoryService categoryService;
     private final ModelMapper modelMapper;
     private final LocationService locationService;
+    private final CommentsService commentsService;
 
-    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService, UserService userService, CategoryService categoryService, ModelMapper modelMapper, LocationService locationService) {
+
+    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService, UserService userService, CategoryService categoryService, ModelMapper modelMapper, LocationService locationService, CommentsService commentsService) {
         this.productRepository = productRepository;
         this.pictureService = pictureService;
         this.userService = userService;
         this.categoryService = categoryService;
         this.modelMapper = modelMapper;
         this.locationService = locationService;
+        this.commentsService = commentsService;
     }
 
     @Override
-    @Transactional
     public void initializeProducts() {
 
         if(productRepository.count() == 0) {
-
-            UserEntity ivan = userService.getByUsername("ivan");
-            UserEntity petyr = userService.getByUsername("petyr");
-            UserEntity gosho = userService.getByUsername("gosho");
+            UserEntity lozev = userService.getByEmail("lozev.bogdan@abv.bg");
 
             PictureEntity picture1 = pictureService.getFirstPicture();
-
             ProductEntity product1 = new ProductEntity();
+            LocationEntity location =
+                    this.locationService.findByLocation(LocationEnum.SOFIA_GRAD);
 
-            LocationEntity location = this.locationService.findByLocation(LocationEnum.SOFIA_GRAD);
+            CategoryEntity category = this.categoryService.findByCategory(CategoryEnum.HOME);
 
             product1.
                     setCondition(ConditionEnum.NEW).
                     setDescription("Perfect! German quality!").
                     setPrice(BigDecimal.valueOf(1500)).
                     setLocation(location).
-                    setSeller(ivan).
+                    setSeller(lozev).
                     setPictures((Set.of(picture1))).
-                    setTitle("shampoo");
-
+                    setTitle("shampoo").
+                    setCategory(category);
             picture1.setProduct(product1);
 
             productRepository.save(product1);
@@ -81,8 +80,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity addProductBindingModel(ProductAddBindingModel productAddBindingModel) {
-
+    public ProductEntity addProductBindingModel(ProductAddBindingModel
+                                                            productAddBindingModel) {
         ProductEntity newProduct =
                 this.modelMapper.map(productAddBindingModel,ProductEntity.class);
 
@@ -99,21 +98,20 @@ public class ProductServiceImpl implements ProductService {
                 setCategory(categoryEntity).
                 setLocation(location);
 
-        categoryEntity.getProducts().add(newProduct);
+        //categoryEntity.getProducts().add(newProduct);
 
         PictureEntity pictureEntity = new PictureEntity();
-        pictureEntity.setProduct(newProduct).setUrl(productAddBindingModel.getUrlPicture());
+        pictureEntity.
+                setProduct(newProduct).
+                setUrl(productAddBindingModel.getUrlPicture());
 
-       // pictureEntity = this.pictureService.addPictureInDb(pictureEntity);
-     newProduct.getPictures().add(pictureEntity);
+        newProduct.getPictures().add(pictureEntity);
 
-      newProduct = this.productRepository.save(newProduct);
+         newProduct = this.productRepository.save(newProduct);
+
+        pictureEntity = this.pictureService.addPictureInDb(pictureEntity);
 
         this.categoryService.updateCategory(categoryEntity);
-
-        System.out.println(newProduct);
-        System.out.println(newProduct.getSeller().getEmail());
-
 
         return newProduct;
     }
@@ -163,7 +161,7 @@ public class ProductServiceImpl implements ProductService {
                     collect(Collectors.toList());
         }
         if(orderBy != null){
-
+            //todo: doesnt work correctly sorted function
             switch (orderBy){
 
                 case VIEWS:
@@ -181,33 +179,26 @@ public class ProductServiceImpl implements ProductService {
 
                 case EXPENSIVEST:
                     allProducts.
-                            sort((a,b)->a.getPrice().compareTo(b.getPrice()));
+                            sort((a,b)->(a.getPrice().intValue())-(b.getPrice().intValue()));
 
                 case CHEAPEST:
                     allProducts.
-                            sort((a,b)->b.getPrice().compareTo(a.getPrice()));
+                            sort((a,b)->(b.getPrice().intValue())-(a.getPrice().intValue()));
 
             }
         }
 
         for (ProductEntity product : allProducts) {
-
          ProductSearchViewModel productSearchViewModel =
                  this.modelMapper.map(product,ProductSearchViewModel.class);
-
          String pictureUrl;
-
          if(product.getPictures().size() == 0){
                  pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
          }else {
              pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
          }
-
-           productSearchViewModel.setMainPicture(pictureUrl);
-
+             productSearchViewModel.setMainPicture(pictureUrl);
             UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntity();
-
-
             // Check for favorites products for current user
          if(currentLoggedInUserEntity != null){
 
@@ -247,8 +238,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+    @Transactional
     @Override
     public void deleteProductById(Long id) {
+
+        // with those activities, we avoid to use CascadeType between entities.
+
+        ProductEntity productForDeleted =
+                this.productRepository.
+                        findById(id).get();
+
+       // productForDeleted.setCategory(null);
+
+        this.pictureService.deleteByProductId(id);
+        this.commentsService.deleteByProductId(id);
+        this.categoryService.deleteByProductId(id);
+        this.userService.deleteByProductIdFrom(id);
 
         this.productRepository.deleteById(id);
     }

@@ -47,8 +47,10 @@ public class ProductController {
 
     @GetMapping("/all")
     public String productsPage(Model model){
+
         List<ProductSearchViewModel> productSearchViewModelList =
                 this.productService.filterBy(new ProductSearchingBindingModel());
+
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
         }
