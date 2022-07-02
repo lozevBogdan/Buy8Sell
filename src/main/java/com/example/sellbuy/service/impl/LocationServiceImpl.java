@@ -17,21 +17,13 @@ public class LocationServiceImpl implements LocationService {
 
     @Override
     public void initializeLocations() {
-
         if(this.locationRepository.count() == 0){
-
             for (LocationEnum locationEnum : LocationEnum.values()) {
-
                 LocationEntity newLocation = new LocationEntity();
-
                 newLocation.setLocation(locationEnum);
-
                 this.locationRepository.save(newLocation);
-
             }
-
         }
-
     }
 
     @Override
