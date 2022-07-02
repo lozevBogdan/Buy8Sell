@@ -12,4 +12,6 @@ public interface PictureService {
     PictureEntity getFirstPicture();
 
     PictureEntity addPictureInDb(PictureEntity pictureEntity);
+
+    void deleteByProductId(Long id);
 }
