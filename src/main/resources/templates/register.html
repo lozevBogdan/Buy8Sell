@@ -16,6 +16,7 @@
                 <h2 class="text-center">Register</h2>
                 <p class="text-center hint-text">Create your account. It's free and only takes a minute.</p>
 
+
                 <div class="form-data">
 
                     <form th:method="post"
@@ -45,7 +46,8 @@
                                     type="email" id="form2Example13" class="form-control" />
                             <label class="form-label" for="form2Example21">Email address</label>
                             <small class="invalid-feedback text-danger">The email should be valid and can not be null! </small>
-                            <small th:if="${emailIsNotFree}" class="invalid-feedback text-danger"> This email is registered already! </small>
+                            <p th:if="${emailIsNotFree}"
+                                   class="text-danger" style="color: red"> This email is registered already! </p>
                         </div>
 
                         <div class="form-outline mb-4">
@@ -127,6 +129,8 @@
 
     </div>
 </form>
+
+<footer th:replace="fragments/footer::footer" ></footer>
 
 <th:block th:replace="fragments/scripts::scripts"></th:block>
 
