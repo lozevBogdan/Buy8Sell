@@ -1,10 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html">
+    <title>Buy8Sell</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 
+<nav th:replace="fragments/navbar::navbar"></nav>
+
+<div class="container mt-5">
+
+    <div class="row mb-7">
+        <div class="col-md-5">
+            <img th:src="*{mainPicture}"
+                 width="400" height="380" />
+        </div>
+
+        <div class="col">
+                <div class="col-md-12">
+                    <div class="card px-5 py-5" id="form1">
+                        <h2 class="text-center">Edit your product</h2>
+                        <div class="form-data">
+
+                            <form   th:action="@{/products/add}"
+                                    th:method="post"
+                                    th:object="${productAddBindingModel}" >
+
+                                <!-- Title input -->
+                                <div class="form-outline mb-4">
+                                    <input th:field="*{title}"
+                                           th:errorclass="'is-invalid alert-danger'"
+                                           type="text" id="title" class="form-control" />
+                                    <label class="form-label" for="title">Title</label>
+                                    <small  class="invalid-feedback text-danger">Please write title of the product with length between 3 and 20 symbols!</small>
+                                </div>
+
+                                <!-- Condition input -->
+                                <div class="form-outline mb-4">
+                                    <select th:field="*{condition}"
+                                            th:errorclass="'is-invalid alert-danger'"
+                                            class="browser-default custom-select" id="condition" name="style">
+
+                                        <option value="">Select condition</option>
+                                        <option th:each=" condition : ${T(com.example.sellbuy.model.entity.enums.ConditionEnum).values()}"
+                                                th:value="${condition}" th:text="${condition}">Condition</option>
+                                    </select>
+                                    <label class="form-label" for="condition">Condition</label>
+                                    <small  class="invalid-feedback text-danger">You should choose condition of the product!</small>
+                                </div>
+
+                                <!-- Category input -->
+                                <div class="form-outline mb-4">
+                                    <select th:field="*{category}"
+                                            th:errorclass="'is-invalid alert-danger'"
+                                            class="browser-default custom-select" id="category" name="style">
+
+                                        <option value="">Select category</option>
+                                        <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
+                                                th:value="${category}" th:text="${category}">Category</option>
+                                    </select>
+                                    <label class="form-label" for="category">Category</label>
+                                    <small  class="invalid-feedback text-danger">You should choose category!</small>
+                                </div>
+
+                                <!-- description input -->
+                                <div class="form-outline mb-4">
+                            <textarea th:field="*{description}"
+                                      th:errorclass="'is-invalid alert-danger'"
+                                      id="description" class="form-control"></textarea>
+                                    <label class="form-label" for="description">Description</label>
+                                    <small  class="invalid-feedback text-danger">You should write some description of the product! Min length of description 5 symbols!</small>
+                                </div>
+
+                                <!--  Price -->
+                                <div class="form-outline mb-4">
+                                    <input th:field="*{price}"
+                                           th:errorclass="'is-invalid alert-danger'"
+                                           type="number" id="price" class="form-control" />
+                                    <label class="form-label" for="price">Price</label>
+                                    <small  class="invalid-feedback text-danger">Price should be positive!</small>
+                                </div>
+
+                                <!-- Location input -->
+
+                                <div class="form-outline mb-4">
+                                    <select th:field="*{location}"
+                                            th:errorclass="'is-invalid alert-danger'"
+                                            class="browser-default custom-select" id="location" name="style">
+
+                                        <option value="">Select location</option>
+                                        <option th:each=" location : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
+                                                th:value="${location}" th:text="${location}">Category</option>
+                                    </select>
+                                    <label class="form-label" for="location">Location</label>
+                                    <small  class="invalid-feedback text-danger">You must indicate where the product is located!</small>
+
+                                </div>
+
+                                <!-- Picture Url-->
+                                <div class="form-outline mb-4">
+                                    <input th:field="*{urlPicture}"
+                                           type="text" id="picture_url" class="form-control" />
+                                    <label class="form-label" for="picture_url">Picture URL</label>
+
+                                    <!--                            for upload a picture from computer-->
+                                    <!--                            <label for="formFileMultiple" class="form-label">Multiple files input example</label>-->
+                                    <!--                            <input class="form-control" type="file" id="formFileMultiple" multiple />-->
+
+                                </div>
+
+                                <!-- Check box -->
+                                <div class=" cow mb-4 form-check">
+
+                                    <input th:field="*{isPromo}"
+                                           th:checked="*{isPromo}"
+                                           th:value="${true}"
+                                           class="form-check-input" type="checkbox"
+                                           id="checkBoxIsPromo"/>
+                                    <label class="form-check-label" for="checkBoxIsPromo"> Make a promotion </label>
+                                </div>
+
+
+                                <!-- Submit button -->
+                                <input type="submit" class="btn btn-primary btn-block mb-4" value="Save changes"/>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+    </div>
+
+</div>
+
+</div>
+</form>
+
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
+
+
+
 </html>
