@@ -77,6 +77,11 @@ public class ProductController {
         return "edit-product";
     }
 
+    @GetMapping("/info/{id}")
+    public String productInfo(@PathVariable Long id){
+        //todo
+        return "product-Info";
+    }
 
     @PostMapping("/add")
     public String add(@RequestParam(defaultValue = "false") boolean isPromo,

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head">
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html">
+    <title>Buy8Sell</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+<nav th:replace="fragments/navbar::navbar"></nav>
+
+<div class="container mt-5">
+
+    <div class="row mb-7">
+
+        <div class="col-md-5">
+            <img src=""
+                 width="400" height="380" />
+        </div>
+
+        <div class="col">
+                <div class="col-md-12">
+                    <div class="card px-5 py-5" id="form1">
+                        <!-- Title  -->
+                        <h2 class="text-center" text="title of product">Title of product</h2>
+                        <div class="form-data">
+
+                            <div  th:object="${productAddBindingModel}" >
+
+                                <!-- Condition -->
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" th:text="|Condition: condition.name()|">Condition</label>
+                                </div>
+
+                                <!-- Category input -->
+
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" th:text="|Category: category.name()|">Category</label>
+                                </div>
+
+
+                                <!-- description input -->
+
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" th:text="|Description: description|">Description</label>
+                                </div>
+
+                                <!--  Price -->
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" th:text="|Price: price|">Price</label>
+                                </div>
+
+                                <!-- Location input -->
+
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" th:text="|Location: location|">Price</label>
+                                </div>
+
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" th:text="|Promo|"></label>
+                                </div>
+
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" th:text="|Number for contact with seller: 0893250782|"></label>
+                                </div>
+
+                                <!-- Submit button -->
+                                <th:block>
+                                    <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
+                                </th:block>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="row mb-7">
+        <div class="card" id="comments">
+            Comments:
+        </div>
+    </div>
+
+    <div>
+        <form>
+            <textarea name="comment" id="comment" class="form-control" placeholder="White your comment..." ></textarea>
+            <button type="submit" class="btn btn-primary" for="description">Add comment</button>
+        </form>
+    </div>
+
+
+</div>
+
+</div>
+</form>
+
+
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+</body>
+
+
+
+</html>
