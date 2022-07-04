@@ -66,13 +66,18 @@ public class ProductController {
 
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id){
-
-        //todo: delete method doesnt work!
         this.productService.deleteProductById(id);
-
         return String.format("redirect:/users/%d/products",
                 this.userService.getCurrentLoggedInUserEntity().getId());
     }
+
+
+    @PostMapping("/edit/{id}")
+    public String addProduct(@PathVariable Long id){
+        //todo
+        return "EditPage";
+    }
+
 
     @PostMapping("/add")
     public String add(@RequestParam(defaultValue = "false") boolean isPromo,
