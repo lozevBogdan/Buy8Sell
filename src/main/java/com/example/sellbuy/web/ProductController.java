@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.LinkedList;
 import java.util.List;
 
 @Controller
@@ -75,7 +74,7 @@ public class ProductController {
     @PostMapping("/edit/{id}")
     public String addProduct(@PathVariable Long id){
         //todo
-        return "EditPage";
+        return "edit-product";
     }
 
 
