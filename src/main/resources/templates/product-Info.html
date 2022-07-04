@@ -63,11 +63,12 @@
                                 </div>
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Promo|"></label>
+                                    <span  class="form-label" th:text="|Promo|"></span>
                                 </div>
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Number for contact with seller: 0893250782|"></label>
+                                    <label class="form-label" >Number for contact with seller:</label>
+                                    <strong class="form-label" th:text="|0893250782|"></strong>
                                 </div>
 
                                 <!-- Submit button -->
@@ -86,12 +87,14 @@
         <div class="card" id="comments">
             Comments:
         </div>
+
+
     </div>
 
     <div>
         <form>
             <textarea name="comment" id="comment" class="form-control" placeholder="White your comment..." ></textarea>
-            <button type="submit" class="btn btn-primary" for="description">Add comment</button>
+            <button type="submit" class="btn btn-info" for="description">Add comment</button>
         </form>
     </div>
 
@@ -101,6 +104,7 @@
 </div>
 </form>
 
+<footer th:replace="fragments/footer::footer" ></footer>
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
