@@ -78,9 +78,17 @@ public class ProductController {
     }
 
     @GetMapping("/info/{id}")
+
     public String productInfo(@PathVariable Long id){
+        this.increaseViewsProductById(id);
         //todo
         return "product-Info";
+    }
+
+    private void increaseViewsProductById(Long id){
+        ProductEntity currentProduct = this.productService.findById(id);
+        currentProduct.setViews(currentProduct.getViews() + 1);
+        this.productService.addProductEntity(currentProduct);
     }
 
     @PostMapping("/add")

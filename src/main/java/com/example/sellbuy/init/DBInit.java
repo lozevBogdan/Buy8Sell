@@ -33,5 +33,6 @@ public class DBInit implements CommandLineRunner {
         this.pictureService.initializePictures();
         this.categoryService.initializedCategories();
         this.productService.initializeProducts();
+
     }
 }
