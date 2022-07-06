@@ -1,5 +1,6 @@
 package com.example.sellbuy.web;
 
+import com.example.sellbuy.model.binding.CommentBindingDto;
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
@@ -32,6 +33,11 @@ public class ProductController {
         this.pictureService = pictureService;
         this.userService = userService;
         this.modelMapper = modelMapper;
+    }
+
+    @ModelAttribute
+    public CommentBindingDto commentBindingDto(){
+        return new CommentBindingDto();
     }
     @ModelAttribute
     public ProductAddBindingModel productAddBindingModel(){
