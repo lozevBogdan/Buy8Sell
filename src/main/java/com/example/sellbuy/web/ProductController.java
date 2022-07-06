@@ -6,10 +6,12 @@ import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.view.ProductDetailsViewDto;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
+import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.PictureService;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -107,9 +109,12 @@ public class ProductController {
 
     @PostMapping("/add")
     public String add(@RequestParam(defaultValue = "false") boolean isPromo,
-                        @Valid ProductAddBindingModel productAddBindingModel,
-                        BindingResult bindingResult,
-                        RedirectAttributes redirectAttributes){
+                      @Valid ProductAddBindingModel productAddBindingModel,
+                      BindingResult bindingResult,
+                      RedirectAttributes redirectAttributes,
+                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUserDetails){
+        
+        //                  todo : get id of user from Principal!!!!
 
         productAddBindingModel.setPromo(isPromo);
 

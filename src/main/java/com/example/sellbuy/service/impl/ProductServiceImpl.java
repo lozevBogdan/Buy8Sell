@@ -10,6 +10,7 @@ import com.example.sellbuy.model.entity.enums.OrderBYEnum;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
 import com.example.sellbuy.repository.ProductRepository;
 import com.example.sellbuy.service.*;
+import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,16 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final PictureService pictureService;
     private final UserService userService;
-
     private final CategoryService categoryService;
     private final ModelMapper modelMapper;
     private final LocationService locationService;
     private final CommentsService commentsService;
 
 
-    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService, UserService userService, CategoryService categoryService, ModelMapper modelMapper, LocationService locationService, CommentsService commentsService) {
+    public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService,
+                              UserService userService, CategoryService categoryService,
+                              ModelMapper modelMapper, LocationService locationService,
+                              CommentsService commentsService) {
         this.productRepository = productRepository;
         this.pictureService = pictureService;
         this.userService = userService;

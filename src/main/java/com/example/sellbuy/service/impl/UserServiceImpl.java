@@ -6,12 +6,12 @@ import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
-import com.example.sellbuy.model.view.ProductSearchViewModel;
 import com.example.sellbuy.repository.UserRepository;
-import com.example.sellbuy.security.CurrentUser;
+import com.example.sellbuy.securityUser.CurrentUser;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -24,13 +24,17 @@ public class UserServiceImpl implements UserService {
     private final UserRoleServiceImpl userRoleService;
     private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
+    private final PasswordEncoder passwordEncoder;
 
 
-    public UserServiceImpl(UserRepository userRepository, UserRoleServiceImpl userRoleService, CurrentUser currentUser, ModelMapper modelMapper){
+    public UserServiceImpl(UserRepository userRepository, UserRoleServiceImpl userRoleService,
+                           CurrentUser currentUser, ModelMapper modelMapper,
+                           PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
         this.currentUser = currentUser;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -43,7 +47,7 @@ public class UserServiceImpl implements UserService {
                     setLastName("Lozev").
                     setEmail("lozev.bogdan@abv.bg").
                     setMobileNumber("0888888888").
-                    setPassword("123");
+                    setPassword(this.passwordEncoder.encode("123"));
 
             UserEntity user2 = new UserEntity();
             user2.
@@ -51,7 +55,7 @@ public class UserServiceImpl implements UserService {
                     setLastName("Petrow").
                     setEmail("petyr@abv.bg").
                     setMobileNumber("0999999999").
-                    setPassword(("petyr"));
+                    setPassword(this.passwordEncoder.encode("123"));
 
             UserEntity user3 = new UserEntity();
             user3.
@@ -59,7 +63,7 @@ public class UserServiceImpl implements UserService {
                     setLastName("Ivanov").
                     setEmail("ivan@abv.bg").
                     setMobileNumber("08933333333").
-                    setPassword(("ivan"));
+                    setPassword(this.passwordEncoder.encode("123"));
 
             UserRoleEntity adminRole = this.userRoleService.findByRole(UserRoleEnum.ADMIN);
             UserRoleEntity userRole = this.userRoleService.findByRole(UserRoleEnum.USER);
@@ -88,28 +92,29 @@ public class UserServiceImpl implements UserService {
                 findByEmail(email).
                 orElse(null);
     }
-
+// because spring security
     @Override
     public void loginUser(UserLoginBindingModel userLoginBindingModel) {
-
-        UserEntity userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
-                userLoginBindingModel.getPassword()).get();
-
-        Long id = userByEmailAndPassword.getId();
-        String email = userByEmailAndPassword.getEmail();
-
-
-      currentUser.logInCurrUser(id,email);
-
+//todo
+//        UserEntity userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
+//                userLoginBindingModel.getPassword()).get();
+//
+//        Long id = userByEmailAndPassword.getId();
+//        String email = userByEmailAndPassword.getEmail();
+//
+//
+//      currentUser.logInCurrUser(id,email);
+//
     }
 
+    // because spring security
     @Override
     public void logoutCurrentUser() {
-            this.currentUser.
-                    setEmail(null).
-                    setId(null);
-
-
+//            this.currentUser.
+//                    setEmail(null).
+//                    setId(null);
+//
+//
     }
 
     @Override
@@ -128,6 +133,7 @@ public class UserServiceImpl implements UserService {
     public void makeNewRegistration(UserRegisterBindingModel userRegisterBindingModel) {
 
         UserEntity newUser = this.modelMapper.map(userRegisterBindingModel,UserEntity.class);
+        //todo : set password with PasswordEncoder!!!!!!
 
         Set<UserRoleEntity> roles = new HashSet<>();
 
@@ -143,7 +149,6 @@ public class UserServiceImpl implements UserService {
         roles.add(useRoleEntity);
 
         newUser.setRoles(roles);
-
 
        newUser =  this.userRepository.save(newUser);
 

@@ -1,21 +1,24 @@
-package com.example.sellbuy.model.user;
+package com.example.sellbuy.securityUser;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+// this is representation of Springs UserDetails,
+// because we add more field like a : firstname an lastName
+public class SellAndBuyUserDetails implements UserDetails {
 
-public class Sell8BuyUserDetails implements UserDetails {
-
+    private final Long id;
     private final String password;
     private final String username;
     private final String firstName;
     private final String lastName;
     private final Collection<GrantedAuthority> authorities;
 
-    public Sell8BuyUserDetails(String password, String username,
-                               String firstName, String lastName,
-                               Collection<GrantedAuthority> authorities) {
+    public SellAndBuyUserDetails(Long id, String password, String username,
+                                 String firstName, String lastName,
+                                 Collection<GrantedAuthority> authorities) {
+        this.id = id;
         this.password = password;
         this.username = username;
         this.firstName = firstName;
@@ -56,5 +59,9 @@ public class Sell8BuyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public Long getId() {
+        return id;
     }
 }

@@ -1,7 +1,7 @@
 package com.example.sellbuy.config;
 
 import com.example.sellbuy.repository.UserRepository;
-import com.example.sellbuy.service.impl.Sell8BuyDetailService;
+import com.example.sellbuy.service.impl.SellAndBuyDetailService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,9 +45,10 @@ public class SecurityConfiguration {
                 // the custom login form
                         loginPage("/users/login").
                 // the name of the username form field
-                        usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
+                        usernameParameter("email").
                 // the name of the password form field
-                        passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
+                        passwordParameter(UsernamePasswordAuthenticationFilter.
+                        SPRING_SECURITY_FORM_PASSWORD_KEY).
                 // where to go in case that the login is successful
                         defaultSuccessUrl("/").
                 // where to go in case that the login failed
@@ -69,6 +70,6 @@ public class SecurityConfiguration {
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return new Sell8BuyDetailService(userRepository);
+        return new SellAndBuyDetailService(userRepository);
     }
 }

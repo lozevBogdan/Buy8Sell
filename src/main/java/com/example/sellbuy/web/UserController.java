@@ -49,11 +49,13 @@ public class UserController {
         return "login";
     }
 
-    @GetMapping("/logout")
-    public String logout(){
-        this.userService.logoutCurrentUser();
-        return "redirect:/";
-    }
+
+// because spring security
+//    @GetMapping("/logout")
+//    public String logout(){
+//        this.userService.logoutCurrentUser();
+//        return "redirect:/";
+//    }
 
     @GetMapping("/register")
     public String register(){
@@ -168,29 +170,30 @@ public class UserController {
         return "redirect:login";
     }
 
-    @PostMapping("/login")
-    public String login(@Valid UserLoginBindingModel userLoginBindingModel,
-                           BindingResult bindingResult,
-                           RedirectAttributes redirectAttributes){
-
-            boolean isCredentialsAreValid =
-                    this.userService.
-                            isExistUserWithEmailAndPassword(userLoginBindingModel.getEmail(),
-                                    userLoginBindingModel.getPassword());
-
-        if (bindingResult.hasErrors() || isCredentialsAreValid) {
-            redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
-            redirectAttributes.addFlashAttribute(
-                    "org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
-            redirectAttributes.addFlashAttribute("invalidCredentials", isCredentialsAreValid);
-
-            return "redirect:/users/login";
-        }
-
-        userService.loginUser(userLoginBindingModel);
-
-        return "redirect:/";
-    }
+//                      because spring security
+//    @PostMapping("/login")
+//    public String login(@Valid UserLoginBindingModel userLoginBindingModel,
+//                           BindingResult bindingResult,
+//                           RedirectAttributes redirectAttributes){
+//
+//            boolean isCredentialsAreValid =
+//                    this.userService.
+//                            isExistUserWithEmailAndPassword(userLoginBindingModel.getEmail(),
+//                                    userLoginBindingModel.getPassword());
+//
+//        if (bindingResult.hasErrors() || isCredentialsAreValid) {
+//            redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
+//            redirectAttributes.addFlashAttribute(
+//                    "org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
+//            redirectAttributes.addFlashAttribute("invalidCredentials", isCredentialsAreValid);
+//
+//            return "redirect:/users/login";
+//        }
+//
+//        userService.loginUser(userLoginBindingModel);
+//
+//        return "redirect:/";
+//    }
 
     @PostMapping("/add/favorites/{id}")
     public String addFavorites(@PathVariable Long id){

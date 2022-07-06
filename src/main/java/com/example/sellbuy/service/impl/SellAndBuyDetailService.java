@@ -2,7 +2,7 @@ package com.example.sellbuy.service.impl;
 
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
-import com.example.sellbuy.model.user.Sell8BuyUserDetails;
+import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.repository.UserRepository;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,11 +12,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.stream.Collectors;
 
-public class Sell8BuyDetailService implements UserDetailsService {
+public class SellAndBuyDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public Sell8BuyDetailService(UserRepository userRepository) {
+    public SellAndBuyDetailService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -25,12 +25,13 @@ public class Sell8BuyDetailService implements UserDetailsService {
             throws UsernameNotFoundException {
         return this.userRepository.
                 findByEmail(username).map(this::mapUser).
-                orElseThrow(()-> new UsernameNotFoundException("User with email " + username + " not found!"));
+                orElseThrow(()-> new UsernameNotFoundException("User with email " +
+                        username + " not found!"));
     }
 
     private UserDetails mapUser(UserEntity userEntity){
 
-        return new Sell8BuyUserDetails(userEntity.getPassword(),
+        return new SellAndBuyUserDetails(userEntity.getId(), userEntity.getPassword(),
                 userEntity.getEmail(),
                 userEntity.getFirstName(),
                 userEntity.getLastName(),

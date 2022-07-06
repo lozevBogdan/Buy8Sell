@@ -1,4 +1,4 @@
-package com.example.sellbuy.security;
+package com.example.sellbuy.securityUser;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;

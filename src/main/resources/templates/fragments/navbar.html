@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html">
@@ -43,7 +45,10 @@
                 </a>
             </li>
 
-            <th:block th:if="${@currentUser.isLogged()}">
+            <th:block sec:authorize="isAuthenticated()">
+<!--                todo-->
+<!--                    th:if="${@currentUser.isLogged()}"-->
+
 
             <li class="nav-item">
                 <a class="nav-link" th:href="@{/products/promotions/all}">
@@ -54,9 +59,8 @@
                 </a>
             </li>
 
-
-
-            <li class="nav-item">
+            <li sec:authorize="hasRole('ADMIN')"
+                    class="nav-item">
                 <a class="nav-link disabled" href="#">
                     <i class="fa fa-envelope-o">
                         <span class="badge badge-warning">11</span>
@@ -64,7 +68,8 @@
                     Disabled
                 </a>
             </li>
-            <li class="nav-item dropdown">
+            <li sec:authorize="hasRole('ADMIN')"
+                    class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-envelope-o">
                         <span class="badge badge-primary">11</span>
@@ -85,7 +90,9 @@
 
         <ul class="navbar-nav ">
 
-            <th:block th:if="${@currentUser.isLogged()}">
+            <th:block sec:authorize="isAuthenticated()" >
+<!--                todo-->
+<!--                    th:if="${@currentUser.isLogged()}">-->
                     <li class="nav-item">
                 <a class="nav-link" th:href="@{/users/messages}">
                     <i class="fa fa-bell">
@@ -107,7 +114,9 @@
 
                 <li class="nav-item">
 
-                    <a class="nav-link" th:href="@{/users/{id}/products(id=${@currentUser.id})}">
+                    <a class="nav-link" >
+<!--                        todo-->
+<!--                       th:href="@{/users/{id}/products(id=${#authentication.principal.id})}">-->
                         <i class="fa fa-bell">
                             <span class="badge badge-danger" >11</span>
                         </i>
@@ -125,7 +134,11 @@
             </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/users/logout}">
+                    <form th:method="post" th:action="@{/users/logout}" >
+                        <button class="btn nav-link" type="submit">
+<!--                        <a type="submit" class="nav-link" >-->
+                    </form>
+
                         </i>
                         Logout
                     </a>
@@ -133,7 +146,7 @@
             </th:block>
 
 
-            <th:block th:if="${!@currentUser.isLogged()}">
+            <th:block sec:authorize="!isAuthenticated()">
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{/users/login}">
                         <!--                    <i class="bi bi-person-fill"></i>-->
@@ -154,7 +167,7 @@
 
         </ul>
 
-        <th:block th:if="${@currentUser.isLogged()}">
+        <th:block sec:authorize="isAuthenticated()">
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
