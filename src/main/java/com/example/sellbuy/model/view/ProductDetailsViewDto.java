@@ -13,6 +13,8 @@ import java.util.Set;
 
 public class ProductDetailsViewDto {
 
+    private  Long id;
+
     private ConditionEnum condition;
 
     private String description;
@@ -37,13 +39,21 @@ public class ProductDetailsViewDto {
 
     private boolean isPromo;
 
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime created;
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+
     private LocalDateTime modified;
 
     public ConditionEnum getCondition() {
         return condition;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public ProductDetailsViewDto setId(Long id) {
+        this.id = id;
+        return this;
     }
 
     public ProductDetailsViewDto setCondition(ConditionEnum condition) {

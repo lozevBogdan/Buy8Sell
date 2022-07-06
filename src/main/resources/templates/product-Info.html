@@ -15,10 +15,11 @@
 
 <nav th:replace="fragments/navbar::navbar"></nav>
 
-<div th:object="${productInfoView}"
+<div
         class="container mt-5">
 
-    <div class="row mb-7">
+    <div class="row mb-7"
+         th:object="${productInfoView}">
         <div class="col-md-5">
             <img th:src="*{pictures.toArray[0].getUrl()}"
                  width="400" height="380" />
@@ -92,8 +93,6 @@
                                     <label class="form-label" th:text="|Created: ${#temporals.format(created,'dd-MM-yyyy HH:mm')}|">Created</label>
                                 </div>
 
-
-
                                 <!-- Submit button  if user is login//todo-->
                                 <th:block>
                                     <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
@@ -114,8 +113,14 @@
     </div>
 
     <div>
-        <form>
-            <textarea name="comment" id="comment" class="form-control" placeholder="White your comment..." ></textarea>
+        <form th:method="post"
+              th:action="@{/comments/add/{id}(id=${productInfoView.id})}"
+              th:object="${commentBindingDto}"
+                >
+            <input th:field="*{textContent}"
+                      th:errorclass = "is-invalid"
+                      name="textContent" id="textContent" class="form-control" placeholder="White your comment..." ></input>
+            <small  class="invalid-feedback text-danger">Comment content can NOT be null!</small>
             <button type="submit" class="btn btn-info" for="description">Add comment</button>
         </form>
     </div>
