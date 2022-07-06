@@ -2,6 +2,7 @@ package com.example.sellbuy.model.entity;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @MappedSuperclass
 public abstract class BaseEntity {
@@ -11,9 +12,9 @@ public abstract class BaseEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Instant created;
+    private LocalDateTime created;
 
-    private Instant modified;
+    private LocalDateTime modified;
 
 
     public Long getId() {
@@ -24,19 +25,19 @@ public abstract class BaseEntity {
         this.id = id;
     }
 
-    public Instant getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Instant created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public Instant getModified() {
+    public LocalDateTime getModified() {
         return modified;
     }
 
-    public void setModified(Instant modified) {
+    public void setModified(LocalDateTime modified) {
         this.modified = modified;
     }
 
@@ -44,14 +45,14 @@ public abstract class BaseEntity {
     @PrePersist
     public void beforeCreate(){
         System.out.println("BEFORE CREATE A ENTITY - PREPERSIST");
-        setCreated(Instant.now());
+        setCreated(LocalDateTime.now());
     }
 
     // this method will be called when already saved entity in DB is called, modified and go again i DB
     @PostPersist
     void onUpdate(){
         System.out.println("POSTPERSIST");
-        setModified(Instant.now());
+        setModified(LocalDateTime.now());
     }
 
     @Override
