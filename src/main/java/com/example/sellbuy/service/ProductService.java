@@ -20,7 +20,7 @@ public interface ProductService {
 
     ProductEntity findById(Long productId);
 
-    void addProductEntity(ProductEntity product);
+    ProductEntity addProductEntity(ProductEntity product);
     public boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product);
 
     void deleteProductById(Long id);

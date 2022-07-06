@@ -15,66 +15,87 @@
 
 <nav th:replace="fragments/navbar::navbar"></nav>
 
-<div class="container mt-5">
+<div th:object="${productInfoView}"
+        class="container mt-5">
 
     <div class="row mb-7">
-
         <div class="col-md-5">
-            <img src=""
+            <img th:src="*{pictures.toArray[0].getUrl()}"
                  width="400" height="380" />
+
+            <div style="position: center">
+                <div class="form-outline mb-2">
+                    <label class="form-label" th:text="|Views: *{views}|">Views</label>
+                </div>
+
+                <div class="form-outline mb-2">
+                    <label class="form-label" th:text="|In favorites on: *{fans.size()}|">Views</label>
+                </div>
+
+            </div>
+
+
+
         </div>
 
         <div class="col">
                 <div class="col-md-12">
                     <div class="card px-5 py-5" id="form1">
                         <!-- Title  -->
-                        <h2 class="text-center" text="title of product">Title of product</h2>
+                        <h2     th:text="*{title}"
+                                class="text-center"
+                                text="title of product">Title of product</h2>
                         <div class="form-data">
 
-                            <div  th:object="${productAddBindingModel}" >
-
+                            <div>
                                 <!-- Condition -->
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Condition: condition.name()|">Condition</label>
+                                    <label class="form-label" th:text="|Condition: *{condition.name()}|">Condition</label>
                                 </div>
 
                                 <!-- Category input -->
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Category: category.name()|">Category</label>
+                                    <label class="form-label" th:text="|Category: *{category.category.name()}|">Category</label>
                                 </div>
 
 
                                 <!-- description input -->
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Description: description|">Description</label>
+                                    <label class="form-label" th:text="|Description: *{description}|">Description</label>
                                 </div>
 
                                 <!--  Price -->
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Price: price|">Price</label>
+                                    <label class="form-label" th:text="|Price: *{price}|">Price</label>
                                 </div>
 
                                 <!-- Location input -->
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Location: location|">Price</label>
+                                    <label class="form-label" th:text="|Location: *{location.location.name()}|">Location</label>
                                 </div>
 
-                                <div class="form-outline mb-2">
+                                <div th:if="*{isPromo()}" class="form-outline mb-2">
                                     <span  class="form-label" th:text="|Promo|"></span>
                                 </div>
 
                                 <div class="form-outline mb-2">
                                     <label class="form-label" >Number for contact with seller:</label>
-                                    <strong class="form-label" th:text="|0893250782|"></strong>
+                                    <strong class="form-label" th:text="*{seller.getMobileNumber()}"></strong>
+                                </div>
+                                <div class="form-outline mb-2">
+                                    <label class="form-label" th:text="|Created: ${#temporals.format(created,'dd-MM-yyyy HH:mm')}|">Created</label>
                                 </div>
 
-                                <!-- Submit button -->
+
+
+                                <!-- Submit button  if user is login//todo-->
                                 <th:block>
                                     <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
                                 </th:block>
+
 
                             </div>
                         </div>
@@ -87,8 +108,6 @@
         <div class="card" id="comments">
             Comments:
         </div>
-
-
     </div>
 
     <div>
@@ -101,8 +120,6 @@
 
 </div>
 
-</div>
-</form>
 
 <footer th:replace="fragments/footer::footer" ></footer>
 

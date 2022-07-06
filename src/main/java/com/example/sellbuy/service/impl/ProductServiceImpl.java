@@ -222,8 +222,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void addProductEntity(ProductEntity product) {
-        this.productRepository.save(product);
+    public ProductEntity addProductEntity(ProductEntity product) {
+       return this.productRepository.save(product);
     }
 
     public boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product){

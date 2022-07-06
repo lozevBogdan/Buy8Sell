@@ -3,10 +3,12 @@ package com.example.sellbuy.web;
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
+import com.example.sellbuy.model.view.ProductDetailsViewDto;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
 import com.example.sellbuy.service.PictureService;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,11 +25,13 @@ public class ProductController {
     private final ProductService productService;
     private final PictureService pictureService;
     private final UserService userService;
+    private final ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, PictureService pictureService, UserService userService) {
+    public ProductController(ProductService productService, PictureService pictureService, UserService userService, ModelMapper modelMapper) {
         this.productService = productService;
         this.pictureService = pictureService;
         this.userService = userService;
+        this.modelMapper = modelMapper;
     }
     @ModelAttribute
     public ProductAddBindingModel productAddBindingModel(){
@@ -79,16 +83,20 @@ public class ProductController {
 
     @GetMapping("/info/{id}")
 
-    public String productInfo(@PathVariable Long id){
-        this.increaseViewsProductById(id);
-        //todo
+    public String productInfo(@PathVariable Long id,Model model){
+        ProductDetailsViewDto productInfoView = this.getAndIncreaseViewsProductById(id);
+        model.addAttribute("productInfoView",productInfoView);
+        model.addAttribute("created",productInfoView.getCreated());
         return "product-Info";
     }
 
-    private void increaseViewsProductById(Long id){
+    private ProductDetailsViewDto getAndIncreaseViewsProductById(Long id){
         ProductEntity currentProduct = this.productService.findById(id);
         currentProduct.setViews(currentProduct.getViews() + 1);
-        this.productService.addProductEntity(currentProduct);
+        currentProduct = this.productService.addProductEntity(currentProduct);
+        ProductDetailsViewDto productDetailsViewDto =
+                this.modelMapper.map(currentProduct, ProductDetailsViewDto.class);
+        return productDetailsViewDto;
     }
 
     @PostMapping("/add")
