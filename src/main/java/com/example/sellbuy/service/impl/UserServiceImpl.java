@@ -11,6 +11,11 @@ import com.example.sellbuy.securityUser.CurrentUser;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,16 +30,18 @@ public class UserServiceImpl implements UserService {
     private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
 
 
     public UserServiceImpl(UserRepository userRepository, UserRoleServiceImpl userRoleService,
                            CurrentUser currentUser, ModelMapper modelMapper,
-                           PasswordEncoder passwordEncoder){
+                           PasswordEncoder passwordEncoder, UserDetailsService userDetailsService){
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
         this.currentUser = currentUser;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
     }
 
 
@@ -92,9 +99,35 @@ public class UserServiceImpl implements UserService {
                 findByEmail(email).
                 orElse(null);
     }
+
+
+// FROM MOBILELLE !!!!!!!!!!!!!!!!-----------------------------------------------------------
+//    public void registerAndLogin(UserRegisterBindingModel userRegisterDTO) {
+//        UserEntity newUser = modelMapper.map(userRegisterDTO,UserEntity.class);
+//        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
+//        this.userRepository.save(newUser);
+//        login(newUser);
+//    }
+//
+//    private void login(UserEntity userEntity) {
+//        UserDetails userDetails =
+//                userDetailsService.loadUserByUsername(userEntity.getEmail());
+//        Authentication auth =
+//                new UsernamePasswordAuthenticationToken(
+//                        userDetails,
+//                        userDetails.getPassword(),
+//                        userDetails.getAuthorities()
+//                );
+//        SecurityContextHolder.
+//                getContext().
+//                setAuthentication(auth);
+//    }
+
+
 // because spring security
     @Override
     public void loginUser(UserLoginBindingModel userLoginBindingModel) {
+
 //todo
 //        UserEntity userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
 //                userLoginBindingModel.getPassword()).get();
@@ -133,7 +166,7 @@ public class UserServiceImpl implements UserService {
     public void makeNewRegistration(UserRegisterBindingModel userRegisterBindingModel) {
 
         UserEntity newUser = this.modelMapper.map(userRegisterBindingModel,UserEntity.class);
-        //todo : set password with PasswordEncoder!!!!!!
+        newUser.setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
 
         Set<UserRoleEntity> roles = new HashSet<>();
 
@@ -145,22 +178,16 @@ public class UserServiceImpl implements UserService {
 
         UserRoleEntity useRoleEntity =
                 this.userRoleService.findByRole(UserRoleEnum.USER);
-
         roles.add(useRoleEntity);
-
         newUser.setRoles(roles);
-
-       newUser =  this.userRepository.save(newUser);
+        newUser =  this.userRepository.save(newUser);
 
     }
 
     @Override
     public UserEntity getCurrentLoggedInUserEntity() {
-
         UserEntity currentLoggedInUser = null;
-
         Long id = currentUser.getId();
-
         if(id != null) {
             currentLoggedInUser = this.userRepository.findById(id).get();
         }
@@ -175,7 +202,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addFavorProduct(ProductEntity product) {
-
         UserEntity byId = this.userRepository.findById(currentUser.getId()).get();
         byId.getFavoriteProducts().add(product);
         userRepository.save(byId);
@@ -196,18 +222,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteByProductIdFrom(Long id) {
         UserEntity currentLoggedInUserEntity = this.getCurrentLoggedInUserEntity();
-
         Set<ProductEntity> products = currentLoggedInUserEntity.getProducts();
-
         for (ProductEntity product : products) {
             if(product.getId() == id){
                 products.remove(product);
                 break;
             }
         }
-
         currentLoggedInUserEntity.setProducts(products);
         this.userRepository.save(currentLoggedInUserEntity);
-
     }
 }

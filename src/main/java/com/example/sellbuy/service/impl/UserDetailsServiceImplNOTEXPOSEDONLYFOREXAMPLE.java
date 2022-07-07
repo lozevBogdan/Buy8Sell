@@ -10,15 +10,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import java.util.*;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImplNOTEXPOSEDONLYFOREXAMPLE implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public UserDetailsServiceImplNOTEXPOSEDONLYFOREXAMPLE(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
