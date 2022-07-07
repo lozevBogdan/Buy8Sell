@@ -35,7 +35,9 @@ public class SecurityConfiguration {
                 // everyone can download static resources (css, js, images)
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // everyone can login and register
-                        antMatchers("/", "/users/login", "/users/register").permitAll().
+                        antMatchers("/").permitAll().
+                //only anonymous user can access this URL
+                        antMatchers( "/users/login", "/users/register").anonymous().
                 // all other pages are available for logger in users
                         anyRequest().
                 authenticated().
@@ -68,6 +70,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    // We can not do that with annotation on SellAndBuyDetailService with @Service
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new SellAndBuyDetailService(userRepository);

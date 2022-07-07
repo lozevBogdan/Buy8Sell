@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 // this is representation of Springs UserDetails,
 // because we add more field like a : firstname an lastName
+//here we defined which field will expose
 public class SellAndBuyUserDetails implements UserDetails {
 
     private final Long id;
