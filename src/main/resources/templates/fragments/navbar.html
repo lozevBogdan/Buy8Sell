@@ -104,7 +104,7 @@
 
                  <li class="nav-item">
 
-                <a class="nav-link" th:href="@{/users/{id}/favorites(id=${#authentication.principal.name})}">
+                <a class="nav-link" th:href="@{/users/{id}/favorites(id=${#authentication.principal.id})}">
                     <i class="fa fa-bell">
                         <span class="badge badge-danger" >11</span>
                     </i>
@@ -114,9 +114,8 @@
 
                 <li class="nav-item">
 
-                    <a class="nav-link" >
-<!--                        todo-->
-<!--                       th:href="@{/users/{id}/products(id=${#authentication.principal.id})}">-->
+                    <a class="nav-link"
+                       th:href="@{/users/{id}/products(id=${#authentication.principal.id})}">
                         <i class="fa fa-bell">
                             <span class="badge badge-danger" >11</span>
                         </i>
