@@ -11,10 +11,6 @@ import com.example.sellbuy.securityUser.CurrentUser;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -185,14 +181,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserEntity getCurrentLoggedInUserEntity() {
-        UserEntity currentLoggedInUser = null;
-        Long id = currentUser.getId();
-        if(id != null) {
-            currentLoggedInUser = this.userRepository.findById(id).get();
-        }
-        System.out.println();
-        return  currentLoggedInUser;
+    public UserEntity getCurrentLoggedInUserEntityById(Long id) {
+        return  this.userRepository.findById(id).get();
     }
 
     @Override
@@ -220,11 +210,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteByProductIdFrom(Long id) {
-        UserEntity currentLoggedInUserEntity = this.getCurrentLoggedInUserEntity();
+    public void deleteByProductIdFrom(ProductEntity productForDelete) {
+        UserEntity currentLoggedInUserEntity = this.getCurrentLoggedInUserEntityById(productForDelete.getSeller().getId());
         Set<ProductEntity> products = currentLoggedInUserEntity.getProducts();
         for (ProductEntity product : products) {
-            if(product.getId() == id){
+            if(product.getId() == productForDelete.getId()){
                 products.remove(product);
                 break;
             }

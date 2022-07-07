@@ -23,7 +23,7 @@ public interface UserService {
 
     void makeNewRegistration(UserRegisterBindingModel userRegisterBindingModel);
 
-    UserEntity getCurrentLoggedInUserEntity();
+    UserEntity getCurrentLoggedInUserEntityById(Long sellAndBuyUser);
 
     UserEntity addInDb(UserEntity currentUser);
 
@@ -33,5 +33,5 @@ public interface UserService {
 
     Set<ProductEntity> getMyProductsById(Long id);
 
-    void deleteByProductIdFrom(Long id);
+    void deleteByProductIdFrom(ProductEntity id);
 }

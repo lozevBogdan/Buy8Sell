@@ -5,9 +5,11 @@ import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
+import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -75,7 +77,7 @@ public class UserController {
 
 
         List<ProductSearchViewModel> productSearchViewModelList =
-              this.returnFavors(favorList);
+              this.returnFavors(favorList,id);
 
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
@@ -92,7 +94,7 @@ public class UserController {
 //        Set<ProductEntity> myProducts = this.userService.getMyProductsById(id);
 
         List<ProductSearchViewModel> myProductsSearchViewModelList =
-                this.returnFavors(myProducts);
+                this.returnFavors(myProducts,id);
 
         if (!model.containsAttribute("myProductsSearchViewModelList")){
             model.addAttribute("myProductsSearchViewModelList",myProductsSearchViewModelList);
@@ -101,7 +103,7 @@ public class UserController {
 
     }
 
-    private  List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts){
+    private  List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts,Long userId){
 
         List<ProductSearchViewModel> returnedList = new LinkedList<>();
 
@@ -118,7 +120,7 @@ public class UserController {
                 pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
             }
             productSearchViewModel.setMainPicture(pictureUrl);
-            UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntity();
+            UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntityById(userId);
 
             // Check for favorites products for current user
             if(currentLoggedInUserEntity != null){
@@ -141,13 +143,6 @@ public class UserController {
     public String register(@Valid UserRegisterBindingModel userRegisterBindingModel,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes){
-
-//todo thi shoud be replece with Spring security propurties
-
-//        if(this.userService.isUserLoggedIn()){
-//            return "redirect:home";
-//        }
-
         boolean isEmailFree =
                 this.userService.isEmailFree(userRegisterBindingModel.getEmail());
 
@@ -163,10 +158,7 @@ public class UserController {
                     "passwordsNotMach",!passwordsAreEquals);
             return "redirect:/users/register";
         }
-
-
         userService.makeNewRegistration(userRegisterBindingModel);
-
         return "redirect:login";
     }
 
@@ -196,9 +188,10 @@ public class UserController {
 //    }
 
     @PostMapping("/add/favorites/{id}")
-    public String addFavorites(@PathVariable Long id){
+    public String addFavorites(@PathVariable Long id,
+                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
-        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntity();
+        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
 
         if(currentUser == null){
             return "redirect:/users/login";
@@ -216,9 +209,10 @@ public class UserController {
     }
 
     @PostMapping("/remove/favorites/{id}")
-    public String removeFromFavorites(@PathVariable Long id){
+    public String removeFromFavorites(@PathVariable Long id,
+                                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
-        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntity();
+        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
 
         if(currentUser == null){
             return "redirect:/users/login";

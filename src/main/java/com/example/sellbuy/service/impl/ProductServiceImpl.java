@@ -9,6 +9,7 @@ import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.model.entity.enums.OrderBYEnum;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
 import com.example.sellbuy.repository.ProductRepository;
+import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.*;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -84,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity addProductBindingModel(ProductAddBindingModel
-                                                            productAddBindingModel) {
+                                                            productAddBindingModel, SellAndBuyUserDetails sellAndBuyUser) {
         ProductEntity newProduct =
                 this.modelMapper.map(productAddBindingModel,ProductEntity.class);
 
@@ -92,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
                 this.categoryService.findByCategory(productAddBindingModel.getCategory());
 
         UserEntity seller =
-                this.userService.getCurrentLoggedInUserEntity();
+                this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
 
         LocationEntity location = this.locationService.findByLocation(productAddBindingModel.getLocation());
 
@@ -120,7 +121,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductSearchViewModel> filterBy(ProductSearchingBindingModel productSearchingBindingModel){
+
+    public List<ProductSearchViewModel> filterBy(
+            ProductSearchingBindingModel productSearchingBindingModel,Long idPrincipal){
 
         String title = productSearchingBindingModel.getTitle();
         Double min = productSearchingBindingModel.getMin();
@@ -201,7 +204,8 @@ public class ProductServiceImpl implements ProductService {
              pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
          }
              productSearchViewModel.setMainPicture(pictureUrl);
-            UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntity();
+         //todo: cheking forn null @AuthenticationPrincipal!!!!!!!!
+            UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntityById(idPrincipal);
             // Check for favorites products for current user
          if(currentLoggedInUserEntity != null){
 
@@ -256,7 +260,7 @@ public class ProductServiceImpl implements ProductService {
         this.pictureService.deleteByProductId(id);
         this.commentsService.deleteByProductId(id);
         this.categoryService.deleteByProductId(id);
-        this.userService.deleteByProductIdFrom(id);
+        this.userService.deleteByProductIdFrom(productForDeleted);
 
         this.productRepository.deleteById(id);
     }

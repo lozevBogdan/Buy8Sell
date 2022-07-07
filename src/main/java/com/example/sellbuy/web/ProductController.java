@@ -57,10 +57,11 @@ public class ProductController {
 //    }
 
     @GetMapping("/all")
-    public String productsPage(Model model){
+    public String productsPage(Model model,
+                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(new ProductSearchingBindingModel());
+                this.productService.filterBy(new ProductSearchingBindingModel(), sellAndBuyUser.getId());
 
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
@@ -76,10 +77,11 @@ public class ProductController {
 
 
     @PostMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable Long id){
+    public String deleteProduct(@PathVariable Long id,
+                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
         this.productService.deleteProductById(id);
         return String.format("redirect:/users/%d/products",
-                this.userService.getCurrentLoggedInUserEntity().getId());
+                sellAndBuyUser.getId());
     }
 
 
@@ -112,7 +114,7 @@ public class ProductController {
                       @Valid ProductAddBindingModel productAddBindingModel,
                       BindingResult bindingResult,
                       RedirectAttributes redirectAttributes,
-                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUserDetails){
+                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
         
         //                  todo : get id of user from Principal!!!!
 
@@ -127,16 +129,17 @@ public class ProductController {
         }
 
         ProductEntity newProduct =
-                this.productService.addProductBindingModel(productAddBindingModel);
+                this.productService.addProductBindingModel(productAddBindingModel,sellAndBuyUser);
 
         return String.format("redirect:/users/%d/products",
-                userService.getCurrentLoggedInUserEntity().getId());
+               sellAndBuyUser.getId());
     }
 
     @PostMapping("/all")
     public String all(@Valid ProductSearchingBindingModel productSearchingBindingModel,
                         BindingResult bindingResult,
-                        RedirectAttributes redirectAttributes, Model model){
+                        RedirectAttributes redirectAttributes,
+                        Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         boolean isMinBiggerThanMax = false;
 
@@ -156,7 +159,7 @@ public class ProductController {
         }
 
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(productSearchingBindingModel);
+                this.productService.filterBy(productSearchingBindingModel,sellAndBuyUser.getId());
 
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
 

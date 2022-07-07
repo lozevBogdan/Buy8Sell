@@ -4,6 +4,7 @@ import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
+import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 
 import java.util.List;
 import java.util.Set;
@@ -14,9 +15,9 @@ public interface ProductService {
 
     void deleteFistProduct();
 
-    ProductEntity addProductBindingModel(ProductAddBindingModel productAddBindingModel);
+    ProductEntity addProductBindingModel(ProductAddBindingModel productAddBindingModel, SellAndBuyUserDetails sellAndBuyUser);
 
-    List<ProductSearchViewModel> filterBy(ProductSearchingBindingModel productSearchingBindingModel);
+    List<ProductSearchViewModel> filterBy(ProductSearchingBindingModel productSearchingBindingModel, Long id);
 
     ProductEntity findById(Long productId);
 
