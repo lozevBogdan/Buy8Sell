@@ -1,7 +1,13 @@
 package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.binding.CommentBindingDto;
+import com.example.sellbuy.model.entity.CommentEntity;
+import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.CommentsService;
+import com.example.sellbuy.service.UserService;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +22,11 @@ import javax.validation.Valid;
 public class CommentController {
 
     private final CommentsService commentsService;
+    private final UserService userService;
 
-    public CommentController(CommentsService commentsService) {
+    public CommentController(CommentsService commentsService, UserService userService) {
         this.commentsService = commentsService;
+        this.userService = userService;
     }
 
 
@@ -26,19 +34,17 @@ public class CommentController {
    public String addComment(@PathVariable Long id,
                             @Valid CommentBindingDto commentBindingDto,
                             BindingResult bindingResult,
-                            RedirectAttributes redirectAttributes)
+                            RedirectAttributes redirectAttributes,
+                            @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser)
                             {
-
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("commentBindingDto", commentBindingDto);
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.commentBindingDto", bindingResult);
-
             return String.format("redirect:/products/info/%d",id);
         }
-
-        //todo: inject Pricipal user and save comment to repository.
-
+          CommentEntity newComment =
+                  this.commentsService.saveComment(commentBindingDto,id,sellAndBuyUser.getId());
         return String.format("redirect:/products/info/%d",id);
    }
 

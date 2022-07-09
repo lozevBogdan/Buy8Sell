@@ -12,9 +12,8 @@ public class CommentEntity extends BaseEntity {
     @Column(nullable = false)
     private String textContent;
 
-    //TODO maybe this shoul become a UserEntity ??????????
-    @Column(nullable = false)
-    private String authorUsername;
+    @ManyToOne
+    private UserEntity author;
 
     @ManyToOne
     private ProductEntity productEntity;
@@ -33,12 +32,21 @@ public class CommentEntity extends BaseEntity {
         return this;
     }
 
-    public String getAuthorUsername() {
-        return authorUsername;
+    public UserEntity getAuthor() {
+        return author;
     }
 
-    public CommentEntity setAuthorUsername(String authorUsername) {
-        this.authorUsername = authorUsername;
+    public CommentEntity setAuthor(UserEntity author) {
+        this.author = author;
+        return this;
+    }
+
+    public ProductEntity getProductEntity() {
+        return productEntity;
+    }
+
+    public CommentEntity setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
         return this;
     }
 

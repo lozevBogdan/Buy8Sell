@@ -52,7 +52,7 @@ public class SecurityConfiguration {
                         passwordParameter(UsernamePasswordAuthenticationFilter.
                         SPRING_SECURITY_FORM_PASSWORD_KEY).
                 // where to go in case that the login is successful
-                        defaultSuccessUrl("/").
+                        defaultSuccessUrl("/",true).
                 // where to go in case that the login failed
                         failureForwardUrl("/users/login-error").
                 and().

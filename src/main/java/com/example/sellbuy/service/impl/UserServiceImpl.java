@@ -222,4 +222,10 @@ public class UserServiceImpl implements UserService {
         currentLoggedInUserEntity.setProducts(products);
         this.userRepository.save(currentLoggedInUserEntity);
     }
+
+    @Override
+    public UserEntity findById(Long authorId) {
+
+        return this.userRepository.findById(authorId).orElse(null);
+    }
 }
