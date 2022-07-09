@@ -126,11 +126,9 @@
             <div th:each="productView : ${productSearchViewModelList}" th:object="${productView}"
                     class="col-md-4">
                 <section class="panel">
-
                     <div class="pro-img-box text-center">
                         <img th:src="*{mainPicture}"
                              width="250" height="220" />
-
                             <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
 
                                 <form th:method="post"
@@ -153,8 +151,6 @@
 <!--                                </form>-->
 
                             </th:block>
-
-
 
 <!--                        <a th:href="@{/users/add/favorites/{id}(id=*{id})}"-->
 <!--                                type="button" class="btn btn-danger">Add to favorites</a>-->

@@ -53,6 +53,10 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
+    public String getFullName(){
+        return this.firstName + " " + this.lastName;
+    }
+
     public String getEmail() {
         return email;
     }

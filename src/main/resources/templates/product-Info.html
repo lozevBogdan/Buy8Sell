@@ -104,13 +104,29 @@
                     </div>
                 </div>
         </div>
+
+        <div class="row mb-7">
+            <div class="card text-center" id="comments">
+                <h3>
+                    Comments:
+                </h3>
+
+            </div>
+            <div th:each="comment : *{comments}"
+                 id="commentBody" class="card">
+                <div id="nameAuthorAndDate" class="justify-content-between p-3">
+                    <p class="fw-bold mb-0" th:text="|${comment.getAuthor().getFullName()}|">nameAuthor</p>
+                    <p class="text-muted small " th:text="|Writen on: ${#temporals.format(comment.created,'dd-MM-yyyy HH:mm')}|">date</p>
+                </div>
+                <div id="commentTextContent" class="card-header d-flex ">
+                    <p class="mb-0"  th:text="${comment.textContent}">content</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="row mb-7">
-        <div class="card" id="comments">
-            Comments:
-        </div>
-    </div>
+
 
     <div>
         <form th:method="post"
