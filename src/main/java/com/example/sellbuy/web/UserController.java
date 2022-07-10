@@ -208,6 +208,8 @@ public class UserController {
         }
     }
 
+
+
     @PostMapping("/remove/favorites/{id}")
     public String removeFromFavorites(@PathVariable Long id,
                                       @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
@@ -226,6 +228,27 @@ public class UserController {
 
             currentUser = this.userService.addInDb(currentUser);
             return String.format("redirect:/users/%d/favorites",currentUser.getId());
+        }
+    }
+
+    @PostMapping("/remove/favorites/{id}/all")
+    public String removeFromFavoritesAndRedirectToAll(@PathVariable Long id,
+                                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+
+        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
+
+        if(currentUser == null){
+            return "redirect:/users/login";
+        }else {
+
+            ProductEntity product = this.productService.findById(id);
+            product.getFans().remove(currentUser);
+            this.productService.addProductEntity(product);
+            //  this.userService.addFavorProduct(product);
+            currentUser.getFavoriteProducts().remove(product);
+
+            currentUser = this.userService.addInDb(currentUser);
+            return "redirect:/products/all";
         }
     }
 

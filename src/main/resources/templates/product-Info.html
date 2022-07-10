@@ -32,8 +32,8 @@
                 <div class="form-outline mb-2">
                     <label class="form-label" th:text="|In favorites on: *{fans.size()}|">Views</label>
                 </div>
-
-                <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
+<!--todo: redirect to product info page when we add to favorites form infoProduct page-->
+                <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
                     <form th:method="post"
                           th:action="@{/users/add/favorites/{id}(id=*{id})}">
                         <button
@@ -41,20 +41,6 @@
                         </button>
                     </form>
                 </th:block>
-
-                <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
-                    <button class="btn btn-success bi bi-heart">Added to favorites</button>
-
-                    <!--                                <form th:method="post"-->
-                    <!--                                      th:action="@{/users/remove/favorites/{id}(id=*{id})}">-->
-                    <!--                                <button  type="submit" class="btn btn-success bi bi-heart" >-->
-                    <!--                                    <i class="bi bi-heart"></i>-->
-                    <!--                                    Go to favorites-->
-                    <!--                                </button>-->
-                    <!--                                </form>-->
-
-                </th:block>
-
             </div>
 
 

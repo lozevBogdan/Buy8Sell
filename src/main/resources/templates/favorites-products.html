@@ -38,7 +38,6 @@
                              width="250" height="220" />
 
                         <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
-
                             <form th:method="post"
                                   th:action="@{/users/add/favorites/{id}(id=*{id})}">
                                 <button
@@ -46,7 +45,6 @@
                                 </button>
                             </form>
                         </th:block>
-
                         <th:block th:if="*{isProductIsFavorInCurrentUser()}">
                             <form th:method="post"
                                   th:action="@{/users/remove/favorites/{id}(id=*{id})}">
