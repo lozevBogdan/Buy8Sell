@@ -15,12 +15,12 @@
 
 <nav th:replace="fragments/navbar.html"></nav>
 
-<div
-        class="container mt-5">
+<div class="container mt-5">
 
     <div class="row mb-7"
          th:object="${productInfoView}">
         <div class="col-md-5">
+<!--            todo: with pictures of product-->
             <img th:src="*{pictures.toArray[0].getUrl()}"
                  width="400" height="380" />
 
@@ -32,6 +32,28 @@
                 <div class="form-outline mb-2">
                     <label class="form-label" th:text="|In favorites on: *{fans.size()}|">Views</label>
                 </div>
+
+                <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
+                    <form th:method="post"
+                          th:action="@{/users/add/favorites/{id}(id=*{id})}">
+                        <button
+                                type="submit" class="btn btn-danger bi bi-heart" >Add to favorites
+                        </button>
+                    </form>
+                </th:block>
+
+                <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
+                    <button class="btn btn-success bi bi-heart">Added to favorites</button>
+
+                    <!--                                <form th:method="post"-->
+                    <!--                                      th:action="@{/users/remove/favorites/{id}(id=*{id})}">-->
+                    <!--                                <button  type="submit" class="btn btn-success bi bi-heart" >-->
+                    <!--                                    <i class="bi bi-heart"></i>-->
+                    <!--                                    Go to favorites-->
+                    <!--                                </button>-->
+                    <!--                                </form>-->
+
+                </th:block>
 
             </div>
 
@@ -93,8 +115,13 @@
                                     <label class="form-label" th:text="|Created: ${#temporals.format(created,'dd-MM-yyyy HH:mm')}|">Created</label>
                                 </div>
 
-                                <!-- Submit button  if user is login//todo-->
-                                <th:block>
+                                <!--                                 todo:logic for delete -->
+                                <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
+                                    <input type="submit" class="btn btn-primary btn-block mb-2" value="Delete"/>
+                                </th:block>
+
+<!--                                 todo:logic send message-->
+                                <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
                                     <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
                                 </th:block>
 
