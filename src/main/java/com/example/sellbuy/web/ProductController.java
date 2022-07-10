@@ -5,6 +5,7 @@ import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
+import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.PictureService;
@@ -69,12 +70,7 @@ public class ProductController {
         return "all-products";
     }
 
-    @GetMapping("/edit/{id}")
-    public String editPage(@PathVariable Long id){
 
-
-        return "edit-product";
-    }
 
     @GetMapping("/add")
     public String allProducts(){
@@ -90,11 +86,41 @@ public class ProductController {
                 sellAndBuyUser.getId());
     }
 
+    @GetMapping("/edit/{id}")
+    public String editPage(@PathVariable Long id,Model model){
+
+        ProductEditViewModel productEditViewModel =
+                this.productService.findByIdProductSearchAndEditViewModel(id);
+        if(!model.containsAttribute("productEditViewModel")){
+            model.addAttribute("productEditViewModel",productEditViewModel);
+        }
+
+        return "edit-product";
+    }
 
     @PostMapping("/edit/{id}")
-    public String addProduct(@PathVariable Long id){
+    public String editProduct(@PathVariable Long id,
+                              @RequestParam(defaultValue = "false") boolean isPromo,
+                              @Valid ProductEditViewModel productEditViewModel,
+                              BindingResult bindingResult,
+                              RedirectAttributes redirectAttributes){
+
+         productEditViewModel.setPromo(isPromo);
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("productEditViewModel", productEditViewModel);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.productEditViewModel",
+                    bindingResult);
+
+            return "redirect:/products/edit/" + id;
+        }
+
+       ProductEntity updatedProduct =  this.productService.updateProductById(id,productEditViewModel);
+
+
         //todo
-        return "edit-product";
+        return "redirect:/products/info/" + id;
     }
 
     @GetMapping("/info/{id}")

@@ -7,9 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 public interface PictureRepository extends JpaRepository<PictureEntity,Long> {
 
 
     void deleteByProductId(Long id);
+
+    PictureEntity findByProductId(Long id);
+
+   Optional<PictureEntity> findByUrl(String urlPicture);
 }

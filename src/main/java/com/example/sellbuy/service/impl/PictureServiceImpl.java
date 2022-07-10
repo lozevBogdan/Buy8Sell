@@ -6,6 +6,8 @@ import com.example.sellbuy.repository.PictureRepository;
 import com.example.sellbuy.service.PictureService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PictureServiceImpl implements PictureService {
 
@@ -48,6 +50,22 @@ public class PictureServiceImpl implements PictureService {
 
         this.pictureRepository.deleteByProductId(id);
 
+    }
+
+    @Override
+    public PictureEntity findByProductId(Long id) {
+        return this.pictureRepository.findByProductId(id);
+    }
+
+    @Override
+    public Optional<PictureEntity> findByUrl(String urlPicture) {
+
+       return this.pictureRepository.findByUrl(urlPicture);
+    }
+
+    @Override
+    public void deletePictureById(Long id) {
+        this.pictureRepository.deleteById(id);
     }
 
 }

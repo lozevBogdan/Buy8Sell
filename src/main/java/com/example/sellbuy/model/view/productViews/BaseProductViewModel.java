@@ -9,14 +9,14 @@ import java.math.BigDecimal;
 
 public abstract class BaseProductViewModel {
 
-    private Long id;
-    private ConditionEnum condition;
-    private String description;
     private String title;
+    private ConditionEnum condition;
+    private CategoryEntity category;
+    private String description;
     private BigDecimal price;
     private LocationEntity location;
+    private Long id;
     private UserEntity seller;
-    private CategoryEntity category ;
     private boolean isPromo;
     private boolean isProductIsFavorInCurrentUser = false;
 

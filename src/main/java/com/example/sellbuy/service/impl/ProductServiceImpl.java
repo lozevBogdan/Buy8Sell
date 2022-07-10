@@ -8,6 +8,7 @@ import com.example.sellbuy.model.entity.enums.ConditionEnum;
 import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.model.entity.enums.OrderBYEnum;
 import com.example.sellbuy.model.view.productViews.BaseProductViewModel;
+import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.repository.ProductRepository;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
@@ -18,9 +19,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -197,7 +197,7 @@ public class ProductServiceImpl implements ProductService {
 
         for (ProductEntity product : allProducts) {
          ProductSearchViewModel productSearchViewModel =
-                 this.modelMapper.map(product,ProductSearchViewModel.class);
+                 this.modelMapper.map(product, ProductSearchViewModel.class);
          String pictureUrl;
          if(product.getPictures().size() == 0){
                  pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
@@ -280,4 +280,66 @@ public class ProductServiceImpl implements ProductService {
         return this.productRepository.findProductsBySellerId(id);
     }
 
+    @Override
+    public ProductEditViewModel findByIdProductSearchAndEditViewModel(Long id) {
+
+        ProductEntity product = this.productRepository.findById(id).get();
+
+        ProductEditViewModel editViewModel =
+                this.modelMapper.map(product, ProductEditViewModel.class);
+
+        //todo: change the picture way to get !!!
+        PictureEntity pictureEntity = this.pictureService.findByProductId(id);
+
+        editViewModel.setUrlPicture(pictureEntity.getUrl());
+
+        return editViewModel;
+    }
+
+    @Override
+    public ProductEntity updateProductById(Long id, ProductEditViewModel productEditViewModel) {
+        ProductEntity product = this.productRepository.findById(id).get();
+        return this.updateProduct(product,productEditViewModel);
+    }
+
+    private ProductEntity updateProduct(ProductEntity oldVersion,ProductEditViewModel newData ){
+
+        CategoryEntity category = this.categoryService.findByCategory(newData.getCategory());
+        LocationEntity location = this.locationService.findByLocation(newData.getLocation());
+
+        //todo: should become a only one picture, NOT Set<>;
+        Set<PictureEntity> pictures = new HashSet<>();
+
+        oldVersion.
+                setTitle(newData.getTitle()).
+                setCondition(newData.getCondition()).
+                setCategory(category).
+                setDescription(newData.getDescription()).
+                setPrice(newData.getPrice()).
+                setLocation(location).
+                setPromo(newData.getIsPromo());
+
+        Optional<PictureEntity> picture =
+                this.pictureService.findByUrl(newData.getUrlPicture());
+
+        if(picture.isEmpty()){
+            PictureEntity newPicture = new PictureEntity();
+            newPicture.
+                    setUrl(newData.getUrlPicture()).
+                    setProduct(oldVersion);
+            pictures.add(newPicture);
+            oldVersion.setPictures(pictures);
+
+            //todo: here should delete a old picture from db
+            this.pictureService.deletePictureById
+            (this.pictureService.findByProductId(oldVersion.getId()).getId());
+
+            newPicture = this.pictureService.addPictureInDb(newPicture);
+        }else {
+            pictures.add(picture.get());
+            oldVersion.setPictures(pictures);
+        }
+        oldVersion.setModified(LocalDateTime.now());
+        return this.productRepository.save(oldVersion);
+    }
 }

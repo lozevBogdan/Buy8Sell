@@ -102,7 +102,7 @@ public class UserController {
 
     }
 
-    private  List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts,Long userId){
+    private  List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts, Long userId){
 
         List<ProductSearchViewModel> returnedList = new LinkedList<>();
 

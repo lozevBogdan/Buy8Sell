@@ -4,6 +4,7 @@ import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.view.productViews.BaseProductViewModel;
+import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 
@@ -31,4 +32,9 @@ public interface ProductService {
     void deleteProductById(Long id);
 
     Set<ProductEntity> findProductsByUserId(Long id);
+
+    ProductEditViewModel findByIdProductSearchAndEditViewModel(Long id);
+
+    ProductEntity updateProductById(Long id, ProductEditViewModel productEditViewModel);
+
 }
