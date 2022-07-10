@@ -1,12 +1,7 @@
-package com.example.sellbuy.model.view;
+package com.example.sellbuy.model.view.productViews;
 
 import com.example.sellbuy.model.entity.*;
-import com.example.sellbuy.model.entity.enums.ConditionEnum;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;

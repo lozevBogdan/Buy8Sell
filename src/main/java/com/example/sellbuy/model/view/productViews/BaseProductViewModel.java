@@ -1,4 +1,4 @@
-package com.example.sellbuy.model.view;
+package com.example.sellbuy.model.view.productViews;
 
 import com.example.sellbuy.model.entity.CategoryEntity;
 import com.example.sellbuy.model.entity.LocationEntity;

@@ -3,10 +3,9 @@ package com.example.sellbuy.service;
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
-import com.example.sellbuy.model.view.BaseProductViewModel;
-import com.example.sellbuy.model.view.ProductSearchViewModel;
+import com.example.sellbuy.model.view.productViews.BaseProductViewModel;
+import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
-import com.fasterxml.jackson.databind.deser.ValueInstantiators;
 
 import java.util.List;
 import java.util.Set;

@@ -4,9 +4,8 @@ import com.example.sellbuy.model.binding.CommentBindingDto;
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
-import com.example.sellbuy.model.entity.UserEntity;
-import com.example.sellbuy.model.view.ProductDetailsViewDto;
-import com.example.sellbuy.model.view.ProductSearchViewModel;
+import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
+import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.PictureService;
 import com.example.sellbuy.service.ProductService;
@@ -21,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/products")
@@ -71,7 +69,12 @@ public class ProductController {
         return "all-products";
     }
 
+    @GetMapping("/edit/{id}")
+    public String editPage(@PathVariable Long id){
 
+
+        return "edit-product";
+    }
 
     @GetMapping("/add")
     public String allProducts(){

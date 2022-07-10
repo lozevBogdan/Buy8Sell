@@ -1,11 +1,4 @@
-package com.example.sellbuy.model.view;
-
-import com.example.sellbuy.model.entity.*;
-import com.example.sellbuy.model.entity.enums.ConditionEnum;
-
-import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
+package com.example.sellbuy.model.view.productViews;
 
 public class ProductSearchViewModel extends BaseProductViewModel {
 

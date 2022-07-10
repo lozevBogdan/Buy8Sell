@@ -118,11 +118,18 @@
 
                                 <!--                                 todo:logic for delete -->
                                 <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
-                                    <input type="submit" th:href="@{/products/delete/{id}(id=*{id})}"
-                                           class="btn btn-primary btn-block mb-2" value="Delete"/>
 
-                                    <input type="submit" th:href="@{/products/edit/{id}(id=*{id})}"
-                                           class="btn btn-danger btn-block mb-2" value="Edit"/>
+                                    <form th:method="post"
+                                          th:action="@{/products/delete/{id}(id=*{id})}">
+                                        <input type="submit"
+                                        class="btn btn-primary btn-block mb-2" value="Delete"></input>
+                                    </form>
+
+                                    <form th:method="get"
+                                    th:action="@{/products/edit/{id}(id=*{id})}">
+                                            <input type="submit"
+                                           class="btn btn-danger btn-block mb-2" value="Edit"></input>
+                                    </form>
                                 </th:block>
 
 <!--                                 todo:logic send message-->
