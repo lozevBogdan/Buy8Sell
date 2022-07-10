@@ -11,100 +11,15 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ProductDetailsViewDto {
-
-    private  Long id;
-
-    private ConditionEnum condition;
-
-    private String description;
-
-    private String title;
-
-    private BigDecimal price;
-
-    private LocationEntity location;
-
-    private UserEntity seller;
+public class ProductDetailsViewDto extends BaseProductViewModel {
 
     private Set<PictureEntity> pictures = new HashSet<>();
-
     private Set<CommentEntity> comments= new HashSet<>();
-
-    private CategoryEntity category;
-
     private Set<UserEntity> fans= new HashSet<>();
-
     private int views;
-
-    private boolean isPromo;
-
     private LocalDateTime created;
-
     private LocalDateTime modified;
 
-    public ConditionEnum getCondition() {
-        return condition;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public ProductDetailsViewDto setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public ProductDetailsViewDto setCondition(ConditionEnum condition) {
-        this.condition = condition;
-        return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public ProductDetailsViewDto setDescription(String description) {
-        this.description = description;
-        return this;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public ProductDetailsViewDto setTitle(String title) {
-        this.title = title;
-        return this;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public ProductDetailsViewDto setPrice(BigDecimal price) {
-        this.price = price;
-        return this;
-    }
-
-    public LocationEntity getLocation() {
-        return location;
-    }
-
-    public ProductDetailsViewDto setLocation(LocationEntity location) {
-        this.location = location;
-        return this;
-    }
-
-    public UserEntity getSeller() {
-        return seller;
-    }
-
-    public ProductDetailsViewDto setSeller(UserEntity seller) {
-        this.seller = seller;
-        return this;
-    }
 
     public Set<PictureEntity> getPictures() {
         return pictures;
@@ -124,15 +39,6 @@ public class ProductDetailsViewDto {
         return this;
     }
 
-    public CategoryEntity getCategory() {
-        return category;
-    }
-
-    public ProductDetailsViewDto setCategory(CategoryEntity category) {
-        this.category = category;
-        return this;
-    }
-
     public Set<UserEntity> getFans() {
         return fans;
     }
@@ -148,15 +54,6 @@ public class ProductDetailsViewDto {
 
     public ProductDetailsViewDto setViews(int views) {
         this.views = views;
-        return this;
-    }
-
-    public boolean isPromo() {
-        return isPromo;
-    }
-
-    public ProductDetailsViewDto setPromo(boolean promo) {
-        isPromo = promo;
         return this;
     }
 

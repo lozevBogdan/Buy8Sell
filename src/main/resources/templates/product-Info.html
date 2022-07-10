@@ -32,15 +32,30 @@
                 <div class="form-outline mb-2">
                     <label class="form-label" th:text="|In favorites on: *{fans.size()}|">Views</label>
                 </div>
-<!--todo: redirect to product info page when we add to favorites form infoProduct page-->
+
+
                 <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
-                    <form th:method="post"
-                          th:action="@{/users/add/favorites/{id}(id=*{id})}">
-                        <button
-                                type="submit" class="btn btn-danger bi bi-heart" >Add to favorites
-                        </button>
-                    </form>
+
+                        <div th:if="*{!isProductIsFavorInCurrentUser()}">
+                            <form th:method="post"
+                                  th:action="@{/users/add/favorites/{id}/info(id=*{id})}">
+                                <button
+                                        type="submit" class="btn btn-danger bi bi-heart" >Add to favorites
+                                </button>
+                            </form>
+                        </div>
+
+                    <div th:if="*{isProductIsFavorInCurrentUser()}">
+                        <form th:method="post"
+                              th:action="@{/users/remove/favorites/{id}/info(id=*{id})}">
+                            <button  type="submit" class="btn btn-success bi bi-heart" >
+                                Remove from favorites
+                            </button>
+                        </form>
+                    </div>
                 </th:block>
+
+
             </div>
 
 
@@ -103,7 +118,11 @@
 
                                 <!--                                 todo:logic for delete -->
                                 <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
-                                    <input type="submit" class="btn btn-primary btn-block mb-2" value="Delete"/>
+                                    <input type="submit" th:href="@{/products/delete/{id}(id=*{id})}"
+                                           class="btn btn-primary btn-block mb-2" value="Delete"/>
+
+                                    <input type="submit" th:href="@{/products/edit/{id}(id=*{id})}"
+                                           class="btn btn-danger btn-block mb-2" value="Edit"/>
                                 </th:block>
 
 <!--                                 todo:logic send message-->

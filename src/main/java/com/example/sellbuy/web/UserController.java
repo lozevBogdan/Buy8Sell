@@ -75,7 +75,6 @@ public class UserController {
 
         Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
 
-
         List<ProductSearchViewModel> productSearchViewModelList =
               this.returnFavors(favorList,id);
 
@@ -208,7 +207,26 @@ public class UserController {
         }
     }
 
+    @PostMapping("/add/favorites/{id}/info")
+    public String addFavoritesAndRedirectToInfoProductPage(@PathVariable Long id,
+                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
+        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
+
+        if(currentUser == null){
+            return "redirect:/users/login";
+        }else {
+
+            ProductEntity product = this.productService.findById(id);
+            product.getFans().add(currentUser);
+            this.productService.addProductEntity(product);
+
+            currentUser.getFavoriteProducts().add(product);
+            currentUser = this.userService.addInDb(currentUser);
+            System.out.println();
+            return  String.format("redirect:/products/info/%d",id);
+        }
+    }
 
     @PostMapping("/remove/favorites/{id}")
     public String removeFromFavorites(@PathVariable Long id,
@@ -240,7 +258,6 @@ public class UserController {
         if(currentUser == null){
             return "redirect:/users/login";
         }else {
-
             ProductEntity product = this.productService.findById(id);
             product.getFans().remove(currentUser);
             this.productService.addProductEntity(product);
@@ -249,6 +266,25 @@ public class UserController {
 
             currentUser = this.userService.addInDb(currentUser);
             return "redirect:/products/all";
+        }
+    }
+
+    @PostMapping("/remove/favorites/{id}/info")
+    public String removeFromFavoritesAndRedirectToInfoPageProduct(@PathVariable Long id,
+                                                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+
+        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
+
+        if(currentUser == null){
+            return "redirect:/users/login";
+        }else {
+            ProductEntity product = this.productService.findById(id);
+            product.getFans().remove(currentUser);
+            this.productService.addProductEntity(product);
+            currentUser.getFavoriteProducts().remove(product);
+
+            currentUser = this.userService.addInDb(currentUser);
+            return String.format("redirect:/products/info/%d",id);
         }
     }
 

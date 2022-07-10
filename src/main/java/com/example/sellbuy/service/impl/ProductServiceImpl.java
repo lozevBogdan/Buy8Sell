@@ -7,6 +7,7 @@ import com.example.sellbuy.model.entity.enums.CategoryEnum;
 import com.example.sellbuy.model.entity.enums.ConditionEnum;
 import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.model.entity.enums.OrderBYEnum;
+import com.example.sellbuy.model.view.BaseProductViewModel;
 import com.example.sellbuy.model.view.ProductSearchViewModel;
 import com.example.sellbuy.repository.ProductRepository;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
@@ -205,15 +206,15 @@ public class ProductServiceImpl implements ProductService {
          }
              productSearchViewModel.setMainPicture(pictureUrl);
          //todo: cheking forn null @AuthenticationPrincipal!!!!!!!!
-            UserEntity currentLoggedInUserEntity = this.userService.getCurrentLoggedInUserEntityById(idPrincipal);
+            UserEntity currentLoggedInUserEntity =
+                    this.userService.getCurrentLoggedInUserEntityById(idPrincipal);
+
             // Check for favorites products for current user
          if(currentLoggedInUserEntity != null){
-
              Set<ProductEntity> favoriteProducts = currentLoggedInUserEntity.getFavoriteProducts();
-
              if(isConsist(favoriteProducts,product)){
                  productSearchViewModel.setProductIsFavorInCurrentUser(true);
-                 System.out.println();
+
              }
          }
            returnedList.add(productSearchViewModel);
@@ -234,7 +235,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     public boolean isConsist(Set<ProductEntity> productEntitySet, ProductEntity product){
+        for (ProductEntity productEntity : productEntitySet) {
+            if(productEntity.getId() == product.getId()){
+                return true;
+            }
+        }
 
+        return false;
+    }
+
+    public boolean isConsist(Set<ProductEntity> productEntitySet, BaseProductViewModel product){
         for (ProductEntity productEntity : productEntitySet) {
             if(productEntity.getId() == product.getId()){
                 return true;

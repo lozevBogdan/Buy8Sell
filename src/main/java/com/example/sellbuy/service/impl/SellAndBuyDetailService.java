@@ -9,7 +9,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 //@Service - this is in case we dont inject Bean in SecurityConfig
@@ -41,8 +40,8 @@ public class SellAndBuyDetailService implements UserDetailsService {
                         getRoles().
                         stream().
                         map(this::mapToGrantedAuthority).
-                        collect(Collectors.toList())
-        );
+                        collect(Collectors.toList()),
+                userEntity.getFavoriteProducts());
     }
 
     private GrantedAuthority mapToGrantedAuthority(UserRoleEntity userRole) {
