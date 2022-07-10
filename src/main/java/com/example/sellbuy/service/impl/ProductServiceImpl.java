@@ -15,6 +15,7 @@ import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.*;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -48,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
         this.commentsService = commentsService;
     }
 
+    @Transactional
     @Override
     public void initializeProducts() {
 
@@ -66,11 +68,10 @@ public class ProductServiceImpl implements ProductService {
                     setDescription("Perfect! German quality!").
                     setPrice(BigDecimal.valueOf(1500)).
                     setLocation(location).
-                    setSeller(lozev).
-                    setPictures((Set.of(picture1))).
+                    setSeller(lozev).setPicture(picture1).
                     setTitle("shampoo").
-                    setCategory(category);
-            picture1.setProduct(product1);
+                    setCategory(category).
+                    setPicture(picture1);
 
             productRepository.save(product1);
         }
@@ -85,8 +86,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity addProductBindingModel(ProductAddBindingModel
-                                                            productAddBindingModel, SellAndBuyUserDetails sellAndBuyUser) {
+    public ProductEntity addProductBindingModel(ProductAddBindingModel productAddBindingModel,
+                                            @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
         ProductEntity newProduct =
                 this.modelMapper.map(productAddBindingModel,ProductEntity.class);
 
@@ -96,7 +97,8 @@ public class ProductServiceImpl implements ProductService {
         UserEntity seller =
                 this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
 
-        LocationEntity location = this.locationService.findByLocation(productAddBindingModel.getLocation());
+        LocationEntity location = this.locationService.
+                findByLocation(productAddBindingModel.getLocation());
 
         newProduct.
                 setSeller(seller).
@@ -106,17 +108,21 @@ public class ProductServiceImpl implements ProductService {
         //categoryEntity.getProducts().add(newProduct);
 
         PictureEntity pictureEntity = new PictureEntity();
-        pictureEntity.
-                setProduct(newProduct).
-                setUrl(productAddBindingModel.getUrlPicture());
+        pictureEntity.setProduct(newProduct);
 
-        newProduct.getPictures().add(pictureEntity);
+        if(productAddBindingModel.getUrlPicture() == null){
+            pictureEntity.setUrl("https://main.admin.forth.gr/files/site/no-image.png");
+        }else {
+            pictureEntity.setUrl(productAddBindingModel.getUrlPicture());
+        }
 
-         newProduct = this.productRepository.save(newProduct);
+        newProduct.setPicture(pictureEntity);
 
-        pictureEntity = this.pictureService.addPictureInDb(pictureEntity);
+        newProduct = this.productRepository.save(newProduct);
 
-        this.categoryService.updateCategory(categoryEntity);
+        //pictureEntity = this.pictureService.addPictureInDb(pictureEntity);
+
+     //   this.categoryService.updateCategory(categoryEntity);
 
         return newProduct;
     }
@@ -199,10 +205,10 @@ public class ProductServiceImpl implements ProductService {
          ProductSearchViewModel productSearchViewModel =
                  this.modelMapper.map(product, ProductSearchViewModel.class);
          String pictureUrl;
-         if(product.getPictures().size() == 0){
+         if(product.getPicture() == null){
                  pictureUrl="https://main.admin.forth.gr/files/site/no-image.png";
          }else {
-             pictureUrl = product.getPictures().stream().findFirst().get().getUrl();
+             pictureUrl = product.getPicture().getUrl();
          }
              productSearchViewModel.setMainPicture(pictureUrl);
          //todo: cheking forn null @AuthenticationPrincipal!!!!!!!!
@@ -260,13 +266,13 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProductById(Long id) {
 
         // with those activities, we avoid to use CascadeType between entities.
-
+// todo: make this with use CascadeTypeAll an mapped by in other side
         ProductEntity productForDeleted =
                 this.productRepository.
                         findById(id).get();
 
        // productForDeleted.setCategory(null);
-
+            //todo: delete method doesnt work
         this.pictureService.deleteByProductId(id);
         this.commentsService.deleteByProductId(id);
         this.categoryService.deleteByProductId(id);
@@ -308,7 +314,6 @@ public class ProductServiceImpl implements ProductService {
         LocationEntity location = this.locationService.findByLocation(newData.getLocation());
 
         //todo: should become a only one picture, NOT Set<>;
-        Set<PictureEntity> pictures = new HashSet<>();
 
         oldVersion.
                 setTitle(newData.getTitle()).
@@ -319,6 +324,7 @@ public class ProductServiceImpl implements ProductService {
                 setLocation(location).
                 setPromo(newData.getIsPromo());
 
+
         Optional<PictureEntity> picture =
                 this.pictureService.findByUrl(newData.getUrlPicture());
 
@@ -327,18 +333,14 @@ public class ProductServiceImpl implements ProductService {
             newPicture.
                     setUrl(newData.getUrlPicture()).
                     setProduct(oldVersion);
-            pictures.add(newPicture);
-            oldVersion.setPictures(pictures);
-
+            Long oldPictureId = oldVersion.getPicture().getId();
+            oldVersion.setPicture(newPicture);
             //todo: here should delete a old picture from db
-            this.pictureService.deletePictureById
-            (this.pictureService.findByProductId(oldVersion.getId()).getId());
+            this.pictureService.deleteOldPictureById(oldPictureId);
 
             newPicture = this.pictureService.addPictureInDb(newPicture);
-        }else {
-            pictures.add(picture.get());
-            oldVersion.setPictures(pictures);
         }
+
         oldVersion.setModified(LocalDateTime.now());
         return this.productRepository.save(oldVersion);
     }

@@ -8,7 +8,7 @@ import java.util.Set;
 
 public class ProductDetailsViewDto extends BaseProductViewModel {
 
-    private Set<PictureEntity> pictures = new HashSet<>();
+    private PictureEntity picture;
     private Set<CommentEntity> comments= new HashSet<>();
     private Set<UserEntity> fans= new HashSet<>();
     private int views;
@@ -16,12 +16,12 @@ public class ProductDetailsViewDto extends BaseProductViewModel {
     private LocalDateTime modified;
 
 
-    public Set<PictureEntity> getPictures() {
-        return pictures;
+    public PictureEntity getPicture() {
+        return picture;
     }
 
-    public ProductDetailsViewDto setPictures(Set<PictureEntity> pictures) {
-        this.pictures = pictures;
+    public ProductDetailsViewDto setPicture(PictureEntity picture) {
+        this.picture = picture;
         return this;
     }
 

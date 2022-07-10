@@ -1,7 +1,6 @@
 package com.example.sellbuy.service;
 
 import com.example.sellbuy.model.entity.PictureEntity;
-import com.example.sellbuy.model.entity.ProductEntity;
 
 import java.util.Optional;
 
@@ -21,5 +20,5 @@ public interface PictureService {
 
    Optional <PictureEntity> findByUrl(String urlPicture);
 
-    void deletePictureById(Long id);
+    void deleteOldPictureById(Long id);
 }

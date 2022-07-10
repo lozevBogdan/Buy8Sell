@@ -45,7 +45,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryEntity updateCategory(CategoryEntity category) {
-
         return categoryRepository.save(category);
     }
 
@@ -68,4 +67,6 @@ public class CategoryServiceImpl implements CategoryService {
 //        this.updateCategory(categoryEntity);
 
     }
+
+
 }

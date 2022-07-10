@@ -13,4 +13,7 @@ public interface CategoryService {
     CategoryEntity updateCategory(CategoryEntity category);
 
     void deleteByProductId(Long id);
+
+
+
 }

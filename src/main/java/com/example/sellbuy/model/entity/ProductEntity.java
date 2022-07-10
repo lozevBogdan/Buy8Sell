@@ -32,8 +32,9 @@ public class ProductEntity extends BaseEntity {
     @ManyToOne
     private UserEntity seller;
 
-    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
-    private Set<PictureEntity> pictures = new HashSet<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "picture_id",referencedColumnName = "id")
+    private PictureEntity picture;
 
     @OneToMany(mappedBy = "productEntity",fetch = FetchType.EAGER)
     private Set<CommentEntity> comments= new HashSet<>();
@@ -107,12 +108,12 @@ public class ProductEntity extends BaseEntity {
         return this;
     }
 
-    public Set<PictureEntity> getPictures() {
-        return pictures;
+    public PictureEntity getPicture() {
+        return picture;
     }
 
-    public ProductEntity setPictures(Set<PictureEntity> pictures) {
-        this.pictures = pictures;
+    public ProductEntity setPicture(PictureEntity picture) {
+        this.picture = picture;
         return this;
     }
 

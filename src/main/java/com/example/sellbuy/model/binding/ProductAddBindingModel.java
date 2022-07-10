@@ -29,7 +29,6 @@ public class ProductAddBindingModel {
     @NotNull
     private LocationEnum location;
 
-
     private String urlPicture;
 
     @NotNull

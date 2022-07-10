@@ -10,7 +10,7 @@ public class PictureEntity extends BaseEntity {
     @Lob
     private String url;
 
-    @ManyToOne
+    @OneToOne(mappedBy = "picture")
     private ProductEntity product;
 
     public PictureEntity() {

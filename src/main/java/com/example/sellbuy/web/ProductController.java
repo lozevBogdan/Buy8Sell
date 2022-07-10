@@ -77,7 +77,7 @@ public class ProductController {
         return "add-new-product";
     }
 
-
+//todo:make a delete post !!!!!!!
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id,
                                 @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
@@ -116,7 +116,8 @@ public class ProductController {
             return "redirect:/products/edit/" + id;
         }
 
-       ProductEntity updatedProduct =  this.productService.updateProductById(id,productEditViewModel);
+       ProductEntity updatedProduct =
+               this.productService.updateProductById(id,productEditViewModel);
 
 
         //todo
@@ -141,6 +142,7 @@ public class ProductController {
 //            }
 //        }
         model.addAttribute("productInfoView",productInfoView);
+       //todo: include modified data!!!
         model.addAttribute("created",productInfoView.getCreated());
         return "product-Info";
     }
