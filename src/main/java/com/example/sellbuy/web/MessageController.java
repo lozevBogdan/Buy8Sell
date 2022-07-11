@@ -45,6 +45,8 @@ public class MessageController {
             System.out.println();
             return "redirect:/products/info/" + productId ;
         }
+
+        //todo: refactor like move in message service
         UserEntity sender = this.userService.findById(sellAndBuyUser.getId());
         UserEntity receiver = this.userService.findById(receiverId);
 
