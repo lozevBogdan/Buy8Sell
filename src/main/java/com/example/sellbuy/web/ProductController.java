@@ -1,6 +1,7 @@
 package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.binding.CommentBindingDto;
+import com.example.sellbuy.model.binding.MessageBindingModel;
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
@@ -45,6 +46,11 @@ public class ProductController {
     @ModelAttribute
     public ProductAddBindingModel productAddBindingModel(){
         return new ProductAddBindingModel();
+    }
+
+    @ModelAttribute
+    public MessageBindingModel messageBindingModel(){
+        return new MessageBindingModel();
     }
 
     @ModelAttribute
@@ -127,8 +133,8 @@ public class ProductController {
     @GetMapping("/info/{id}")
     public String productInfo(@PathVariable Long id,Model model,
                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
-        ProductDetailsViewDto productInfoView = this.getAndIncreaseViewsProductById(id);
 
+        ProductDetailsViewDto productInfoView = this.getAndIncreaseViewsProductById(id);
        if(productService.isConsist(this.userService.findById(sellAndBuyUser.getId()).
                        getFavoriteProducts(),productInfoView)) {
            productInfoView.setProductIsFavorInCurrentUser(true);

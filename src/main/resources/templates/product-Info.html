@@ -113,7 +113,8 @@
                                     <strong class="form-label" th:text="*{seller.getMobileNumber()}"></strong>
                                 </div>
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Created: ${#temporals.format(created,'dd-MM-yyyy HH:mm')}|">Created</label>
+                                    <label class="form-label" th:text="|Created: ${#temporals.format(created,'dd-MM-yyyy HH:mm')}|"
+                                    >Created</label>
                                 </div>
 
                                 <!--                                 todo:logic for delete -->
@@ -133,11 +134,20 @@
                                 </th:block>
 
 <!--                                 todo:logic send message-->
-                                <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
-                                    <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
+                                <th:block  th:if="*{!seller.email.equals(#authentication.principal.username)}">
+                                    <form th:object="${messageBindingModel}"
+                                          th:method="post"
+                                          th:action="@{/messages/send/{receiverId}/{productId}(receiverId=${productInfoView.seller.id},productId=${productInfoView.getId()})}">
+
+                                        <textarea th:field="*{message}"
+                                                  th:errorclass = "is-invalid"
+                                                  type="text" class="form-control" placeholder="Write your message..."></textarea>
+                                        <small  class="invalid-feedback text-danger">Comment content can NOT be null!</small>
+                                        <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
+                                        <a th:if="${isSend}" class="text-bg-success text-center">
+                                            You have successfully sent the message!</a>
+                                    </form>
                                 </th:block>
-
-
                             </div>
                         </div>
                     </div>
