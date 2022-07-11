@@ -49,7 +49,7 @@ public class MessageController {
         MessageEntity message =
                 this.messageService.
                         createAndSave(messageBindingModel, productId, receiverId, sellAndBuyUser.getId());
-        System.out.println();
+
         redirectAttributes.addFlashAttribute("isSend", true);
         return "redirect:/products/info/" + productId ;
     }
