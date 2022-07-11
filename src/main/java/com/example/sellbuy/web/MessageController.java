@@ -42,21 +42,14 @@ public class MessageController {
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.messageBindingModel",
                     bindingResult);
-            System.out.println();
             return "redirect:/products/info/" + productId ;
         }
 
         //todo: refactor like move in message service
-        UserEntity sender = this.userService.findById(sellAndBuyUser.getId());
-        UserEntity receiver = this.userService.findById(receiverId);
-
-        MessageEntity message = new MessageEntity();
-        message.
-                setMessage(messageBindingModel.getMessage()).
-                setReceiver(receiver).setSender(sender);
-
-
-        message = this.messageService.addInDb(message);
+        MessageEntity message =
+                this.messageService.
+                        createAndSave(messageBindingModel, productId, receiverId, sellAndBuyUser.getId());
+        System.out.println();
         redirectAttributes.addFlashAttribute("isSend", true);
         return "redirect:/products/info/" + productId ;
     }
