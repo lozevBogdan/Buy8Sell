@@ -273,12 +273,12 @@ public class ProductServiceImpl implements ProductService {
 
        // productForDeleted.setCategory(null);
             //todo: delete method doesnt work
-        this.pictureService.deleteByProductId(id);
-        this.commentsService.deleteByProductId(id);
-        this.categoryService.deleteByProductId(id);
-        this.userService.deleteByProductIdFrom(productForDeleted);
 
+        this.commentsService.deleteByProductId(id);
+       // this.categoryService.deleteByProductId(id);
+        this.userService.deleteByProductIdFrom(productForDeleted);
         this.productRepository.deleteById(id);
+        this.pictureService.deleteByProductId(id);
     }
 
     @Override

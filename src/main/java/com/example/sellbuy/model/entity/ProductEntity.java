@@ -33,7 +33,10 @@ public class ProductEntity extends BaseEntity {
     private UserEntity seller;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "picture_id",referencedColumnName = "id")
+    @JoinTable(name = "products_id_pictures_id",
+            joinColumns = {
+            @JoinColumn(name = "product_id",referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "picture_id",referencedColumnName = "id") })
     private PictureEntity picture;
 
     @OneToMany(mappedBy = "productEntity",fetch = FetchType.EAGER)

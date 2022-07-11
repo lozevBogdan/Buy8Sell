@@ -6,6 +6,7 @@ import com.example.sellbuy.repository.PictureRepository;
 import com.example.sellbuy.service.PictureService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -44,6 +45,7 @@ public class PictureServiceImpl implements PictureService {
 
         return this.pictureRepository.save(pictureEntity);
     }
+
 
     @Override
     public void deleteByProductId(Long id) {

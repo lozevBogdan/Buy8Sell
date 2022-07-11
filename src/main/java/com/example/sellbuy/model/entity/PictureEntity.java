@@ -10,7 +10,7 @@ public class PictureEntity extends BaseEntity {
     @Lob
     private String url;
 
-    @OneToOne(mappedBy = "picture")
+    @OneToOne(mappedBy = "picture",cascade = CascadeType.ALL, orphanRemoval = true)
     private ProductEntity product;
 
     public PictureEntity() {
