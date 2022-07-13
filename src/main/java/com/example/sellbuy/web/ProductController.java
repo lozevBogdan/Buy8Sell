@@ -219,6 +219,15 @@ public class ProductController {
         return "all-products";
     }
 
+    //EXAMPLE FOR REQUEST PARAM
+    // TODO:  TO IMPLEMENT REDIRECT WITH CHOOSEN CATEGORY TO ALL PRODUCT PAGE
+    @GetMapping
+    public String indexRedirect(
+            @RequestParam(value = "category",required = false) String category){
+        System.out.println(category);
+        return null;
+    }
+
 
 
 }
