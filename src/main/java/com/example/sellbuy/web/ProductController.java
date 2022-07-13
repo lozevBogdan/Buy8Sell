@@ -225,6 +225,22 @@ public class ProductController {
     public String indexRedirect(
             @RequestParam(value = "category",required = false) String category){
         System.out.println(category);
+
+        switch (category){
+            case "HOUSEHOLD":
+                //todo:
+                ;
+            case "FASHION":
+                //todo:
+                ;
+            case "SERVICES":
+                //todo:
+                ;
+            case "PROPERTY":
+                //todo:
+                ;
+        }
+
         return null;
     }
 
