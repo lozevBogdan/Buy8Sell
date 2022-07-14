@@ -8,6 +8,7 @@ import com.example.sellbuy.model.entity.enums.ConditionEnum;
 import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.model.entity.enums.OrderBYEnum;
 import com.example.sellbuy.model.view.productViews.BaseProductViewModel;
+import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
 import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.repository.ProductRepository;
@@ -197,7 +198,6 @@ public class ProductServiceImpl implements ProductService {
                 case CHEAPEST:
                     allProducts.
                             sort((a,b)->(b.getPrice().intValue())-(a.getPrice().intValue()));
-
             }
         }
 
@@ -225,8 +225,6 @@ public class ProductServiceImpl implements ProductService {
          }
            returnedList.add(productSearchViewModel);
         }
-
-
         return returnedList;
     }
 
@@ -246,7 +244,6 @@ public class ProductServiceImpl implements ProductService {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -256,7 +253,6 @@ public class ProductServiceImpl implements ProductService {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -313,8 +309,6 @@ public class ProductServiceImpl implements ProductService {
         CategoryEntity category = this.categoryService.findByCategory(newData.getCategory());
         LocationEntity location = this.locationService.findByLocation(newData.getLocation());
 
-        //todo: should become a only one picture, NOT Set<>;
-
         oldVersion.
                 setTitle(newData.getTitle()).
                 setCondition(newData.getCondition()).
@@ -344,4 +338,14 @@ public class ProductServiceImpl implements ProductService {
         oldVersion.setModified(LocalDateTime.now());
         return this.productRepository.save(oldVersion);
     }
+
+    @Override
+    public ProductDetailsViewDto getAndIncreaseViewsProductById(Long id){
+        ProductEntity currentProduct = this.findById(id);
+        currentProduct.setViews(currentProduct.getViews() + 1);
+        currentProduct = this.addProductEntity(currentProduct);
+        return this.modelMapper.map(currentProduct, ProductDetailsViewDto.class);
+    }
+
+
 }

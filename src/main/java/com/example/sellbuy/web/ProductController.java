@@ -44,6 +44,7 @@ public class ProductController {
     public CommentBindingDto commentBindingDto(){
         return new CommentBindingDto();
     }
+
     @ModelAttribute
     public ProductAddBindingModel productAddBindingModel(){
         return new ProductAddBindingModel();
@@ -59,25 +60,17 @@ public class ProductController {
         return new ProductSearchingBindingModel();
     }
 
-//    @ModelAttribute
-//    public List<ProductSearchViewModel> productSearchViewModelList(){
-//        return new LinkedList<>();
-//    }
-
     @GetMapping("/all")
     public String productsPage(Model model,
                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         List<ProductSearchViewModel> productSearchViewModelList =
                 this.productService.filterBy(new ProductSearchingBindingModel(), sellAndBuyUser.getId());
-
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
         }
         return "all-products";
     }
-
-
 
     @GetMapping("/add")
     public String allProducts(){
@@ -88,9 +81,9 @@ public class ProductController {
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id,
                                 @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+
         this.productService.deleteProductById(id);
-        return String.format("redirect:/users/%d/products",
-                sellAndBuyUser.getId());
+        return String.format("redirect:/users/%d/products",sellAndBuyUser.getId());
     }
 
     @GetMapping("/edit/{id}")
@@ -101,7 +94,6 @@ public class ProductController {
         if(!model.containsAttribute("productEditViewModel")){
             model.addAttribute("productEditViewModel",productEditViewModel);
         }
-
         return "edit-product";
     }
 
@@ -119,15 +111,10 @@ public class ProductController {
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.productEditViewModel",
                     bindingResult);
-
             return "redirect:/products/edit/" + id;
         }
-
        ProductEntity updatedProduct =
                this.productService.updateProductById(id,productEditViewModel);
-
-
-        //todo
         return "redirect:/products/info/" + id;
     }
 
@@ -135,32 +122,16 @@ public class ProductController {
     public String productInfo(@PathVariable Long id,Model model,
                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
-        ProductDetailsViewDto productInfoView = this.getAndIncreaseViewsProductById(id);
+        ProductDetailsViewDto productInfoView = this.productService.getAndIncreaseViewsProductById(id);
+
        if(productService.isConsist(this.userService.findById(sellAndBuyUser.getId()).
                        getFavoriteProducts(),productInfoView)) {
            productInfoView.setProductIsFavorInCurrentUser(true);
        }
-
-//        for (ProductEntity product : this.userService.findById(sellAndBuyUser.getId()).
-//                getFavoriteProducts()) {
-//            if(Objects.equals(product.getId(), productInfoView.getId())){
-//                System.out.println();
-//                productInfoView.setProductIsFavorInCurrentUser(true);
-//            }
-//        }
         model.addAttribute("productInfoView",productInfoView);
        //todo: include modified data!!!
         model.addAttribute("created",productInfoView.getCreated());
         return "product-Info";
-    }
-
-    private ProductDetailsViewDto getAndIncreaseViewsProductById(Long id){
-        ProductEntity currentProduct = this.productService.findById(id);
-        currentProduct.setViews(currentProduct.getViews() + 1);
-        currentProduct = this.productService.addProductEntity(currentProduct);
-        ProductDetailsViewDto productDetailsViewDto =
-                this.modelMapper.map(currentProduct, ProductDetailsViewDto.class);
-        return productDetailsViewDto;
     }
 
     @PostMapping("/add")
@@ -169,8 +140,6 @@ public class ProductController {
                       BindingResult bindingResult,
                       RedirectAttributes redirectAttributes,
                       @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
-        
-        //                  todo : get id of user from Principal!!!!
 
         productAddBindingModel.setPromo(isPromo);
 
@@ -202,9 +171,7 @@ public class ProductController {
             productSearchingBindingModel.setCategory(CategoryEnum.valueOf(category));
         }
 
-
         if (productSearchingBindingModel.getMin() != null && productSearchingBindingModel.getMax() != null) {
-
             isMinBiggerThanMax =
                     productSearchingBindingModel.getMin() > productSearchingBindingModel.getMax();
         }
@@ -217,10 +184,8 @@ public class ProductController {
 
             return "redirect:/products/all";
         }
-
         List<ProductSearchViewModel> productSearchViewModelList =
                 this.productService.filterBy(productSearchingBindingModel,sellAndBuyUser.getId());
-
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
 
         return "all-products";
