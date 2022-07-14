@@ -5,6 +5,7 @@ import com.example.sellbuy.model.binding.MessageBindingModel;
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
+import com.example.sellbuy.model.entity.enums.CategoryEnum;
 import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
 import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
@@ -192,9 +193,15 @@ public class ProductController {
     public String all(@Valid ProductSearchingBindingModel productSearchingBindingModel,
                         BindingResult bindingResult,
                         RedirectAttributes redirectAttributes,
-                        Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+                        Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
+                      @RequestParam(value = "category",required = false) String category){
 
         boolean isMinBiggerThanMax = false;
+
+        if (category != ""){
+            productSearchingBindingModel.setCategory(CategoryEnum.valueOf(category));
+        }
+
 
         if (productSearchingBindingModel.getMin() != null && productSearchingBindingModel.getMax() != null) {
 
@@ -220,29 +227,39 @@ public class ProductController {
     }
 
     //EXAMPLE FOR REQUEST PARAM
-    // TODO:  TO IMPLEMENT REDIRECT WITH CHOOSEN CATEGORY TO ALL PRODUCT PAGE
-    @GetMapping
-    public String indexRedirect(
-            @RequestParam(value = "category",required = false) String category){
-        System.out.println(category);
 
-        switch (category){
-            case "HOUSEHOLD":
-                //todo:
-                ;
-            case "FASHION":
-                //todo:
-                ;
-            case "SERVICES":
-                //todo:
-                ;
-            case "PROPERTY":
-                //todo:
-                ;
-        }
-
-        return null;
-    }
+//    @GetMapping
+//    public String indexRedirect(
+//            @RequestParam(value = "category",required = false) String category, RedirectAttributes redirectAttributes){
+//
+//        CategoryEnum categoryEnum = null;
+//
+//        switch (category){
+//            case "HOUSEHOLD":
+//                categoryEnum = CategoryEnum.HOUSEHOLD;
+//            case "FASHION":
+//                categoryEnum = CategoryEnum.FASHION;
+//            case "SERVICES":
+//                categoryEnum = CategoryEnum.SERVICES;
+//            case "PROPERTY":
+//                categoryEnum = CategoryEnum.PROPERTIES;
+//            case "ELECTRONICS":
+//                categoryEnum = CategoryEnum.ELECTRONICS;
+//            case "VEHICLES":
+//                categoryEnum = CategoryEnum.VEHICLES;
+//            case "ANIMALS":
+//                categoryEnum = CategoryEnum.ANIMALS;
+//            case "OTHERS":
+//                categoryEnum = CategoryEnum.OTHER;
+//        }
+//
+//        ProductSearchingBindingModel productSearchingBindingModel = new ProductSearchingBindingModel();
+//        productSearchingBindingModel.setCategory(categoryEnum);
+//
+//        redirectAttributes.addFlashAttribute("productSearchingBindingModel", productSearchingBindingModel);
+//
+//        return "redirect:/products/all";
+//    }
 
 
 

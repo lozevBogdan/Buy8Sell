@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
             LocationEntity location =
                     this.locationService.findByLocation(LocationEnum.SOFIA_GRAD);
 
-            CategoryEntity category = this.categoryService.findByCategory(CategoryEnum.HOME);
+            CategoryEntity category = this.categoryService.findByCategory(CategoryEnum.HOUSEHOLD);
 
             product1.
                     setCondition(ConditionEnum.NEW).
