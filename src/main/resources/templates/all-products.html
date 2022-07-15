@@ -79,7 +79,7 @@
                                         name="style"
                                         th:errorclass="'is-invalid alert-danger'"
                                         th:field="*{location}">
-                                    <option value="">All</option>
+                                    <option value="">All LOCATIONS</option>
                                     <option th:each=" location : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
                                             th:text="${location}" th:value="${location}">Location
                                     </option>
@@ -105,7 +105,7 @@
                                 <label>CATEGORY</label>
                                 <select class="browser-default custom-select"
                                         name="style" th:errorclass="'is-invalid alert-danger'" th:field="*{category}">
-                                    <option value="">SELECT CATEGORY</option>
+                                    <option value="">ALL CATEGORIES</option>
                                     <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
                                             th:text="${category}" th:value="${category}">Category
                                     </option>
