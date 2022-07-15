@@ -141,6 +141,7 @@ public class ProductController {
                       RedirectAttributes redirectAttributes,
                       @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
+        //todo; cheking for null picture !!!!!
         productAddBindingModel.setPromo(isPromo);
 
         if (bindingResult.hasErrors()) {
