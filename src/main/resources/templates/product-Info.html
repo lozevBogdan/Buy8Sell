@@ -66,39 +66,42 @@
                 <div class="col-md-12">
                     <div class="card px-5 py-5" id="form1">
                         <!-- Title  -->
-                        <h2     th:text="*{title}"
-                                class="text-center"
-                                text="title of product">Title of product</h2>
+                        <strong     th:text="*{title}" class="text-center" text="title of product">Title of product</strong>
                         <div class="form-data">
 
                             <div>
                                 <!-- Condition -->
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Condition: *{condition.name()}|">Condition</label>
+                                    <strong class="form-label" >Condition:</strong>
+                                    <label class="form-label" th:text="*{condition.name()}">Condition</label>
                                 </div>
 
                                 <!-- Category input -->
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Category: *{category.category.name()}|">Category</label>
+                                    <strong class="form-label" >Category:</strong>
+                                    <label class="form-label" th:text="*{category.category.name()}">Category</label>
                                 </div>
 
 
                                 <!-- description input -->
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Description: *{description}|">Description</label>
+                                    <strong class="form-label" >Description:</strong>
+                                    <label class="form-label" th:text="*{description}">Description</label>
                                 </div>
 
                                 <!--  Price -->
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Price: *{price}|">Price</label>
+                                    <strong class="form-label">Price:</strong>
+                                    <label class="form-label" th:text="*{price}">Price</label>
                                 </div>
 
                                 <!-- Location input -->
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" th:text="|Location: *{location.location.name()}|">Location</label>
+                                    <strong class="form-label" >Location:</strong>
+                                    <label class="form-label" th:text="*{location.location.name()}"></label>
                                 </div>
 
                                 <div th:if="*{isPromo()}" class="form-outline mb-2">
@@ -109,8 +112,8 @@
                                 </div>
 
                                 <div class="form-outline mb-2">
-                                    <label class="form-label" >Number for contact with seller:</label>
-                                    <strong class="form-label" th:text="*{seller.getMobileNumber()}"></strong>
+                                    <strong class="form-label" >Number for contact with seller:</strong>
+                                    <label class="form-label" th:text="*{seller.getMobileNumber()}"></label>
                                 </div>
                                 <div class="form-outline mb-2">
                                     <label class="form-label" th:text="|Created: ${#temporals.format(created,'dd-MM-yyyy HH:mm')}|"
