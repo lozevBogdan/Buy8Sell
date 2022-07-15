@@ -285,7 +285,7 @@ public class ProductServiceImpl implements ProductService {
         if(title != null){
             allProducts = allProducts.
                     stream().
-                    filter(p->p.getTitle().contains(title)).
+                    filter(p->p.getTitle().toLowerCase().contains(title.toLowerCase())).
                     collect(Collectors.toList());
         }
 
