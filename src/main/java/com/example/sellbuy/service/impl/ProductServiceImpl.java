@@ -117,6 +117,7 @@ public class ProductServiceImpl implements ProductService {
                     setLocation(locationSofiaGrad).
                     setSeller(lozev).
                     setPicture(bmw320DPicture).
+                    setPromo(true).
                     setTitle("BMW 320d").
                     setCategory(categoryVehicles);
 
@@ -147,6 +148,7 @@ public class ProductServiceImpl implements ProductService {
                     setLocation(locationKustendil).
                     setSeller(ivan).
                     setPicture(saucepanPicture).
+                    setPromo(true).
                     setTitle("Saucepan").
                     setCategory(categoryHouseHold);
 
@@ -167,6 +169,7 @@ public class ProductServiceImpl implements ProductService {
                     setLocation(locationVarna).
                     setSeller(petyr).
                     setPicture(nokia3230Picture).
+                    setPromo(true).
                     setTitle("NOKIA 3230").
                     setCategory(categoryElectronics);
 
@@ -209,6 +212,7 @@ public class ProductServiceImpl implements ProductService {
                     setLocation(locationSofiaGrad).
                     setSeller(petyr).
                     setPicture(labradorPicture).
+                    setPromo(true).
                     setTitle("Labrador 2 years old").
                     setCategory(categoryAnimals);
 
