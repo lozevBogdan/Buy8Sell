@@ -24,82 +24,102 @@
 
 <div class="container bootdey">
 
-    <div class="col-md-3">
+    <div class="row mb-4">
 
         <section class="panel">
 
             <div class="panel-body">
 
-                <form th:action="@{/products/all}"
+                <form role="form product-form"
+                      th:action="@{/products/all}"
                       th:method="post"
-                      th:object="${productSearchingBindingModel}"
-
-                      role="form product-form">
-
-                    <div class="form-group">
-                        <label>SEARCH</label>
-                        <input th:field="*{title}"
-                                type="text" placeholder="Search by title" class="form-control" />
-                    </div>
-
-                    <div class="form-group">
-                        <label>PRICE</label>
-                        <input th:field="*{min}"
-                               th:errorclass="is-invalid"
-                                type="number" placeholder="Minimum price" class="form-control" />
-                        <small class="invalid-feedback text-danger">Minimum price should be bigger than zero! </small>
-
-                        <input th:field="*{max}"
-                               th:errorclass="is-invalid"
-                                type="number" placeholder="Maximim price" class="form-control" />
-                        <small class="invalid-feedback text-danger">Maximum price should be bigger than zero! </small>
-                        <small th:if="${isMinBiggerThanMax}" class="text-danger">Maximum price should be bigger than minimum! </small>
-                    </div>
+                      th:object="${productSearchingBindingModel}">
 
 
+                    <div id="rol2">
 
-                    <div class="form-group">
-                        <div class="text-white label-holder d-flex justify-content-center">
-                            <label for="style" class="h4 mb-2">Style</label>
+                        <div class="float-left">
+                            <div class="form-group ">
+                                <label>SEARCH</label>
+                                <input class="form-control"
+                                       placeholder="Search by title"
+                                       th:field="*{title}" type="text"/>
+                            </div>
                         </div>
-                        <label>CATEGORY</label>
-                        <select th:field="*{category}"
-                                th:errorclass="'is-invalid alert-danger'"
-                                class="browser-default custom-select" id="style" name="style">
-                            <option value="">SELECT CATEGORY</option>
-                            <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
-                                    th:value="${category}" th:text="${category}">Category</option>
-                        </select>
+
+                        <div class="float-left" >
+                            <div class="form-group">
+                                <label>PRICE</label>
+                                <input class="form-control"
+                                       placeholder="Minimum price"
+                                       th:errorclass="is-invalid" th:field="*{min}" type="number"/>
+                                <small class="invalid-feedback text-danger">Minimum price should be bigger than
+                                    zero! </small>
+
+                                <input class="form-control"
+                                       placeholder="Maximim price"
+                                       th:errorclass="is-invalid" th:field="*{max}" type="number"/>
+                                <small class="invalid-feedback text-danger">Maximum price should be bigger than
+                                    zero! </small>
+                                <small class="text-danger" th:if="${isMinBiggerThanMax}">Maximum price should be
+                                    bigger
+                                    than
+                                    minimum! </small>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="form-group">
-                        <div class="text-white label-holder d-flex justify-content-center">
-                            <label for="style" class="h4 mb-2">Style</label>
+                    <div id="rol1">
+
+                        <div class="float-left" >
+                            <div class="form-group">
+                                <label>LOCATION</label>
+                                <select class="browser-default custom-select"
+                                        id="style"
+                                        name="style"
+                                        th:errorclass="'is-invalid alert-danger'"
+                                        th:field="*{location}">
+                                    <option value="">All</option>
+                                    <option th:each=" location : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
+                                            th:text="${location}" th:value="${location}">Location
+                                    </option>
+                                </select>
+                            </div>
                         </div>
-                        <label>LOCATION</label>
-                        <select th:field="*{location}"
-                                th:errorclass="'is-invalid alert-danger'"
-                                class="browser-default custom-select" id="style" name="style">
-                            <option value="">All</option>
-                            <option th:each=" location : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
-                                    th:value="${location}" th:text="${location}">Location</option>
-                        </select>
+
+                        <div class=float-left>
+                            <div class="form-group">
+                                <label>SORT BY</label>
+                                <select class="browser-default custom-select"
+                                        id="style"
+                                        name="style" th:errorclass="'is-invalid alert-danger'" th:field="*{orderBy}">
+                                    <option value="">SORT BY</option>
+                                    <option th:each=" orderBy : ${T(com.example.sellbuy.model.entity.enums.OrderBYEnum).values()}"
+                                            th:text="${orderBy}" th:value="${orderBy}">OrderBy
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="float-left">
+                            <div class="form-group">
+                                <label>CATEGORY</label>
+                                <select class="browser-default custom-select"
+                                        id="style"
+                                        name="style" th:errorclass="'is-invalid alert-danger'" th:field="*{category}">
+                                    <option value="">SELECT CATEGORY</option>
+                                    <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
+                                            th:text="${category}" th:value="${category}">Category
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="d-inline-block" id="down">
+                                <button class="btn btn-primary" type="submit">Apply filter</button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <div class="text-white label-holder d-flex justify-content-center">
-                            <label for="style" class="h4 mb-2">Style</label>
-                        </div>
-                        <label>SORT BY</label>
-                        <select th:field="*{orderBy}"
-                                th:errorclass="'is-invalid alert-danger'"
-                                class="browser-default custom-select" id="style" name="style">
-                            <option value="">SORT BY</option>
-                            <option th:each=" orderBy : ${T(com.example.sellbuy.model.entity.enums.OrderBYEnum).values()}"
-                                    th:value="${orderBy}" th:text="${orderBy}">OrderBy</option>
-                        </select>
-                    </div>
-                    <button class="btn btn-primary" type="submit">SEARCH</button>
                 </form>
             </div>
         </section>
@@ -123,31 +143,31 @@
 
         <div class="row product-list">
 
-            <div th:each="productView : ${productSearchViewModelList}" th:object="${productView}"
-                    class="col-md-4">
+            <div class="col-md-4" th:each="productView : ${productSearchViewModelList}"
+                 th:object="${productView}">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img th:src="*{mainPicture}"
-                             width="250" height="220" />
+                        <img height="220"
+                             th:src="*{mainPicture}" width="250"/>
 
                         <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
 
                             <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
-                                <form th:method="post"
-                                      th:action="@{/users/add/favorites/{id}(id=*{id})}">
+                                <form th:action="@{/users/add/favorites/{id}(id=*{id})}"
+                                      th:method="post">
                                     <button
-                                            type="submit" class="btn btn-danger bi bi-heart" >Add to favorites
+                                            class="btn btn-danger bi bi-heart" type="submit">Add to favorites
                                     </button>
                                 </form>
                             </th:block>
 
                             <th:block th:if="*{isProductIsFavorInCurrentUser()}">
-                                    <form th:method="post"
-                                          th:action="@{/users/remove/favorites/{id}/all(id=*{id})}">
-                                        <button  type="submit" class="btn btn-success bi bi-heart" >
-                                            <i class="bi bi-heart"></i>Remove from favorites
-                                        </button>
-                                    </form>
+                                <form th:action="@{/users/remove/favorites/{id}/all(id=*{id})}"
+                                      th:method="post">
+                                    <button class="btn btn-success bi bi-heart" type="submit">
+                                        <i class="bi bi-heart"></i>Remove from favorites
+                                    </button>
+                                </form>
                             </th:block>
                         </th:block>
 
@@ -158,19 +178,17 @@
                         </th:block>
 
 
-
-
-<!--                        <a th:href="@{/users/add/favorites/{id}(id=*{id})}"-->
-<!--                                type="button" class="btn btn-danger">Add to favorites</a>-->
+                        <!--                        <a th:href="@{/users/add/favorites/{id}(id=*{id})}"-->
+                        <!--                                type="button" class="btn btn-danger">Add to favorites</a>-->
                     </div>
 
                     <div class="panel-body text-center">
                         <h4>
-                            <a th:href="@{/products/info/{id}(id=*{id})}" th:text="*{title}" class="pro-title">
-                               tittle
+                            <a class="pro-title" th:href="@{/products/info/{id}(id=*{id})}" th:text="*{title}">
+                                tittle
                             </a>
                         </h4>
-                        <h5 th:if="*{isPromo()}"> <span class="badge badge-warning">PROMO</span></h5>
+                        <h5 th:if="*{isPromo()}"><span class="badge badge-warning">PROMO</span></h5>
                         <p class="price" th:text="|*{price} BGN|">$300.00</p>
 
                     </div>
@@ -178,14 +196,14 @@
             </div>
 
 
-
         </div>
     </div>
 </div>
 
 
-<footer th:replace="fragments/footer::footer" ></footer>
-<<th:block th:replace="fragments/scripts::scripts">
+<footer th:replace="fragments/footer::footer"></footer>
+<
+<th:block th:replace="fragments/scripts::scripts">
 
 </th:block>
 </body>
