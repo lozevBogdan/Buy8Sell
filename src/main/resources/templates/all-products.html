@@ -76,7 +76,6 @@
                             <div class="form-group">
                                 <label>LOCATION</label>
                                 <select class="browser-default custom-select"
-                                        id="style"
                                         name="style"
                                         th:errorclass="'is-invalid alert-danger'"
                                         th:field="*{location}">
@@ -92,7 +91,6 @@
                             <div class="form-group">
                                 <label>SORT BY</label>
                                 <select class="browser-default custom-select"
-                                        id="style"
                                         name="style" th:errorclass="'is-invalid alert-danger'" th:field="*{orderBy}">
                                     <option value="">SORT BY</option>
                                     <option th:each=" orderBy : ${T(com.example.sellbuy.model.entity.enums.OrderBYEnum).values()}"
@@ -106,7 +104,6 @@
                             <div class="form-group">
                                 <label>CATEGORY</label>
                                 <select class="browser-default custom-select"
-                                        id="style"
                                         name="style" th:errorclass="'is-invalid alert-danger'" th:field="*{category}">
                                     <option value="">SELECT CATEGORY</option>
                                     <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
