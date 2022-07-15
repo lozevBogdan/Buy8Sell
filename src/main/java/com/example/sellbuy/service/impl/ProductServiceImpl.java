@@ -216,7 +216,6 @@ public class ProductServiceImpl implements ProductService {
                     setTitle("Labrador 2 years old").
                     setCategory(categoryAnimals);
 
-
             productRepository.
                     saveAll(List.of(bmw320D,nokia3230,tvSamsung32Inch,saucepan,plate,mersedesClk,lada1200,dress,
                             twoRoomApartment,dogLabrador));
