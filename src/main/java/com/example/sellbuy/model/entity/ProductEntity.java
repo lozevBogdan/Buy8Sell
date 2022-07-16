@@ -18,6 +18,7 @@ public class ProductEntity extends BaseEntity {
     private ConditionEnum condition;
 
     @Column(nullable = false)
+    @Lob
     private String description;
 
     @Column(nullable = false)
