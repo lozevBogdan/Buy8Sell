@@ -64,12 +64,6 @@ public class UserController {
         return "register";
     }
 
-    @GetMapping("/messages")
-    public String messages(){
-    return "chats-all";
-    }
-
-
     @GetMapping("/{id}/favorites")
     public String getAllFavorites(@PathVariable Long id, Model model){
 

@@ -92,7 +92,7 @@
 
             <th:block sec:authorize="isAuthenticated()" >
                     <li class="nav-item">
-                <a class="nav-link" th:href="@{/users/messages}">
+                <a class="nav-link" th:href="@{/messages/all/user/{id}(id=${#authentication.principal.id})}">
                     <i class="fa fa-bell">
                         <span class="badge badge-warning">11</span>
                     </i>

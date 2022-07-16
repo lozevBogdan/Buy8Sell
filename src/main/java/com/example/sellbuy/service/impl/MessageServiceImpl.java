@@ -8,6 +8,8 @@ import com.example.sellbuy.service.MessageService;
 import com.example.sellbuy.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class MessageServiceImpl  implements MessageService {
 
@@ -35,4 +37,12 @@ public class MessageServiceImpl  implements MessageService {
         message = this.messageRepository.save(message);
         return message;
     }
+
+    @Override
+    public Set<MessageEntity> getMessageBySenderAndReceiver(Long senderId, Long receiverId) {
+
+        return this.messageRepository.findBySenderIdAndReceiverId(senderId,receiverId);
+
+    }
+
 }
