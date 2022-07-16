@@ -17,7 +17,6 @@ public class ProductEditViewModel {
     @Size(min = 3,max = 20)
     private String title;
 
-    @NotNull
     private ConditionEnum condition;
 
     @NotNull
@@ -36,7 +35,6 @@ public class ProductEditViewModel {
 
     @NotNull
     private CategoryEnum category;
-
 
     private boolean isPromo;
 

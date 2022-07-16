@@ -77,7 +77,7 @@ public class ProductServiceImpl implements ProductService {
             CategoryEntity categoryElectronics = this.categoryService.findByCategory(CategoryEnum.ELECTRONICS);
             CategoryEntity categoryProperty = this.categoryService.findByCategory(CategoryEnum.PROPERTIES);
             CategoryEntity categoryServices = this.categoryService.findByCategory(CategoryEnum.SERVICES);
-            CategoryEntity categoryAnimals = this.categoryService.findByCategory(CategoryEnum.ANIMALS);
+            CategoryEntity categoryBooks = this.categoryService.findByCategory(CategoryEnum.BOOKS);
             CategoryEntity categoryOther = this.categoryService.findByCategory(CategoryEnum.OTHER);
 
             PictureEntity bmw320DPicture = new PictureEntity().
@@ -227,7 +227,7 @@ public class ProductServiceImpl implements ProductService {
                     setPicture(labradorPicture).
                     setPromo(true).
                     setTitle("Labrador 2 years old").
-                    setCategory(categoryAnimals);
+                    setCategory(categoryBooks);
 
             ProductEntity plumbingServicesBg = new ProductEntity().
                     setCondition(ConditionEnum.NEW).
@@ -507,6 +507,8 @@ public class ProductServiceImpl implements ProductService {
 
         CategoryEntity category = this.categoryService.findByCategory(newData.getCategory());
         LocationEntity location = this.locationService.findByLocation(newData.getLocation());
+
+        System.out.println();
 
         oldVersion.
                 setTitle(newData.getTitle()).

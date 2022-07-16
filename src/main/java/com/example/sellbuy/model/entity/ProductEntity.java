@@ -14,7 +14,7 @@ import java.util.Set;
 public class ProductEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "_condition", nullable = false)
+    @Column(name = "_condition")
     private ConditionEnum condition;
 
     @Column(nullable = false)

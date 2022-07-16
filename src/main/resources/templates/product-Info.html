@@ -66,12 +66,12 @@
                 <div class="col-md-12">
                     <div class="card px-5 py-5" id="form1">
                         <!-- Title  -->
-                        <strong     th:text="*{title}" class="text-center" text="title of product">Title of product</strong>
+                        <strong  > <h5 th:text="*{title}" class="text-center" text="title of product"> </h5></strong>
                         <div class="form-data">
 
                             <div>
                                 <!-- Condition -->
-                                <div class="form-outline mb-2">
+                                <div th:if="*{condition != null}" class="form-outline mb-2">
                                     <strong class="form-label" >Condition:</strong>
                                     <label class="form-label" th:text="*{condition.name()}">Condition</label>
                                 </div>

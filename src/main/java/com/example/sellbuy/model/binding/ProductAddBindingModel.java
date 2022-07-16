@@ -15,7 +15,6 @@ public class ProductAddBindingModel {
     @Size(min = 3,max = 20)
     private String title;
 
-    @NotNull
     private ConditionEnum condition;
 
     @NotNull
