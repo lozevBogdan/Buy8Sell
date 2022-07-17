@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 public class MessageBindingModel {
 
-    @Size(min = 3)
+    @Size(min = 1)
     private String message;
 
     public String getMessage() {
