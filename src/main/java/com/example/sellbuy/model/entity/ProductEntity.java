@@ -43,6 +43,9 @@ public class ProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "productEntity",fetch = FetchType.EAGER)
     private Set<CommentEntity> comments= new HashSet<>();
 
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private Set<MessageEntity> messages;
+
     @ManyToOne
     private CategoryEntity category;
 
@@ -65,6 +68,14 @@ public class ProductEntity extends BaseEntity {
     public ProductEntity setCondition(ConditionEnum condition) {
         this.condition = condition;
         return this;
+    }
+
+    public Set<MessageEntity> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Set<MessageEntity> messages) {
+        this.messages = messages;
     }
 
     public String getTitle() {

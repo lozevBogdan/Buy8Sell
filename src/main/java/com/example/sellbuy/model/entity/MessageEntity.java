@@ -1,9 +1,6 @@
 package com.example.sellbuy.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "messages")
@@ -19,6 +16,9 @@ public class MessageEntity extends BaseEntity{
 
     @ManyToOne
     private UserEntity receiver;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    private ProductEntity product;
 
     public MessageEntity() {
     }
@@ -57,5 +57,13 @@ public class MessageEntity extends BaseEntity{
     public MessageEntity setReceiver(UserEntity receiver) {
         this.receiver = receiver;
         return this;
+    }
+
+    public ProductEntity getProduct() {
+        return product;
+    }
+
+    public void setProduct(ProductEntity product) {
+        this.product = product;
     }
 }
