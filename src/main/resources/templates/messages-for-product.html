@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<body>
+<nav th:replace="fragments/navbar.html"></nav>
+
+<section style="background-color: #eee;">
+    <div class="container py-5">
+
+        <div th:if="${!(senders.size() > 0) && (allMessages.size() == 0) }" class="row">
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+                <h5 class="font-weight-bold mb-3 text-center text-lg-start">Your sended messages: </h5>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li class="p-2 border-bottom">
+                                <a th:href="@{/messages/sender/{senderId}/{productId}(senderId=${seller},productId = ${productId})}"
+                                   class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row">
+                                        <div class="pt-1">
+                                            <p class="fw-bold"
+                                               th:text="|You do not have an answer yet! Click to see your message.|">
+                                                Danny Smith</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${senders.size() > 0}" class="row">
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+                <h5 class="font-weight-bold mb-3 text-center text-lg-start">You have messages from: </h5>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li th:each="sender : ${senders}" th:object="${sender}" class="p-2 border-bottom">
+                                <a th:href="@{/messages/send/{senderId}/{productId}(senderId=*{id},productId = ${productId})}"
+                                   class="d-flex justify-content-between">
+                                    <div class="d-flex flex-row">
+                                        <div class="pt-1">
+                                            <p class="fw-bold" th:text="|From: *{fullName}. Click to see your chat.|">
+                                                Danny Smith</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${allMessages.size() > 0}" class="col-md-6 col-lg-7 col-xl-8">
+            <ul class="list-unstyled">
+                <li th:each="message : ${allMessages}" th:object="${message}"
+                    class="d-flex justify-content-between mb-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/avatar-6.webp" alt="avatar"
+                         class="rounded-circle d-flex align-self-start me-3 shadow-1-strong" width="60">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between p-3">
+                            <p class="fw-bold mb-0" th:text="*{sender.getFullName()}">Brad Pitt</p>
+                            <p class="text-muted small mb-0"><i class="far fa-clock"
+                                                                th:text="${#temporals.format(message.created,'dd-MM-yyyy HH:mm')}"></i>
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-0" th:text="*{message}">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut
+                                labore et dolore magna aliqua.
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li class="bg-white mb-3">
+                    <div class="form-outline">
+                        <form th:object="${messageBindingModel}"
+                              th:method="post"
+                              th:action="@{/messages/send/{receiverId}/{productId}/{senderId}(receiverId =${chatWitUserId}, productId =${productId},senderId=${#authentication.principal.id})}">
+                                <textarea th:field="*{message}" placeholder="Message" class="form-control"
+                                          id="textAreaExample2" rows="4"></textarea>
+                            <button type="submit" class="btn btn-info btn-rounded float-end">Send</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer::footer"></footer>
+
+<th:block th:replace="fragments/scripts::scripts"></th:block>
+
+</body>
+</html>
