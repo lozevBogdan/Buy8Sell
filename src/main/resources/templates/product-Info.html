@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head th:replace="fragments/head::head">
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html">
@@ -120,8 +121,8 @@
                                     >Created</label>
                                 </div>
 
-                                <!--                                 todo:logic for delete -->
-                                <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
+
+                                <th:block th:if="*{(seller.email.equals(#authentication.principal.username))}">
 
                                     <form th:method="post"
                                           th:action="@{/products/delete/{id}(id=*{id})}">
@@ -136,8 +137,26 @@
                                     </form>
                                 </th:block>
 
-<!--                                 todo:logic send message-->
+
+
+
+
                                 <th:block  th:if="*{!seller.email.equals(#authentication.principal.username)}">
+
+                                    <th:block sec:authorize="hasRole('ADMIN')" >
+                                        <form th:method="post"
+                                              th:action="@{/products/delete/{id}(id=*{id})}">
+                                            <input type="submit"
+                                                   class="btn btn-primary btn-block mb-2" value="Delete"></input>
+                                        </form>
+
+                                        <form th:method="get"
+                                              th:action="@{/products/edit/{id}(id=*{id})}">
+                                            <input type="submit"
+                                                   class="btn btn-danger btn-block mb-2" value="Edit"></input>
+                                        </form>
+                                    </th:block>
+
                                     <form th:object="${messageBindingModel}"
                                           th:method="post"
                                           th:action="@{/messages/send/{receiverId}/{productId}(receiverId=${productInfoView.seller.id},productId=${productInfoView.getId()})}">
