@@ -1,5 +1,7 @@
 package com.example.sellbuy.model.view.userViews;
 
+import java.util.Objects;
+
 public class UserChatViewModel {
 
     private Long id;
@@ -22,5 +24,18 @@ public class UserChatViewModel {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserChatViewModel that = (UserChatViewModel) o;
+        return Objects.equals(id, that.id) && Objects.equals(fullName, that.fullName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, fullName);
     }
 }
