@@ -14,7 +14,7 @@ public class ProductEditViewModel {
     private Long id;
 
     @NotNull
-    @Size(min = 3,max = 20)
+    @Size(min = 3)
     private String title;
 
     private ConditionEnum condition;

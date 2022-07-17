@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 public class ProductAddBindingModel {
 
     @NotNull
-    @Size(min = 3,max = 20)
+    @Size(min = 3)
     private String title;
 
     private ConditionEnum condition;
