@@ -9,4 +9,6 @@ import java.util.Set;
 @Repository
 public interface MessageRepository extends JpaRepository<MessageEntity,Long> {
     Set<MessageEntity> findBySenderIdAndReceiverId(Long senderId, Long receiverId);
+
+    void deleteByProductId(Long id);
 }

@@ -7,10 +7,8 @@ import com.example.sellbuy.model.entity.enums.CategoryEnum;
 import com.example.sellbuy.model.entity.enums.ConditionEnum;
 import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.model.entity.enums.OrderBYEnum;
-import com.example.sellbuy.model.view.productViews.BaseProductViewModel;
-import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
-import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
-import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
+import com.example.sellbuy.model.view.productViews.*;
+import com.example.sellbuy.model.view.userViews.UserChatViewModel;
 import com.example.sellbuy.repository.ProductRepository;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.*;
@@ -35,12 +33,13 @@ public class ProductServiceImpl implements ProductService {
     private final ModelMapper modelMapper;
     private final LocationService locationService;
     private final CommentsService commentsService;
+    private final MessageService messageService;
 
 
     public ProductServiceImpl(ProductRepository productRepository, PictureService pictureService,
                               UserService userService, CategoryService categoryService,
                               ModelMapper modelMapper, LocationService locationService,
-                              CommentsService commentsService) {
+                              CommentsService commentsService, MessageService messageService) {
         this.productRepository = productRepository;
         this.pictureService = pictureService;
         this.userService = userService;
@@ -48,6 +47,7 @@ public class ProductServiceImpl implements ProductService {
         this.modelMapper = modelMapper;
         this.locationService = locationService;
         this.commentsService = commentsService;
+        this.messageService = messageService;
     }
 
     @Transactional
@@ -472,6 +472,7 @@ public class ProductServiceImpl implements ProductService {
         this.commentsService.deleteByProductId(id);
        // this.categoryService.deleteByProductId(id);
         this.userService.deleteByProductIdFrom(productForDeleted);
+        this.messageService.deleteByProductId(id);
         this.productRepository.deleteById(id);
         this.pictureService.deleteByProductId(id);
     }
@@ -546,6 +547,48 @@ public class ProductServiceImpl implements ProductService {
         currentProduct.setViews(currentProduct.getViews() + 1);
         currentProduct = this.addProductEntity(currentProduct);
         return this.modelMapper.map(currentProduct, ProductDetailsViewDto.class);
+    }
+
+    @Override
+    public Set<ProductChatViewModel> getProductsFromChatsByUserByUserId(Long id) {
+
+        Set<ProductEntity> products = this.findProductsByUserId(id);
+
+        Set<MessageEntity> receivedMessages = this.userService.findById(id).getReceiverMessages();
+        Set<MessageEntity> sendedMessages = this.userService.findById(id).getSendMessages();
+
+        for (MessageEntity receivedMessage : receivedMessages) {
+            if(receivedMessage.getProduct().getSeller().getId() != id){
+                products.add(receivedMessage.getProduct());
+            }
+        }
+        for (MessageEntity sendedMessage : sendedMessages) {
+            if(sendedMessage.getProduct().getSeller().getId() != id){
+                products.add(sendedMessage.getProduct());
+            }
+        }
+        products = products.stream().filter(m->m.getMessages().size() > 0).collect(Collectors.toSet());
+
+        return products.stream().map(p->mapToProductChatViewModel(p)).collect(Collectors.toSet());
+    }
+
+    @Override
+    public Set<UserChatViewModel> findProductChattersByProductIdAndSellerId(Long productId, Long sellerId) {
+
+        Set<MessageEntity> messages = this.findById(productId).getMessages();
+
+        Set<UserChatViewModel> chatters = new HashSet<>();
+
+        for (MessageEntity message : messages) {
+            if((message.getSender().getId() != sellerId && (message.getReceiver().getId() == sellerId))){
+                chatters.add(this.modelMapper.map(message.getSender(), UserChatViewModel.class));
+            }
+        }
+        return chatters;
+    }
+
+    private ProductChatViewModel mapToProductChatViewModel(ProductEntity productEntity){
+        return this.modelMapper.map(productEntity,ProductChatViewModel.class);
     }
 
 

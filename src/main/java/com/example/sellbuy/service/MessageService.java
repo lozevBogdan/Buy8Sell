@@ -3,6 +3,7 @@ package com.example.sellbuy.service;
 import com.example.sellbuy.model.binding.MessageBindingModel;
 import com.example.sellbuy.model.entity.MessageEntity;
 import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.model.view.messages.MessageChatViewModel;
 
 import java.util.Set;
 
@@ -13,4 +14,8 @@ public interface MessageService {
 
 
     Set<MessageEntity> getMessageBySenderAndReceiver(Long senderId, Long receiverId);
+
+    void deleteByProductId(Long id);
+
+    Set<MessageChatViewModel> findChatsMessagesByProductIdSenderIdReceiverId(Long productId, Long senderId, Long currentUsedId);
 }

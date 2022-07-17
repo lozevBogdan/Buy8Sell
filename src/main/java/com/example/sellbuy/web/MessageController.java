@@ -2,18 +2,20 @@ package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.binding.MessageBindingModel;
 import com.example.sellbuy.model.entity.MessageEntity;
+import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.model.view.messages.MessageChatViewModel;
+import com.example.sellbuy.model.view.productViews.ProductChatViewModel;
+import com.example.sellbuy.model.view.userViews.UserChatViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.MessageService;
+import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -23,63 +25,68 @@ import java.util.Set;
 @Controller
 @RequestMapping("/messages")
 public class MessageController {
-
     private final UserService userService;
     private final MessageService messageService;
+    private final ProductService productService;
 
-    public MessageController(UserService userService, MessageService messageService) {
+    public MessageController(UserService userService, MessageService messageService, ProductService productService) {
         this.userService = userService;
         this.messageService = messageService;
+        this.productService = productService;
     }
 
-    @GetMapping("/all/user/{id}")
-    public String messages(@PathVariable Long id, Model model){
+    @ModelAttribute
+    public MessageBindingModel messageBindingModel(){return new MessageBindingModel();}
+    @ModelAttribute(name = "allMessages")
+    public Set<MessageEntity> messages(){return new HashSet<>();}
 
-        Set<UserEntity> chatsUsers = new HashSet<>();
+    @ModelAttribute(name = "senders")
+    public Set<UserChatViewModel> senders(){return new HashSet<>();}
 
-        UserEntity user = this.userService.findById(id);
+    @GetMapping("/all")
+    public String messages(Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
-        Set<MessageEntity> receivedMessages = user.getReceiverMessages();
-        Set<MessageEntity> sendMessages = user.getSendMessages();
+       Set<ProductChatViewModel> products =
+               this.productService.getProductsFromChatsByUserByUserId(sellAndBuyUser.getId());
 
-        for (MessageEntity receiveMessage : receivedMessages) {
-            chatsUsers.add(receiveMessage.getSender());
-        }
+       model.addAttribute("products",products);
 
-        for (MessageEntity sendMessage : sendMessages) {
-            chatsUsers.add(sendMessage.getReceiver());
-        }
+       return "messages-for-all-products";
 
-        //todo: to make a chatUsers dto modelt
-        model.addAttribute("chatsUsers",chatsUsers);
-
-
-        return "chats-all";
     }
-
-    @GetMapping("chats/user/{id}")
-    public String getChatMessages(@PathVariable Long id,
+    @GetMapping("/products/{id}")
+    public String getSenders(@PathVariable Long id,
                                   @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
                                   Model model){
 
-        Set<MessageEntity> receivedMessages =
-                this.messageService.getMessageBySenderAndReceiver(id,sellAndBuyUser.getId());
-        Set<MessageEntity> sendedMessages =
-                this.messageService.getMessageBySenderAndReceiver(sellAndBuyUser.getId(),id);
+        Set<UserChatViewModel> chatters =
+                this.productService.
+                        findProductChattersByProductIdAndSellerId(id, sellAndBuyUser.getId());
 
-        Set<MessageEntity> allMessages = new HashSet<>();
-        allMessages.addAll(receivedMessages);
-        allMessages.addAll(sendedMessages);
+        if (chatters.size() == 0){
+            ProductEntity product = this.productService.findById(id);
+            model.addAttribute("seller",product.getSeller().getId());
+        }
 
-        allMessages.stream().sorted((a,b)->a.getCreated().compareTo(b.getCreated()));
+        model.addAttribute("senders",chatters);
+        model.addAttribute("currentUser",this.userService.findById(sellAndBuyUser.getId()));
+        model.addAttribute("productId",id);
 
-
-        model.addAttribute("allMessages",allMessages);
-
-        return "chats-all";
+        return "messages-for-product";
     }
 
+    @GetMapping("/send/{senderId}/{productId}")
+    public String getChatMessagesFromSender(@AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
+            Model model, @PathVariable Long productId, @PathVariable Long senderId){
 
+        Set<MessageChatViewModel> allMessages = this.messageService.
+                        findChatsMessagesByProductIdSenderIdReceiverId(productId,senderId,sellAndBuyUser.getId());
+
+        model.addAttribute("allMessages",allMessages);
+        model.addAttribute("chatWitUserId",senderId);
+
+        return "messages-for-product";
+    }
     @PostMapping("/send/{receiverId}/{productId}")
     public String sentMessage(@Valid MessageBindingModel messageBindingModel,
                               BindingResult bindingResult,
@@ -95,15 +102,38 @@ public class MessageController {
             return "redirect:/products/info/" + productId ;
         }
 
-        //todo: refactor like move in message service
+        MessageEntity message = this.messageService.
+                        createAndSave(messageBindingModel, productId, receiverId, sellAndBuyUser.getId());
+
+        redirectAttributes.addFlashAttribute("isSend", true);
+
+        return "redirect:/products/info/" + productId ;
+    }
+
+    @PostMapping("/send/{receiverId}/{productId}/{senderId}")
+    public String sendMessageFromChat(@Valid MessageBindingModel messageBindingModel,
+                                      BindingResult bindingResult,
+                                      RedirectAttributes redirectAttributes,
+                                      @PathVariable Long productId,
+                                      @PathVariable Long receiverId,
+                                      @PathVariable Long senderId,
+                                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+
+        if (bindingResult.hasErrors()) {
+            redirectAttributes.addFlashAttribute("messageBindingModel", messageBindingModel);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.messageBindingModel",
+                    bindingResult);
+            return "redirect:/products/info/" + productId ;
+        }
+
         MessageEntity message =
                 this.messageService.
                         createAndSave(messageBindingModel, productId, receiverId, sellAndBuyUser.getId());
 
         redirectAttributes.addFlashAttribute("isSend", true);
-        return "redirect:/products/info/" + productId ;
+
+        return "redirect:/messages/send/" + receiverId + "/" + productId ;
     }
-
-
 
 }

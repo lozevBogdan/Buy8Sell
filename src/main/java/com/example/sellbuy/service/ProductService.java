@@ -3,10 +3,8 @@ package com.example.sellbuy.service;
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
-import com.example.sellbuy.model.view.productViews.BaseProductViewModel;
-import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
-import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
-import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
+import com.example.sellbuy.model.view.productViews.*;
+import com.example.sellbuy.model.view.userViews.UserChatViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 
 import java.util.List;
@@ -39,5 +37,9 @@ public interface ProductService {
     ProductEntity updateProductById(Long id, ProductEditViewModel productEditViewModel);
 
     public ProductDetailsViewDto getAndIncreaseViewsProductById(Long id);
+
+    Set<ProductChatViewModel> getProductsFromChatsByUserByUserId(Long id);
+
+    Set<UserChatViewModel> findProductChattersByProductIdAndSellerId(Long productId, Long sellerId);
 
 }
