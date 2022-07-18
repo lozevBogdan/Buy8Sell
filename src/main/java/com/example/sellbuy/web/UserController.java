@@ -122,6 +122,7 @@ public class UserController {
         return "redirect:/users/profile/" + userId ;
     }
 
+    //todo: mapping like this should go in different controller like @UserProfileController
     @GetMapping("/passwords/change")
     public String changePassword(){
         return "passwords-change";
