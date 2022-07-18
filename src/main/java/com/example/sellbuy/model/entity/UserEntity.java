@@ -84,6 +84,7 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
+
     public String getMobileNumber() {
         return mobileNumber;
     }

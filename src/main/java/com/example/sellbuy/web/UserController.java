@@ -59,6 +59,11 @@ public class UserController {
 //        return "redirect:/";
 //    }
 
+    @GetMapping("/profile/{id}")
+    public String myProfile(@PathVariable Long id){
+        return "my-profile";
+    }
+
     @GetMapping("/register")
     public String register(){
         return "register";
