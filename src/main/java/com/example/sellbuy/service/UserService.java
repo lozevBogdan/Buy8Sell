@@ -39,4 +39,12 @@ public interface UserService {
     UserEntity findById(Long authorId);
 
     UserEditViewModel findByIdUserEditViewModel(Long id);
+
+    UserEntity updateUserByIdWithUserEditViewModel(Long userId,UserEditViewModel userEditViewModel);
+
+    boolean isThisIsOldPasswordByUserId(String oldPassword, Long userId);
+
+    UserEntity changePasswordByUserId(String newPassword, Long id);
+
+    boolean isNewPasswordIsEqualToOldPassByUserId(String newPassword, Long id);
 }

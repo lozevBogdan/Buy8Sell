@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -233,5 +234,43 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEditViewModel findByIdUserEditViewModel(Long id) {
         return this.modelMapper.map(this.findById(id),UserEditViewModel.class);
+    }
+
+    @Override
+    public UserEntity updateUserByIdWithUserEditViewModel(Long userId, UserEditViewModel userEditViewModel) {
+        UserEntity userEntity = this.userRepository.findById(userId).get();
+            return this.userRepository.
+                       save(this.updateUserByUserEditViewModel(userEntity,userEditViewModel));
+    }
+
+    @Override
+    public boolean isThisIsOldPasswordByUserId(String oldPassword, Long userId) {
+       String currentUserPassword = this.userRepository.findById(userId).get().getPassword();
+        return passwordEncoder.matches(oldPassword,currentUserPassword);
+    }
+
+    @Override
+    public UserEntity changePasswordByUserId(String newPassword, Long id) {
+        UserEntity user = this.userRepository.findById(id).get();
+        user.setPassword(this.passwordEncoder.encode(newPassword));
+        user.setModified(LocalDateTime.now());
+        return this.userRepository.save(user);
+    }
+
+    @Override
+    public boolean isNewPasswordIsEqualToOldPassByUserId(String newPassword, Long id) {
+        return this.passwordEncoder.matches(newPassword,this.userRepository.findById(id).get().getPassword());
+    }
+
+    private UserEntity updateUserByUserEditViewModel(UserEntity userEntity,UserEditViewModel userEditViewModel){
+
+        userEntity.setModified(LocalDateTime.now());
+
+       return userEntity.
+                setFirstName(userEditViewModel.getFirstName()).
+                setLastName(userEditViewModel.getLastName()).
+                setEmail(userEditViewModel.getEmail()).
+                setMobileNumber(userEditViewModel.getMobileNumber());
+
     }
 }
