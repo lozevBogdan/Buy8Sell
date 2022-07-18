@@ -95,7 +95,9 @@
             <th:block sec:authorize="isAuthenticated()">
 
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}">
+                    <a class="nav-link"
+                       th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}"
+                    th:text="|${#authentication.principal.firstName} ${#authentication.principal.lastName}|">
                         My profile
                     </a>
                 </li>
