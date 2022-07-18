@@ -228,6 +228,7 @@ public class ProductServiceImpl implements ProductService {
                     setTitle("Labrador 2 years old").
                     setCategory(categoryBooks);
 
+
             ProductEntity plumbingServicesBg = new ProductEntity().
                     setCondition(ConditionEnum.NEW).
                     setDescription("Вик услуги аварийни ремонти коректност ниски цени. Бързина качество. Подмяна тръби. Вик услуги, ремонт тръби. Изграждане водопровод. вик ремоти. Подмяна на канали. Отпушване на мивки. Подмяна на тръби в мазе. Денонощно 24/7. Ремонт на казанчета.").
