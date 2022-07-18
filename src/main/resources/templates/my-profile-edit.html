@@ -16,79 +16,95 @@
         <!-- /Breadcrumb -->
 
         <div class="row gutters-sm">
-            <!--                                            todo: validation-->
+
             <form
 
-                th:action="@{/users/profile/{userId}/save(userId = ${#authentication.principal.id})}"
-                th:method="post"
-                th:object="${userEditViewModel}">
+                    th:action="@{/users/profile/{userId}/save(userId = ${#authentication.principal.id})}"
+                    th:method="post"
+                    th:object="${userEditViewModel}">
 
-                    <div class="card mb-3">
-                        <div class="card-body">
+                <div class="card mb-3">
+                    <div class="card-body">
 
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">First Name</h6>
-                                </div>
-                                <input class="col-sm-9"
-                                       th:field="*{firstName}">
-
-                                </input>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">First Name</h6>
                             </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Last Name</h6>
-                                </div>
-                                <input class="col-sm-9" th:field="*{lastName}">
+                            <input class="col-sm-9"
+                                   th:field="*{firstName}"
+                                   th:errorclass="'is-invalid alert-danger'">
 
-                                </input>
+                            </input>
+                            <small class="invalid-feedback text-danger">First name must between 3 na 20
+                                characters! </small>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Last Name</h6>
                             </div>
+                            <input class="col-sm-9" th:field="*{lastName}"
+                                   th:errorclass="'is-invalid alert-danger'">
 
-                            <hr>
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Email</h6>
-                                </div>
-                                <input class="col-sm-9 " th:field="*{email}">
+                            </input>
+                            <small class="invalid-feedback text-danger">Last name must between 3 na 20
+                                characters! </small>
+                        </div>
 
-                                </input>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
                             </div>
-                            <hr>
+                            <input class="col-sm-9 "
+                                   th:field="*{email}"
+                                   th:errorclass="'is-invalid alert-danger'">
 
-                            <div class="row">
-                                <div class="col-sm-3">
-                                    <h6 class="mb-0">Mobile</h6>
-                                </div>
-                                <input class="col-sm-9 " th:field="*{mobileNumber}">
+                            </input>
+                            <small class="invalid-feedback text-danger">The email should be valid and can not be
+                                null! </small>
+                            <p th:if="${emailIsNotFree}"
+                               class="text-danger" style="color: red"> This email is registered already! </p>
+                        </div>
+                        <hr>
 
-                                </input>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Mobile</h6>
                             </div>
-                            <hr>
+                            <input class="col-sm-9 "
+                                   th:field="*{mobileNumber}"
+                                   th:errorclass="'is-invalid alert-danger'">
 
-                            <div class="row mb-4">
+                            </input>
+                            <small class="invalid-feedback text-danger">The mobile number should be ten numbers and can
+                                not be null! </small>
+                        </div>
+                        <hr>
 
-                                <div class="col d-flex justify-content-center">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <button class="btn btn-info" type="submit"> Save Changes</button>
-                                        </div>
+                        <div class="row mb-4">
+
+                            <div class="col d-flex justify-content-center">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-info" type="submit"> Save Changes</button>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col">
-                                    <div class="row">
-                                        <div class="col-sm-12">
-<!--                                            todo-->
-                                            <a class="btn btn-info " href="" target="__blank">Change password</a>
-                                        </div>
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <!--                                            todo-->
+                                        <a class="btn btn-info " href="" target="__blank">Change password</a>
                                     </div>
                                 </div>
-
                             </div>
 
                         </div>
+
                     </div>
+                </div>
 
 
             </form>
