@@ -47,6 +47,11 @@ public class UserController {
         return new UserLoginBindingModel();
     }
 
+//    @ModelAttribute
+//    public UserEditViewModel userEditViewModel(){
+//        return new UserEditViewModel();
+//    }
+
     @GetMapping("/login")
     public String login(){
         return "login";
@@ -65,6 +70,16 @@ public class UserController {
         UserEditViewModel  userEditViewModel = this.userService.findByIdUserEditViewModel(id);
         model.addAttribute("userEditViewModel",userEditViewModel);
         return "my-profile";
+    }
+
+    @GetMapping("/profile/{userId}/edit")
+    public String editUserInfo(@PathVariable Long userId, Model model){
+        if(!model.containsAttribute("userEditViewModel")) {
+            UserEditViewModel userEditViewModel = this.userService.findByIdUserEditViewModel(userId);
+            model.addAttribute("userEditViewModel", userEditViewModel);
+        }
+
+        return "my-profile-edit";
     }
 
     @GetMapping("/register")
