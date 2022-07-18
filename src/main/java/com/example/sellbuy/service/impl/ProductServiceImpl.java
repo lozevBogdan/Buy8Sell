@@ -508,8 +508,6 @@ public class ProductServiceImpl implements ProductService {
         CategoryEntity category = this.categoryService.findByCategory(newData.getCategory());
         LocationEntity location = this.locationService.findByLocation(newData.getLocation());
 
-        System.out.println();
-
         oldVersion.
                 setTitle(newData.getTitle()).
                 setCondition(newData.getCondition()).
