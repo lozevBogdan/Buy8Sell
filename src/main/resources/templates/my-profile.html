@@ -116,14 +116,15 @@
                             <div class="col">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <a class="btn btn-info " href="" target="__blank">Change password</a>
+                                        <a class="btn btn-info " th:href="@{/users/passwords/change}" target="__blank">Change password</a>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-
                     </div>
+                    <a th:if="${successfulUpdated}" class="text-bg-success text-center">
+                        You successfully update you profile information!</a>
                 </div>
 
                 <!--                <div class="row gutters-sm">-->
@@ -185,6 +186,7 @@
 
 
             </div>
+
         </div>
 
     </div>
