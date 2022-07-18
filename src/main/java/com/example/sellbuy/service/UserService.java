@@ -4,6 +4,7 @@ import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 
 import java.util.Set;
 
@@ -36,4 +37,6 @@ public interface UserService {
     void deleteByProductIdFrom(ProductEntity id);
 
     UserEntity findById(Long authorId);
+
+    UserEditViewModel findByIdUserEditViewModel(Long id);
 }

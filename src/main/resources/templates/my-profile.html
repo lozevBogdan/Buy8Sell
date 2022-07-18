@@ -15,7 +15,7 @@
 
         <!-- /Breadcrumb -->
 
-        <div class="row gutters-sm">
+        <div th:object="${userEditViewModel}" class="row gutters-sm">
             <!--            <div class="col-md-4 mb-3">-->
             <!--                <div class="card">-->
             <!--                    <div class="card-body">-->
@@ -65,7 +65,7 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">First Name</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-9 text-secondary" th:text="*{firstName}">
                                 Kenneth Valdez
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Last Name</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-9 text-secondary" th:text="*{lastName}">
                                 Kenneth Valdez
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Email</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-9 text-secondary" th:text="*{email}">
                                 fip@jukmuh.al
                             </div>
                         </div>
@@ -94,14 +94,13 @@
                             <div class="col-sm-3">
                                 <h6 class="mb-0">Mobile</h6>
                             </div>
-                            <div class="col-sm-9 text-secondary">
+                            <div class="col-sm-9 text-secondary" th:text="*{mobileNumber}">
                                 (320) 380-4539
                             </div>
                         </div>
                         <hr>
 
                         <div class="row mb-4">
-
                             <div class="col d-flex justify-content-center">
                                 <div class="row">
                                     <div class="col-sm-12">

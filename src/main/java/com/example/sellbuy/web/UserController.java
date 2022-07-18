@@ -5,6 +5,7 @@ import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
+import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
@@ -60,7 +61,9 @@ public class UserController {
 //    }
 
     @GetMapping("/profile/{id}")
-    public String myProfile(@PathVariable Long id){
+    public String myProfile(@PathVariable Long id,Model model){
+        UserEditViewModel  userEditViewModel = this.userService.findByIdUserEditViewModel(id);
+        model.addAttribute("userEditViewModel",userEditViewModel);
         return "my-profile";
     }
 

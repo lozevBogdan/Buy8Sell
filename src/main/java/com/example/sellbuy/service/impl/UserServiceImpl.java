@@ -6,6 +6,7 @@ import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
+import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.repository.UserRepository;
 import com.example.sellbuy.securityUser.CurrentUser;
 import com.example.sellbuy.service.UserService;
@@ -227,5 +228,10 @@ public class UserServiceImpl implements UserService {
     public UserEntity findById(Long authorId) {
 
         return this.userRepository.findById(authorId).orElse(null);
+    }
+
+    @Override
+    public UserEditViewModel findByIdUserEditViewModel(Long id) {
+        return this.modelMapper.map(this.findById(id),UserEditViewModel.class);
     }
 }
