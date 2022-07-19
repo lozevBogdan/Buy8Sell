@@ -3,6 +3,8 @@ package com.example.sellbuy.model.view.userViews;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 
 import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 public class UserInfoViewModel {
@@ -12,7 +14,7 @@ public class UserInfoViewModel {
     private String lastName;
     private String mobileNumber;
     private String email;
-    private Set<UserRoleEntity> roles;
+    private List<UserRoleEntity> roles;
 
     public UserInfoViewModel() {
     }
@@ -62,12 +64,25 @@ public class UserInfoViewModel {
         return this;
     }
 
-    public Set<UserRoleEntity> getRoles() {
+    public List<UserRoleEntity> getRoles() {
         return roles;
     }
 
-    public UserInfoViewModel setRoles(Set<UserRoleEntity> roles) {
+    public UserInfoViewModel setRoles(List<UserRoleEntity> roles) {
         this.roles = roles;
         return this;
+    }
+
+    public String rolesToString(){
+        String roles = "";
+
+        for (int i = 0; i < this.roles.size(); i++) {
+
+            if(i==1){
+                roles += "/";
+            }
+            roles +=this.roles.get(i).getRole().name();
+        }
+        return roles;
     }
 }
