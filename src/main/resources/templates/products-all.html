@@ -30,6 +30,10 @@
 
             <div class="panel-body">
 
+                <div class="text-center">
+                    <h1></h1>
+                </div>
+
                 <form role="form product-form"
                       th:action="@{/products/all}"
                       th:method="post"
@@ -47,7 +51,7 @@
                             </div>
                         </div>
 
-                        <div class="float-left" >
+                        <div class="float-left">
                             <div class="form-group">
                                 <label>PRICE</label>
                                 <input class="form-control"
@@ -72,7 +76,7 @@
 
                     <div id="rol1">
 
-                        <div class="float-left" >
+                        <div class="float-left">
                             <div class="form-group">
                                 <label>LOCATION</label>
                                 <select class="browser-default custom-select"
@@ -195,7 +199,7 @@
 
         </div>
     </div>
-    <div th:if="${noResults}" class="text-center">
+    <div class="text-center" th:if="${noResults}">
         <h1>
             Тhere are no matches for the specified criteria!</h1>
     </div>
