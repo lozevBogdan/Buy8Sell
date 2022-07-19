@@ -19,13 +19,13 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <th scope="row">1</th>
-        <td>Otto</td>
-        <td>@moto</td>
-        <td>0893250782</td>
-        <td>emi@bg</td>
-        <td>ADMIN</td>
+    <tr th:each=" user : ${allUsersViewModels}" th:object="${user}">
+        <th scope="row" th:text="*{id}">1</th>
+        <td th:text="*{firstName}" >Otto</td>
+        <td th:text="*{lastName}" >@moto</td>
+        <td th:text="*{mobileNumber}" >0893250782</td>
+        <td th:text="*{email}" >emi@bg</td>
+        <td th:text="*{rolesToString()}">ADMIN</td>
         <td><button>Edit</button></td>
     </tr>
     </tbody>
