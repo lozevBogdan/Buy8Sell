@@ -329,7 +329,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
 
     public List<ProductSearchViewModel> filterBy(
-            ProductSearchingBindingModel productSearchingBindingModel,Long idPrincipal){
+            ProductSearchingBindingModel productSearchingBindingModel,Long idPrincipal,boolean getOnlyPromotions){
 
         String title = productSearchingBindingModel.getTitle();
         Double min = productSearchingBindingModel.getMin();
@@ -340,6 +340,13 @@ public class ProductServiceImpl implements ProductService {
 
         List<ProductEntity> allProducts = this.productRepository.findAll();
         List<ProductSearchViewModel> returnedList = new LinkedList<>();
+
+        if(getOnlyPromotions){
+            allProducts = allProducts.
+                    stream().
+                    filter(p-> p.isPromo()).
+                    collect(Collectors.toList());
+        }
 
         if(title != null){
             allProducts = allProducts.

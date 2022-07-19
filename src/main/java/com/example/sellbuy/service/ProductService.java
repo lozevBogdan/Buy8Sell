@@ -18,7 +18,8 @@ public interface ProductService {
 
     ProductEntity addProductBindingModel(ProductAddBindingModel productAddBindingModel, SellAndBuyUserDetails sellAndBuyUser);
 
-    List<ProductSearchViewModel> filterBy(ProductSearchingBindingModel productSearchingBindingModel, Long id);
+    List<ProductSearchViewModel> filterBy(ProductSearchingBindingModel productSearchingBindingModel, Long principalId,
+                                          boolean getOnlyPromotions);
 
     ProductEntity findById(Long productId);
 

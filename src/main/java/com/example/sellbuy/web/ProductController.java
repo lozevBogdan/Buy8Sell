@@ -65,11 +65,58 @@ public class ProductController {
                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(new ProductSearchingBindingModel(), sellAndBuyUser.getId());
+                this.productService.filterBy(new ProductSearchingBindingModel(), sellAndBuyUser.getId(),false);
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
         }
         return "products-all";
+    }
+
+    @GetMapping("/all/promotion")
+    public String allPromotions(Model model,
+                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+
+        List<ProductSearchViewModel> productSearchViewModelList =
+                this.productService.filterBy(new ProductSearchingBindingModel(), sellAndBuyUser.getId(),true);
+        if (!model.containsAttribute("productSearchViewModelList")){
+            model.addAttribute("productSearchViewModelList",productSearchViewModelList);
+            model.addAttribute("noResults",productSearchViewModelList.size()==0);
+        }
+        return "products-promotions";
+    }
+
+    @PostMapping("/all/promotion")
+    public String allPromotions(@Valid ProductSearchingBindingModel productSearchingBindingModel,
+                      BindingResult bindingResult,
+                      RedirectAttributes redirectAttributes,
+                      Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
+                      @RequestParam(value = "category",required = false) String category){
+
+        boolean isMinBiggerThanMax = false;
+
+        if (category != ""){
+            productSearchingBindingModel.setCategory(CategoryEnum.valueOf(category));
+        }
+
+        if (productSearchingBindingModel.getMin() != null && productSearchingBindingModel.getMax() != null) {
+            isMinBiggerThanMax =
+                    productSearchingBindingModel.getMin() > productSearchingBindingModel.getMax();
+        }
+
+        if (bindingResult.hasErrors() || isMinBiggerThanMax) {
+            redirectAttributes.addFlashAttribute("productSearchingBindingModel", productSearchingBindingModel);
+            redirectAttributes.addFlashAttribute("isMinBiggerThanMax", isMinBiggerThanMax);
+            redirectAttributes.addFlashAttribute(
+                    "org.springframework.validation.BindingResult.productSearchingBindingModel", bindingResult);
+
+            return "redirect:/products/all/promotion";
+        }
+        List<ProductSearchViewModel> productSearchViewModelList =
+                this.productService.filterBy(productSearchingBindingModel,sellAndBuyUser.getId(),true);
+        model.addAttribute("productSearchViewModelList", productSearchViewModelList);
+        model.addAttribute("noResults",productSearchViewModelList.size()==0);
+
+        return "products-promotions";
     }
 
     @GetMapping("/add")
@@ -186,9 +233,9 @@ public class ProductController {
             return "redirect:/products/all";
         }
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(productSearchingBindingModel,sellAndBuyUser.getId());
+                this.productService.filterBy(productSearchingBindingModel,sellAndBuyUser.getId(),false);
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-
+        model.addAttribute("noResults",productSearchViewModelList.size()==0);
         return "products-all";
     }
 
