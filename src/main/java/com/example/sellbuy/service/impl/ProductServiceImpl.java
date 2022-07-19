@@ -417,15 +417,15 @@ public class ProductServiceImpl implements ProductService {
          }
              productSearchViewModel.setMainPicture(pictureUrl);
          //todo: cheking forn null @AuthenticationPrincipal!!!!!!!!
-            UserEntity currentLoggedInUserEntity =
-                    this.userService.getCurrentLoggedInUserEntityById(idPrincipal);
+
 
             // Check for favorites products for current user
-         if(currentLoggedInUserEntity != null){
+         if(idPrincipal != null){
+             UserEntity currentLoggedInUserEntity =
+                     this.userService.getCurrentLoggedInUserEntityById(idPrincipal);
              Set<ProductEntity> favoriteProducts = currentLoggedInUserEntity.getFavoriteProducts();
              if(isConsist(favoriteProducts,product)){
                  productSearchViewModel.setProductIsFavorInCurrentUser(true);
-
              }
          }
            returnedList.add(productSearchViewModel);
@@ -492,15 +492,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductEditViewModel findByIdProductSearchAndEditViewModel(Long id) {
 
         ProductEntity product = this.productRepository.findById(id).get();
-
         ProductEditViewModel editViewModel =
                 this.modelMapper.map(product, ProductEditViewModel.class);
-
-        //todo: change the picture way to get !!!
-        PictureEntity pictureEntity = this.pictureService.findByProductId(id);
-
-        editViewModel.setUrlPicture(pictureEntity.getUrl());
-
         return editViewModel;
     }
 
