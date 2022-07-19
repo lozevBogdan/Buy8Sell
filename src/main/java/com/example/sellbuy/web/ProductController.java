@@ -65,7 +65,9 @@ public class ProductController {
                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(new ProductSearchingBindingModel(), sellAndBuyUser.getId(),false);
+                this.productService.filterBy(new ProductSearchingBindingModel(),
+                        sellAndBuyUser != null ? sellAndBuyUser.getId() : null,false);
+
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
         }
@@ -77,7 +79,9 @@ public class ProductController {
                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(new ProductSearchingBindingModel(), sellAndBuyUser.getId(),true);
+                this.productService.filterBy(new ProductSearchingBindingModel(),
+                        sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
+                        true);
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
             model.addAttribute("noResults",productSearchViewModelList.size()==0);
@@ -112,7 +116,9 @@ public class ProductController {
             return "redirect:/products/all/promotion";
         }
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(productSearchingBindingModel,sellAndBuyUser.getId(),true);
+                this.productService.filterBy(productSearchingBindingModel,
+                        sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
+                        true);
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         model.addAttribute("noResults",productSearchViewModelList.size()==0);
 
@@ -177,8 +183,6 @@ public class ProductController {
            productInfoView.setProductIsFavorInCurrentUser(true);
        }
         model.addAttribute("productInfoView",productInfoView);
-       //todo: include modified data!!!
-        model.addAttribute("created",productInfoView.getCreated());
         return "product-Info";
     }
 
@@ -234,7 +238,9 @@ public class ProductController {
             return "redirect:/products/all";
         }
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(productSearchingBindingModel,sellAndBuyUser.getId(),false);
+                this.productService.filterBy(productSearchingBindingModel,
+                        sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
+                        false);
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         model.addAttribute("noResults",productSearchViewModelList.size()==0);
         return "products-all";
