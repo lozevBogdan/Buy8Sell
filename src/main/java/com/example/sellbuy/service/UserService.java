@@ -5,7 +5,9 @@ import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
+import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
 
+import java.util.List;
 import java.util.Set;
 
 public interface UserService {
@@ -47,4 +49,7 @@ public interface UserService {
     UserEntity changePasswordByUserId(String newPassword, Long id);
 
     boolean isNewPasswordIsEqualToOldPassByUserId(String newPassword, Long id);
+
+    List<UserInfoViewModel> getAllUsers();
+
 }

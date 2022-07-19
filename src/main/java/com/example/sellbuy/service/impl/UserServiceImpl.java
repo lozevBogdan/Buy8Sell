@@ -7,6 +7,7 @@ import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
+import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
 import com.example.sellbuy.repository.UserRepository;
 import com.example.sellbuy.securityUser.CurrentUser;
 import com.example.sellbuy.service.UserService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -73,9 +75,9 @@ public class UserServiceImpl implements UserService {
             UserRoleEntity adminRole = this.userRoleService.findByRole(UserRoleEnum.ADMIN);
             UserRoleEntity userRole = this.userRoleService.findByRole(UserRoleEnum.USER);
 
-            user1.setRoles(Set.of(adminRole,userRole));
-            user2.setRoles(Set.of(userRole));
-            user3.setRoles(Set.of(userRole));
+            user1.setRoles(List.of(adminRole,userRole));
+            user2.setRoles(List.of(userRole));
+            user3.setRoles(List.of(userRole));
 
             userRepository.save(user1);
             userRepository.save(user2);
@@ -166,7 +168,7 @@ public class UserServiceImpl implements UserService {
         UserEntity newUser = this.modelMapper.map(userRegisterBindingModel,UserEntity.class);
         newUser.setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
 
-        Set<UserRoleEntity> roles = new HashSet<>();
+        List<UserRoleEntity> roles = new LinkedList<>();
 
         if(this.userRepository.count() == 0){
             UserRoleEntity adminRoleEntity =
@@ -260,6 +262,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean isNewPasswordIsEqualToOldPassByUserId(String newPassword, Long id) {
         return this.passwordEncoder.matches(newPassword,this.userRepository.findById(id).get().getPassword());
+    }
+
+    @Override
+    public List<UserInfoViewModel> getAllUsers() {
+        return this.userRepository.
+                findAll().
+                stream().
+                map(this::mapToUserInfoViewModel).
+                collect(Collectors.toList());
+    }
+
+    private UserInfoViewModel mapToUserInfoViewModel(UserEntity userEntity){
+        return this.modelMapper.map(userEntity,UserInfoViewModel.class);
     }
 
     private UserEntity updateUserByUserEditViewModel(UserEntity userEntity,UserEditViewModel userEditViewModel){
