@@ -13,8 +13,10 @@ public class SellBuyApplication {
         SpringApplication.run(SellBuyApplication.class, args);
 
 
-//todo: admin have own page where see all users and can change their filed
+//todo: make successful mesage equals in ebery where
 //todo: Promotion page sorted by newesr
+//todo: Updated date do not work in User in system
+//todo: After changes from profile editing user lose Admin role
 
     }
 
