@@ -37,7 +37,7 @@ public class SecurityConfiguration {
                 // everyone can login and register
                         antMatchers("/").permitAll().
                 //only anonymous user can access this URL
-                        antMatchers( "/users/login", "/users/register").anonymous().
+                        antMatchers( "/users/login", "/users/register","/products/all","/products/all/promotion").anonymous().
                 // all other pages are available for logger in users
                         anyRequest().
                 authenticated().
