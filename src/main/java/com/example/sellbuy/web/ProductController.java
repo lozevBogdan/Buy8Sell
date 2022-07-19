@@ -69,12 +69,12 @@ public class ProductController {
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
         }
-        return "all-products";
+        return "products-all";
     }
 
     @GetMapping("/add")
     public String allProducts(){
-        return "add-new-product";
+        return "product-add";
     }
 
 //todo:make a delete post !!!!!!!
@@ -94,7 +94,7 @@ public class ProductController {
         if(!model.containsAttribute("productEditViewModel")){
             model.addAttribute("productEditViewModel",productEditViewModel);
         }
-        return "edit-product";
+        return "product-edit";
     }
 
     @PostMapping("/edit/{id}")
@@ -189,7 +189,7 @@ public class ProductController {
                 this.productService.filterBy(productSearchingBindingModel,sellAndBuyUser.getId());
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
 
-        return "all-products";
+        return "products-all";
     }
 
     //EXAMPLE FOR REQUEST PARAM

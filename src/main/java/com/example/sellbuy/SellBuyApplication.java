@@ -12,7 +12,7 @@ public class SellBuyApplication {
 
         SpringApplication.run(SellBuyApplication.class, args);
 
-//todo: add MyProfile page, where user can edit their number and name
+
 //todo: admin have own page where see all users and can change their filed
 //todo: Promotion page sorted by newesr
 

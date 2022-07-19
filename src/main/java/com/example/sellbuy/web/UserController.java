@@ -196,7 +196,7 @@ public class UserController {
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
         }
-            return "favorites-products";
+            return "products-favorites";
 
     }
 
