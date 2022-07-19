@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Mobile number</th>
+        <th scope="col">Email address</th>
+        <th scope="col">Role</th>
+    </tr>
+    </thead>
+    <tbody th:object="${userInfoViewModel}">
+        <tr >
+        <th scope="row" th:text="*{id}">1</th>
+        <td>
+            <input
+                    th:field="*{firstName}"
+                    th:errorclass="'is-invalid alert-danger'"/>
+        </td>
+            <td>
+            <input
+                    th:field="*{lastName}"
+                    th:errorclass="'is-invalid alert-danger'"/>
+        </td>
+            <td>
+                <input
+                        th:field="*{mobileNumber}"
+                        th:errorclass="'is-invalid alert-danger'"/>
+            </td>
+
+            <td>
+                <input
+                        th:field="*{email}"
+                        th:errorclass="'is-invalid alert-danger'"/>
+            </td>
+
+<!--            todo: to be option -->
+            <td th:if="*{id != 1}" >
+                    <div class=" cow mb-4 form-check">
+                        <input th:field="*{isAdmin}"
+                               th:checked="*{isHaveAdminRole()}"
+                               th:value="${true}"
+                               class="form-check-input" type="checkbox"
+                               id="checkBoxIsAdmin"/>
+                        <label class="form-check-label" for="checkBoxIsAdmin"> ACTIVE ADMIN RIGHTS </label>
+                    </div>
+            </td>
+
+            <td th:if="*{id == 1}" >
+                <label class="form-check-label" for="checkBoxIsAdmin"> ACTIVE ADMIN RIGHTS </label>
+            </td>
+
+        <td><a class="btn btn-danger" th:href="@{/admin/users/save/{userId}(userId=*{id})}">Save</a></td>
+    </tr>
+    </tbody>
+</table>
+
+<footer th:replace="fragments/footer::footer" ></footer>
+
+<th:block th:replace="fragments/scripts::scripts">
+
+</th:block>
+
+</body>
+
+</html>

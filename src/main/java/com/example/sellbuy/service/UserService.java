@@ -52,4 +52,5 @@ public interface UserService {
 
     List<UserInfoViewModel> getAllUsers();
 
+    UserInfoViewModel getUserInfoViewModelByUserId(Long userId);
 }

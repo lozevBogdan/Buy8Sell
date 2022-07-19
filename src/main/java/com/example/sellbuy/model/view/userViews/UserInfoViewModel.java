@@ -15,6 +15,7 @@ public class UserInfoViewModel {
     private String mobileNumber;
     private String email;
     private List<UserRoleEntity> roles;
+    private boolean isAdmin;
 
     public UserInfoViewModel() {
     }
@@ -73,11 +74,23 @@ public class UserInfoViewModel {
         return this;
     }
 
+    public boolean isHaveAdminRole(){
+      boolean isAdmin =  this.roles.stream().anyMatch(r->r.getRole().name().equals("ADMIN"));
+        return isAdmin;
+    }
+
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
+    public UserInfoViewModel setAdmin(boolean admin) {
+        isAdmin = admin;
+        return this;
+    }
+
     public String rolesToString(){
         String roles = "";
-
         for (int i = 0; i < this.roles.size(); i++) {
-
             if(i==1){
                 roles += "/";
             }

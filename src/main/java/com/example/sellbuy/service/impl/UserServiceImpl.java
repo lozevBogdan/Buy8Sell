@@ -75,9 +75,9 @@ public class UserServiceImpl implements UserService {
             UserRoleEntity adminRole = this.userRoleService.findByRole(UserRoleEnum.ADMIN);
             UserRoleEntity userRole = this.userRoleService.findByRole(UserRoleEnum.USER);
 
-            user1.setRoles(List.of(adminRole,userRole));
-            user2.setRoles(List.of(userRole));
-            user3.setRoles(List.of(userRole));
+            user1.setRoles(Set.of(adminRole,userRole));
+            user2.setRoles(Set.of(userRole));
+            user3.setRoles(Set.of(userRole));
 
             userRepository.save(user1);
             userRepository.save(user2);
@@ -168,7 +168,7 @@ public class UserServiceImpl implements UserService {
         UserEntity newUser = this.modelMapper.map(userRegisterBindingModel,UserEntity.class);
         newUser.setPassword(passwordEncoder.encode(userRegisterBindingModel.getPassword()));
 
-        List<UserRoleEntity> roles = new LinkedList<>();
+        Set<UserRoleEntity> roles = new HashSet<>();
 
         if(this.userRepository.count() == 0){
             UserRoleEntity adminRoleEntity =
@@ -271,6 +271,16 @@ public class UserServiceImpl implements UserService {
                 stream().
                 map(this::mapToUserInfoViewModel).
                 collect(Collectors.toList());
+    }
+
+    @Override
+    public UserInfoViewModel getUserInfoViewModelByUserId(Long userId) {
+        UserEntity userEntity = this.userRepository.findById(userId).get();
+        UserInfoViewModel userViewModel =
+                this.modelMapper.map(userEntity,UserInfoViewModel.class);
+       userViewModel.setAdmin(userViewModel.isHaveAdminRole());
+
+        return userViewModel;
     }
 
     private UserInfoViewModel mapToUserInfoViewModel(UserEntity userEntity){
