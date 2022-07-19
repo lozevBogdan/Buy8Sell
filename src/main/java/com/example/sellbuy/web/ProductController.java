@@ -162,6 +162,7 @@ public class ProductController {
         }
        ProductEntity updatedProduct =
                this.productService.updateProductById(id,productEditViewModel);
+        redirectAttributes.addFlashAttribute("updated", true);
         return "redirect:/products/info/" + id;
     }
 

@@ -166,8 +166,12 @@
                                                   type="text" class="form-control" placeholder="Write your message..."></textarea>
                                         <small  class="invalid-feedback text-danger">Comment content can NOT be null!</small>
                                         <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
-                                        <a th:if="${isSend}" class="text-bg-success text-center">
+                                        <a th:if="${isSend}"  style="border: 1px solid blue;background-color: lightblue;
+                                             padding: 10px; float: right;" class="text-bg-success text-center">
                                             You have successfully sent the message!</a>
+                                        <a th:if="${updated}"  style="border: 1px solid blue;background-color: lightblue;
+                                             padding: 10px; float: right;" class="text-bg-success text-center">
+                                           You successfully update product!</a>
                                     </form>
                                 </th:block>
                             </div>
