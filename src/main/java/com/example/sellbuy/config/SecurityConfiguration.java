@@ -35,9 +35,9 @@ public class SecurityConfiguration {
                 // everyone can download static resources (css, js, images)
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // everyone can login and register
-                        antMatchers("/").permitAll().
+                        antMatchers("/","/products/all", "/products/all/promotion","/products/info/**").permitAll().
                 //only anonymous user can access this URL
-                        antMatchers( "/users/login", "/users/register","/products/all","/products/all/promotion").anonymous().
+                        antMatchers( "/users/login", "/users/register").anonymous().
                 // all other pages are available for logger in users
                         anyRequest().
                 authenticated().

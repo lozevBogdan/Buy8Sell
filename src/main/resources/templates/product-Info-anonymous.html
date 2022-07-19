@@ -35,26 +35,26 @@
                 </div>
 
 
-                <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
+<!--                <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">-->
 
-                    <div th:if="*{!isProductIsFavorInCurrentUser()}">
-                        <form th:method="post"
-                              th:action="@{/users/add/favorites/{id}/info(id=*{id})}">
-                            <button
-                                    type="submit" class="btn btn-danger bi bi-heart">Add to favorites
-                            </button>
-                        </form>
-                    </div>
+<!--                    <div th:if="*{!isProductIsFavorInCurrentUser()}">-->
+<!--                        <form th:method="post"-->
+<!--                              th:action="@{/users/add/favorites/{id}/info(id=*{id})}">-->
+<!--                            <button-->
+<!--                                    type="submit" class="btn btn-danger bi bi-heart">Add to favorites-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                    </div>-->
 
-                    <div th:if="*{isProductIsFavorInCurrentUser()}">
-                        <form th:method="post"
-                              th:action="@{/users/remove/favorites/{id}/info(id=*{id})}">
-                            <button type="submit" class="btn btn-success bi bi-heart">
-                                Remove from favorites
-                            </button>
-                        </form>
-                    </div>
-                </th:block>
+<!--                    <div th:if="*{isProductIsFavorInCurrentUser()}">-->
+<!--                        <form th:method="post"-->
+<!--                              th:action="@{/users/remove/favorites/{id}/info(id=*{id})}">-->
+<!--                            <button type="submit" class="btn btn-success bi bi-heart">-->
+<!--                                Remove from favorites-->
+<!--                            </button>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </th:block>-->
             </div>
         </div>
 
@@ -117,54 +117,54 @@
                                 >Created</label>
                             </div>
 
-                            <th:block th:if="*{(seller.email.equals(#authentication.principal.username))}">
+<!--                            <th:block th:if="*{(seller.email.equals(#authentication.principal.username))}">-->
 
-                                <form th:method="post"
-                                      th:action="@{/products/delete/{id}(id=*{id})}">
-                                    <input type="submit"
-                                           class="btn btn-primary btn-block mb-2" value="Delete"></input>
-                                </form>
+<!--                                <form th:method="post"-->
+<!--                                      th:action="@{/products/delete/{id}(id=*{id})}">-->
+<!--                                    <input type="submit"-->
+<!--                                           class="btn btn-primary btn-block mb-2" value="Delete"></input>-->
+<!--                                </form>-->
 
-                                <form th:method="get"
-                                      th:action="@{/products/edit/{id}(id=*{id})}">
-                                    <input type="submit"
-                                           class="btn btn-danger btn-block mb-2" value="Edit"></input>
-                                </form>
-                            </th:block>
-                            <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
+<!--                                <form th:method="get"-->
+<!--                                      th:action="@{/products/edit/{id}(id=*{id})}">-->
+<!--                                    <input type="submit"-->
+<!--                                           class="btn btn-danger btn-block mb-2" value="Edit"></input>-->
+<!--                                </form>-->
+<!--                            </th:block>-->
+<!--                            <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">-->
 
-                                <th:block sec:authorize="hasRole('ADMIN')">
-                                    <form th:method="post"
-                                          th:action="@{/products/delete/{id}(id=*{id})}">
-                                        <input type="submit"
-                                               class="btn btn-primary btn-block mb-2" value="Delete"></input>
-                                    </form>
+<!--                                <th:block sec:authorize="hasRole('ADMIN')">-->
+<!--                                    <form th:method="post"-->
+<!--                                          th:action="@{/products/delete/{id}(id=*{id})}">-->
+<!--                                        <input type="submit"-->
+<!--                                               class="btn btn-primary btn-block mb-2" value="Delete"></input>-->
+<!--                                    </form>-->
 
-                                    <form th:method="get"
-                                          th:action="@{/products/edit/{id}(id=*{id})}">
-                                        <input type="submit"
-                                               class="btn btn-danger btn-block mb-2" value="Edit"></input>
-                                    </form>
-                                </th:block>
+<!--                                    <form th:method="get"-->
+<!--                                          th:action="@{/products/edit/{id}(id=*{id})}">-->
+<!--                                        <input type="submit"-->
+<!--                                               class="btn btn-danger btn-block mb-2" value="Edit"></input>-->
+<!--                                    </form>-->
+<!--                                </th:block>-->
 
-                                <form th:object="${messageBindingModel}"
-                                      th:method="post"
-                                      th:action="@{/messages/send/{receiverId}/{productId}(receiverId=${productInfoView.seller.id},productId=${productInfoView.getId()})}">
+<!--                                <form th:object="${messageBindingModel}"-->
+<!--                                      th:method="post"-->
+<!--                                      th:action="@{/messages/send/{receiverId}/{productId}(receiverId=${productInfoView.seller.id},productId=${productInfoView.getId()})}">-->
 
-                                        <textarea th:field="*{message}"
-                                                  th:errorclass="is-invalid"
-                                                  type="text" class="form-control"
-                                                  placeholder="Write your message..."></textarea>
-                                    <small class="invalid-feedback text-danger">Comment content can NOT be null!</small>
-                                    <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
-                                    <a th:if="${isSend}" style="border: 1px solid blue;background-color: lightblue;
-                                             padding: 10px; float: right;" class="text-bg-success text-center">
-                                        You have successfully sent the message!</a>
-                                </form>
-                            </th:block>
-                            <a th:if="${updated}" style="border: 1px solid blue;background-color: lightblue;
-                                             padding: 10px; float: right;" class="text-bg-success text-center">
-                                You successfully update product!</a>
+<!--                                        <textarea th:field="*{message}"-->
+<!--                                                  th:errorclass="is-invalid"-->
+<!--                                                  type="text" class="form-control"-->
+<!--                                                  placeholder="Write your message..."></textarea>-->
+<!--                                    <small class="invalid-feedback text-danger">Comment content can NOT be null!</small>-->
+<!--                                    <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>-->
+<!--                                    <a th:if="${isSend}" style="border: 1px solid blue;background-color: lightblue;-->
+<!--                                             padding: 10px; float: right;" class="text-bg-success text-center">-->
+<!--                                        You have successfully sent the message!</a>-->
+<!--                                </form>-->
+<!--                            </th:block>-->
+<!--                            <a th:if="${updated}" style="border: 1px solid blue;background-color: lightblue;-->
+<!--                                             padding: 10px; float: right;" class="text-bg-success text-center">-->
+<!--                                You successfully update product!</a>-->
                         </div>
                     </div>
                 </div>

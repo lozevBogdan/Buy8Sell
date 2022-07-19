@@ -28,19 +28,20 @@
 
         <section class="panel">
 
-            <div class="panel-body text-center">
+            <div class="panel-body">
 
                 <div class="text-center">
-                    <h1>Promotions products:</h1>
+                    <h1></h1>
                 </div>
 
-
                 <form role="form product-form"
-                      th:action="@{/products/all/promotion}"
+                      th:action="@{/products/all}"
                       th:method="post"
                       th:object="${productSearchingBindingModel}">
 
+
                     <div id="rol2">
+
                         <div class="float-left">
                             <div class="form-group ">
                                 <label>SEARCH</label>
@@ -126,7 +127,7 @@
     </div>
 
 
-    <div class="col-md-9 text-center">
+    <div class="col-md-9">
         <section class="panel">
             <div class="panel-body">
                 <div class="pull-right">
@@ -141,41 +142,14 @@
         </section>
 
 
-        <div class="row product-list text-center">
+        <div class="row product-list">
 
             <div class="col-md-4" th:each="productView : ${productSearchViewModelList}"
                  th:object="${productView}">
-
                 <section class="panel">
                     <div class="pro-img-box text-center">
                         <img height="220"
                              th:src="*{mainPicture}" width="250"/>
-                        <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
-
-                            <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
-                                <form th:action="@{/users/add/favorites/{id}(id=*{id})}"
-                                      th:method="post">
-                                    <button
-                                            class="btn btn-danger bi bi-heart" type="submit">Add to favorites
-                                    </button>
-                                </form>
-                            </th:block>
-
-                            <th:block th:if="*{isProductIsFavorInCurrentUser()}">
-                                <form th:action="@{/users/remove/favorites/{id}/all(id=*{id})}"
-                                      th:method="post">
-                                    <button class="btn btn-success bi bi-heart" type="submit">
-                                        <i class="bi bi-heart"></i>Remove from favorites
-                                    </button>
-                                </form>
-                            </th:block>
-                        </th:block>
-
-                        <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
-
-                            <button class="btn btn-info bi bi-heart">Your product</button>
-
-                        </th:block>
                     </div>
 
                     <div class="panel-body text-center">
@@ -190,13 +164,16 @@
                     </div>
                 </section>
             </div>
+
+
         </div>
     </div>
-    <div th:if="${noResults}" class="text-center">
+    <div class="text-center" th:if="${noResults}">
         <h1>
             Тhere are no matches for the specified criteria!</h1>
     </div>
 </div>
+
 
 <footer th:replace="fragments/footer::footer"></footer>
 <

@@ -71,7 +71,8 @@ public class ProductController {
         if (!model.containsAttribute("productSearchViewModelList")){
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
         }
-        return "products-all";
+
+        return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
 
     @GetMapping("/all/promotion")
@@ -86,7 +87,7 @@ public class ProductController {
             model.addAttribute("productSearchViewModelList",productSearchViewModelList);
             model.addAttribute("noResults",productSearchViewModelList.size()==0);
         }
-        return "products-promotions";
+        return sellAndBuyUser != null ? "products-promotions" : "products-promotions-anonymous";
     }
 
     @PostMapping("/all/promotion")
@@ -122,7 +123,7 @@ public class ProductController {
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         model.addAttribute("noResults",productSearchViewModelList.size()==0);
 
-        return "products-promotions";
+        return sellAndBuyUser != null ? "products-promotions" : "products-promotions-anonymous";
     }
 
     @GetMapping("/add")
@@ -178,12 +179,17 @@ public class ProductController {
 
         ProductDetailsViewDto productInfoView = this.productService.getAndIncreaseViewsProductById(id);
 
-       if(productService.isConsist(this.userService.findById(sellAndBuyUser.getId()).
-                       getFavoriteProducts(),productInfoView)) {
-           productInfoView.setProductIsFavorInCurrentUser(true);
-       }
+        if(sellAndBuyUser != null){
+            if(productService.isConsist(this.userService.findById(sellAndBuyUser.getId()).
+                    getFavoriteProducts(),productInfoView)) {
+                productInfoView.setProductIsFavorInCurrentUser(true);
+            }
+        }
+
         model.addAttribute("productInfoView",productInfoView);
-        return "product-Info";
+
+
+        return sellAndBuyUser != null ? "product-Info" : "product-Info-anonymous";
     }
 
     @PostMapping("/add")
@@ -243,7 +249,8 @@ public class ProductController {
                         false);
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         model.addAttribute("noResults",productSearchViewModelList.size()==0);
-        return "products-all";
+
+        return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
 
     //EXAMPLE FOR REQUEST PARAM

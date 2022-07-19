@@ -151,6 +151,7 @@
                         <img height="220"
                              th:src="*{mainPicture}" width="250"/>
 
+
                         <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
 
                             <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
@@ -178,9 +179,6 @@
 
                         </th:block>
 
-
-                        <!--                        <a th:href="@{/users/add/favorites/{id}(id=*{id})}"-->
-                        <!--                                type="button" class="btn btn-danger">Add to favorites</a>-->
                     </div>
 
                     <div class="panel-body text-center">

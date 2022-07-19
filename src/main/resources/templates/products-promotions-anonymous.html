@@ -35,6 +35,7 @@
                 </div>
 
 
+
                 <form role="form product-form"
                       th:action="@{/products/all/promotion}"
                       th:method="post"
@@ -50,7 +51,7 @@
                             </div>
                         </div>
 
-                        <div class="float-left">
+                        <div class="float-left" >
                             <div class="form-group">
                                 <label>PRICE</label>
                                 <input class="form-control"
@@ -75,7 +76,7 @@
 
                     <div id="rol1">
 
-                        <div class="float-left">
+                        <div class="float-left" >
                             <div class="form-group">
                                 <label>LOCATION</label>
                                 <select class="browser-default custom-select"
@@ -150,32 +151,6 @@
                     <div class="pro-img-box text-center">
                         <img height="220"
                              th:src="*{mainPicture}" width="250"/>
-                        <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
-
-                            <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
-                                <form th:action="@{/users/add/favorites/{id}(id=*{id})}"
-                                      th:method="post">
-                                    <button
-                                            class="btn btn-danger bi bi-heart" type="submit">Add to favorites
-                                    </button>
-                                </form>
-                            </th:block>
-
-                            <th:block th:if="*{isProductIsFavorInCurrentUser()}">
-                                <form th:action="@{/users/remove/favorites/{id}/all(id=*{id})}"
-                                      th:method="post">
-                                    <button class="btn btn-success bi bi-heart" type="submit">
-                                        <i class="bi bi-heart"></i>Remove from favorites
-                                    </button>
-                                </form>
-                            </th:block>
-                        </th:block>
-
-                        <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
-
-                            <button class="btn btn-info bi bi-heart">Your product</button>
-
-                        </th:block>
                     </div>
 
                     <div class="panel-body text-center">
