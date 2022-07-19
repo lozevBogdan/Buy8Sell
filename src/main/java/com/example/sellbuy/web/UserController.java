@@ -116,7 +116,6 @@ public class UserController {
         }
 
         userService.updateUserByIdWithUserEditViewModel(userId,userEditViewModel);
-
         redirectAttributes.addFlashAttribute("successfulUpdated",true);
 
         return "redirect:/users/profile/" + userId ;
@@ -137,8 +136,6 @@ public class UserController {
 
         boolean passwordsAreEquals = passwordChangingBindingModel.getNewPassword().
                 equals(passwordChangingBindingModel.getNewPasswordConfirm());
-
-
 
         boolean isThisOldPassword;
 

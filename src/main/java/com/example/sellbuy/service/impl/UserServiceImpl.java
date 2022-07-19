@@ -229,7 +229,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity findById(Long authorId) {
-
         return this.userRepository.findById(authorId).orElse(null);
     }
 
@@ -283,14 +282,35 @@ public class UserServiceImpl implements UserService {
         return userViewModel;
     }
 
+    @Override
+    public UserEntity updateUserByIdWithUserInfoViewModelAndIsAmin(Long userId,
+                                         UserInfoViewModel userInfoViewModel,boolean isAdmin) {
+        UserRoleEntity userRole = this.userRoleService.findByRole(UserRoleEnum.USER);
+        UserRoleEntity adminRole = this.userRoleService.findByRole(UserRoleEnum.ADMIN);
+
+        Set<UserRoleEntity> newRoles = new HashSet<>();
+        newRoles.add(userRole);
+
+        if(isAdmin){
+            newRoles.add(adminRole);
+        }
+
+        UserEntity userEntity = this.userRepository.findById(userId).get();
+        userEntity.setRoles(newRoles).
+                setFirstName(userInfoViewModel.getFirstName()).
+                setLastName(userInfoViewModel.getLastName()).
+                setEmail(userInfoViewModel.getEmail()).
+                setMobileNumber(userInfoViewModel.getMobileNumber());
+        userEntity.setModified(LocalDateTime.now());
+        return this.userRepository.save(userEntity);
+    }
+
     private UserInfoViewModel mapToUserInfoViewModel(UserEntity userEntity){
         return this.modelMapper.map(userEntity,UserInfoViewModel.class);
     }
 
     private UserEntity updateUserByUserEditViewModel(UserEntity userEntity,UserEditViewModel userEditViewModel){
-
         userEntity.setModified(LocalDateTime.now());
-
        return userEntity.
                 setFirstName(userEditViewModel.getFirstName()).
                 setLastName(userEditViewModel.getLastName()).

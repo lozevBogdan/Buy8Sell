@@ -2,6 +2,12 @@ package com.example.sellbuy.model.view.userViews;
 
 import com.example.sellbuy.model.entity.UserRoleEntity;
 
+import javax.persistence.Column;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -10,12 +16,29 @@ import java.util.Set;
 public class UserInfoViewModel {
 
     private Long id;
+    @NotNull
+    @Size(min = 3, max = 20)
     private String firstName;
+
+    @NotNull
+    @Size(min = 3, max = 20)
     private String lastName;
+
+    @NotNull
+    @Size(min = 3, max = 20)
     private String mobileNumber;
+
+    @Email()
+    @NotEmpty
     private String email;
+
     private List<UserRoleEntity> roles;
+
     private boolean isAdmin;
+
+    private LocalDateTime created;
+
+    private LocalDateTime modified;
 
     public UserInfoViewModel() {
     }
@@ -85,6 +108,24 @@ public class UserInfoViewModel {
 
     public UserInfoViewModel setAdmin(boolean admin) {
         isAdmin = admin;
+        return this;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public UserInfoViewModel setCreated(LocalDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+    public LocalDateTime getModified() {
+        return modified;
+    }
+
+    public UserInfoViewModel setModified(LocalDateTime modified) {
+        this.modified = modified;
         return this;
     }
 

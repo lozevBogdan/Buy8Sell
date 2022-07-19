@@ -11,6 +11,8 @@
     <thead>
     <tr>
         <th scope="col">Id</th>
+        <th scope="col">Created</th>
+        <th scope="col">Last updated</th>
         <th scope="col">First Name</th>
         <th scope="col">Last Name</th>
         <th scope="col">Mobile number</th>
@@ -21,6 +23,8 @@
     <tbody>
     <tr th:each=" user : ${allUsersViewModels}" th:object="${user}">
         <th scope="row" th:text="*{id}">1</th>
+        <th  th:text="${#temporals.format(user.created,'dd-MM-yyyy HH:mm')}">1</th>
+        <th  th:text="${#temporals.format(user.modified,'dd-MM-yyyy HH:mm')}">1</th>
         <td th:text="*{firstName}" >Otto</td>
         <td th:text="*{lastName}" >@moto</td>
         <td th:text="*{mobileNumber}" >0893250782</td>
@@ -28,8 +32,22 @@
         <td th:text="*{rolesToString()}">ADMIN</td>
         <td><a class="btn btn-danger" th:href="@{/admin/users/edit/{userId}(userId=*{id})}">Edit</a></td>
     </tr>
+
     </tbody>
 </table>
+
+<a th:if="${successfulUpdated}"
+   class="text-bg-success text-center"
+    style="
+  border: 1px solid blue;
+  background-color: lightblue;
+  padding: 10px; float: right;
+">
+    Your changes have been successfully saved!
+</a>
+
+
+
 
 <footer th:replace="fragments/footer::footer" ></footer>
 

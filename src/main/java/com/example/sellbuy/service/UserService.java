@@ -53,4 +53,6 @@ public interface UserService {
     List<UserInfoViewModel> getAllUsers();
 
     UserInfoViewModel getUserInfoViewModelByUserId(Long userId);
+
+    UserEntity updateUserByIdWithUserInfoViewModelAndIsAmin(Long userId, UserInfoViewModel userInfoViewModel, boolean isAdmin);
 }
