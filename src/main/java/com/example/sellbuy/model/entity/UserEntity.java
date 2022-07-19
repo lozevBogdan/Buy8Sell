@@ -2,6 +2,7 @@ package com.example.sellbuy.model.entity;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +27,7 @@ public class UserEntity extends BaseEntity{
 
     @Column
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<UserRoleEntity> roles = new HashSet<>();
+    private List<UserRoleEntity> roles = new LinkedList<>();
 
     @OneToMany(mappedBy = "seller",fetch = FetchType.EAGER)
     private Set<ProductEntity> products= new HashSet<>();
@@ -94,11 +95,11 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public Set<UserRoleEntity> getRoles() {
+    public List<UserRoleEntity> getRoles() {
         return roles;
     }
 
-    public UserEntity setRoles(Set<UserRoleEntity> roles) {
+    public UserEntity setRoles(List<UserRoleEntity> roles) {
         this.roles = roles;
         return this;
     }
