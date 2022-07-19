@@ -96,8 +96,7 @@ public class UserController {
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
                            @PathVariable Long userId,
-                           @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
-                           Model model){
+                           @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         boolean isEmailFree = true;
 
@@ -114,10 +113,8 @@ public class UserController {
 
             return "redirect:/users/profile/" + userId + "/edit";
         }
-
         userService.updateUserByIdWithUserEditViewModel(userId,userEditViewModel);
         redirectAttributes.addFlashAttribute("successfulUpdated",true);
-
         return "redirect:/users/profile/" + userId ;
     }
 

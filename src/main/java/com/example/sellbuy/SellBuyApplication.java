@@ -16,7 +16,6 @@ public class SellBuyApplication {
 //todo: make successful mesage equals in ebery where
 //todo: Promotion page sorted by newesr
 //todo: Updated date do not work in User in system
-//todo: After changes from profile editing user lose Admin role
 
     }
 

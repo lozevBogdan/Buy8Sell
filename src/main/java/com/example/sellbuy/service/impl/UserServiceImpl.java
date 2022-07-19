@@ -291,7 +291,7 @@ public class UserServiceImpl implements UserService {
         Set<UserRoleEntity> newRoles = new HashSet<>();
         newRoles.add(userRole);
 
-        if(isAdmin){
+        if(isAdmin || userId == 1L){
             newRoles.add(adminRole);
         }
 
@@ -311,11 +311,14 @@ public class UserServiceImpl implements UserService {
 
     private UserEntity updateUserByUserEditViewModel(UserEntity userEntity,UserEditViewModel userEditViewModel){
         userEntity.setModified(LocalDateTime.now());
-       return userEntity.
+        userEntity.
                 setFirstName(userEditViewModel.getFirstName()).
                 setLastName(userEditViewModel.getLastName()).
                 setEmail(userEditViewModel.getEmail()).
                 setMobileNumber(userEditViewModel.getMobileNumber());
+
+        System.out.println();
+        return userEntity;
 
     }
 }
