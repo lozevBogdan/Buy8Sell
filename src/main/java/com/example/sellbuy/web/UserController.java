@@ -130,7 +130,6 @@ public class UserController {
                                  RedirectAttributes redirectAttributes,
                                  @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser
                                  ){
-
         boolean passwordsAreEquals = passwordChangingBindingModel.getNewPassword().
                 equals(passwordChangingBindingModel.getNewPasswordConfirm());
 

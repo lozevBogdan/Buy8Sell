@@ -128,7 +128,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void loginUser(UserLoginBindingModel userLoginBindingModel) {
 
-//todo
+//todo: thish should be deleted!!
 //        UserEntity userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
 //                userLoginBindingModel.getPassword()).get();
 //
