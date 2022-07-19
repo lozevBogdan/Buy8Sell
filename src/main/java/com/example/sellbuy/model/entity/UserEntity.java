@@ -27,7 +27,7 @@ public class UserEntity extends BaseEntity{
 
     @Column
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<UserRoleEntity> roles = new LinkedList<>();
+    private Set<UserRoleEntity> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "seller",fetch = FetchType.EAGER)
     private Set<ProductEntity> products= new HashSet<>();
@@ -95,11 +95,11 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public List<UserRoleEntity> getRoles() {
+    public Set<UserRoleEntity> getRoles() {
         return roles;
     }
 
-    public UserEntity setRoles(List<UserRoleEntity> roles) {
+    public UserEntity setRoles(Set<UserRoleEntity> roles) {
         this.roles = roles;
         return this;
     }
