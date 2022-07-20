@@ -130,31 +130,31 @@ public class UserServiceImpl implements UserService {
 //    }
 
 
-// because spring security
-    @Override
-    public void loginUser(UserLoginBindingModel userLoginBindingModel) {
-
-//todo: thish should be deleted!!
-//        UserEntity userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
-//                userLoginBindingModel.getPassword()).get();
+//// because spring security
+//    @Override
+//    public void loginUser(UserLoginBindingModel userLoginBindingModel) {
 //
-//        Long id = userByEmailAndPassword.getId();
-//        String email = userByEmailAndPassword.getEmail();
+////todo: thish should be deleted!!
+////        UserEntity userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
+////                userLoginBindingModel.getPassword()).get();
+////
+////        Long id = userByEmailAndPassword.getId();
+////        String email = userByEmailAndPassword.getEmail();
+////
+////
+////      currentUser.logInCurrUser(id,email);
+////
+//    }
 //
-//
-//      currentUser.logInCurrUser(id,email);
-//
-    }
-
-    // because spring security
-    @Override
-    public void logoutCurrentUser() {
-//            this.currentUser.
-//                    setEmail(null).
-//                    setId(null);
-//
-//
-    }
+//    // because spring security
+//    @Override
+//    public void logoutCurrentUser() {
+////            this.currentUser.
+////                    setEmail(null).
+////                    setId(null);
+////
+////
+//    }
 
     @Override
     public boolean isEmailFree(String email) {

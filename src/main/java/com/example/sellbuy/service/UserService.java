@@ -17,9 +17,9 @@ public interface UserService {
 
     UserEntity getByEmail(String email);
 
-    void loginUser(UserLoginBindingModel userLoginBindingModel);
-
-    void logoutCurrentUser();
+//    void loginUser(UserLoginBindingModel userLoginBindingModel);
+//
+//    void logoutCurrentUser();
 
     boolean isEmailFree(String email);
 

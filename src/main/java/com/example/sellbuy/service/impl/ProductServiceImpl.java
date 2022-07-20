@@ -481,6 +481,7 @@ public class ProductServiceImpl implements ProductService {
         this.messageService.deleteByProductId(id);
         this.productRepository.deleteById(id);
         this.pictureService.deleteByProductId(id);
+
     }
 
     @Override

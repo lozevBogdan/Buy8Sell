@@ -13,12 +13,11 @@ public class SellBuyApplication {
         SpringApplication.run(SellBuyApplication.class, args);
 
 
-//todo: make successful mesage equals in ebery where
+
 //todo: Login page error cheking
-
-
         //not necessary
-//todo: if you are apply some filter and add some product in favorites, then redirect to all products with out previous filter
+//todo: if you are apply some filter and add some product in favorites,
+// then redirect to all products with out previous filter
 
     }
 
