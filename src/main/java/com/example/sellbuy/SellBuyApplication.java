@@ -15,6 +15,10 @@ public class SellBuyApplication {
 //todo: Login page error cheking
 //todo: About page
 
+//todo: IMPORTANT: implement somewhere Exception handling (error handling)
+//todo: IMPORTANT: implement Event
+//todo: IMPORTANT: implement REST
+
     }
 
 }
