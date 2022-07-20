@@ -177,8 +177,6 @@ public class ProductEntity extends BaseEntity {
         return this;
     }
 
-
-
     @Override
     public String toString() {
         return "ProductEntity{" +

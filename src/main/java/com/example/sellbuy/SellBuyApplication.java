@@ -14,7 +14,6 @@ public class SellBuyApplication {
 
 
 //todo: make successful mesage equals in ebery where
-//todo: Promotion page sorted by newesr
 //todo: Login page error cheking
 
 

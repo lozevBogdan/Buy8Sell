@@ -6,6 +6,7 @@ import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.enums.CategoryEnum;
+import com.example.sellbuy.model.entity.enums.OrderBYEnum;
 import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
 import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
@@ -80,7 +81,7 @@ public class ProductController {
                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.productService.filterBy(new ProductSearchingBindingModel(),
+                this.productService.filterBy(new ProductSearchingBindingModel().setOrderBy(OrderBYEnum.NEWEST),
                         sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
                         true);
         if (!model.containsAttribute("productSearchViewModelList")){
@@ -135,7 +136,6 @@ public class ProductController {
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id,
                                 @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
-
         this.productService.deleteProductById(id);
         return String.format("redirect:/users/%d/products",sellAndBuyUser.getId());
     }
@@ -199,7 +199,6 @@ public class ProductController {
                       RedirectAttributes redirectAttributes,
                       @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
-        //todo: to check for null picture and if null to set some default !!!!!
         productAddBindingModel.setPromo(isPromo);
 
         if (bindingResult.hasErrors()) {

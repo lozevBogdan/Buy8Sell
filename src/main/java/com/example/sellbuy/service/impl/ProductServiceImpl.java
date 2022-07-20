@@ -304,12 +304,11 @@ public class ProductServiceImpl implements ProductService {
                 setCategory(categoryEntity).
                 setLocation(location);
 
-        //categoryEntity.getProducts().add(newProduct);
-
         PictureEntity pictureEntity = new PictureEntity();
         pictureEntity.setProduct(newProduct);
 
-        if(productAddBindingModel.getUrlPicture() == null){
+
+        if(productAddBindingModel.getUrlPicture().trim().equals("")){
             pictureEntity.setUrl("https://main.admin.forth.gr/files/site/no-image.png");
         }else {
             pictureEntity.setUrl(productAddBindingModel.getUrlPicture());
@@ -327,7 +326,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-
     public List<ProductSearchViewModel> filterBy(
             ProductSearchingBindingModel productSearchingBindingModel,Long idPrincipal,boolean getOnlyPromotions){
 
@@ -379,30 +377,34 @@ public class ProductServiceImpl implements ProductService {
                     filter(p->p.getLocation().getLocation().name().equals(location.name())).
                     collect(Collectors.toList());
         }
+
         if(orderBy != null){
-            //todo: doesnt work correctly sorted function
             switch (orderBy){
 
                 case VIEWS:
-                    //todo: doesnt work correctly
                     allProducts.
                             sort((a,b)->b.getViews()-a.getViews());
+                    break;
 
                 case NEWEST:
                     allProducts.
                             sort((a,b)->b.getCreated().compareTo(a.getCreated()));
+                    break;
 
                 case LATEST:
                     allProducts.
                             sort((a,b)->a.getCreated().compareTo(b.getCreated()));
+                    break;
 
                 case EXPENSIVEST:
                     allProducts.
-                            sort((a,b)->(a.getPrice().intValue())-(b.getPrice().intValue()));
+                            sort((a,b)->(b.getPrice().intValue())-(a.getPrice().intValue()));
+                    break;
 
                 case CHEAPEST:
                     allProducts.
-                            sort((a,b)->(b.getPrice().intValue())-(a.getPrice().intValue()));
+                            sort((a,b)->(a.getPrice().intValue())-(b.getPrice().intValue()));
+                    break;
             }
         }
 
@@ -416,8 +418,6 @@ public class ProductServiceImpl implements ProductService {
              pictureUrl = product.getPicture().getUrl();
          }
              productSearchViewModel.setMainPicture(pictureUrl);
-         //todo: cheking forn null @AuthenticationPrincipal!!!!!!!!
-
 
             // Check for favorites products for current user
          if(idPrincipal != null){
