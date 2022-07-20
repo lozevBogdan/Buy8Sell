@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/head::head">
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html">
+    <meta content="text/html" http-equiv="Content-Type">
     <title>Buy8Sell</title>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" id="bootstrap-css" rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -22,8 +22,8 @@
          th:object="${productInfoView}">
         <div class="col-md-5">
 
-            <img th:src="*{picture.getUrl()}"
-                 width="400" height="380"/>
+            <img height="380"
+                 th:src="*{picture.getUrl()}" width="400"/>
 
             <div style="position: center">
                 <div class="form-outline mb-2">
@@ -38,18 +38,18 @@
                 <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
 
                     <div th:if="*{!isProductIsFavorInCurrentUser()}">
-                        <form th:method="post"
-                              th:action="@{/users/add/favorites/{id}/info(id=*{id})}">
+                        <form th:action="@{/users/add/favorites/{id}/info(id=*{id})}"
+                              th:method="post">
                             <button
-                                    type="submit" class="btn btn-danger bi bi-heart">Add to favorites
+                                    class="btn btn-danger bi bi-heart" type="submit">Add to favorites
                             </button>
                         </form>
                     </div>
 
                     <div th:if="*{isProductIsFavorInCurrentUser()}">
-                        <form th:method="post"
-                              th:action="@{/users/remove/favorites/{id}/info(id=*{id})}">
-                            <button type="submit" class="btn btn-success bi bi-heart">
+                        <form th:action="@{/users/remove/favorites/{id}/info(id=*{id})}"
+                              th:method="post">
+                            <button class="btn btn-success bi bi-heart" type="submit">
                                 Remove from favorites
                             </button>
                         </form>
@@ -62,12 +62,12 @@
             <div class="col-md-12">
                 <div class="card px-5 py-5" id="form1">
                     <!-- Title  -->
-                    <strong><h5 th:text="*{title}" class="text-center" text="title of product"></h5></strong>
+                    <strong><h5 class="text-center" text="title of product" th:text="*{title}"></h5></strong>
                     <div class="form-data">
 
                         <div>
                             <!-- Condition -->
-                            <div th:if="*{condition != null}" class="form-outline mb-2">
+                            <div class="form-outline mb-2" th:if="*{condition != null}">
                                 <strong class="form-label">Condition:</strong>
                                 <label class="form-label" th:text="*{condition.name()}">Condition</label>
                             </div>
@@ -100,7 +100,7 @@
                                 <label class="form-label" th:text="*{location.location.name()}"></label>
                             </div>
 
-                            <div th:if="*{isPromo()}" class="form-outline mb-2">
+                            <div class="form-outline mb-2" th:if="*{isPromo()}">
                                 <h5>
                                     <span class="form-label badge badge-warning" th:text="|Promo|"></span>
                                 </h5>
@@ -119,52 +119,56 @@
 
                             <th:block th:if="*{(seller.email.equals(#authentication.principal.username))}">
 
-                                <form th:method="post"
-                                      th:action="@{/products/delete/{id}(id=*{id})}">
-                                    <input type="submit"
-                                           class="btn btn-primary btn-block mb-2" value="Delete"></input>
+                                <form th:action="@{/products/delete/{id}(id=*{id})}"
+                                      th:method="post">
+                                    <input class="btn btn-primary btn-block mb-2"
+                                           type="submit" value="Delete"></input>
                                 </form>
 
-                                <form th:method="get"
-                                      th:action="@{/products/edit/{id}(id=*{id})}">
-                                    <input type="submit"
-                                           class="btn btn-danger btn-block mb-2" value="Edit"></input>
+                                <form th:action="@{/products/edit/{id}(id=*{id})}"
+                                      th:method="get">
+                                    <input class="btn btn-danger btn-block mb-2"
+                                           type="submit" value="Edit"></input>
                                 </form>
                             </th:block>
                             <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
 
                                 <th:block sec:authorize="hasRole('ADMIN')">
-                                    <form th:method="post"
-                                          th:action="@{/products/delete/{id}(id=*{id})}">
-                                        <input type="submit"
-                                               class="btn btn-primary btn-block mb-2" value="Delete"></input>
+                                    <form th:action="@{/products/delete/{id}(id=*{id})}"
+                                          th:method="post">
+                                        <input class="btn btn-primary btn-block mb-2"
+                                               type="submit" value="Delete"></input>
                                     </form>
 
-                                    <form th:method="get"
-                                          th:action="@{/products/edit/{id}(id=*{id})}">
-                                        <input type="submit"
-                                               class="btn btn-danger btn-block mb-2" value="Edit"></input>
+                                    <form th:action="@{/products/edit/{id}(id=*{id})}"
+                                          th:method="get">
+                                        <input class="btn btn-danger btn-block mb-2"
+                                               type="submit" value="Edit"></input>
                                     </form>
                                 </th:block>
 
-                                <form th:object="${messageBindingModel}"
+                                <form th:action="@{/messages/send/{receiverId}/{productId}(receiverId=${productInfoView.seller.id},productId=${productInfoView.getId()})}"
                                       th:method="post"
-                                      th:action="@{/messages/send/{receiverId}/{productId}(receiverId=${productInfoView.seller.id},productId=${productInfoView.getId()})}">
+                                      th:object="${messageBindingModel}">
 
-                                        <textarea th:field="*{message}"
-                                                  th:errorclass="is-invalid"
-                                                  type="text" class="form-control"
-                                                  placeholder="Write your message..."></textarea>
+                                        <textarea class="form-control"
+                                                  placeholder="Write your message..."
+                                                  th:errorclass="is-invalid" th:field="*{message}"
+                                                  type="text"></textarea>
                                     <small class="invalid-feedback text-danger">Comment content can NOT be null!</small>
-                                    <input type="submit" class="btn btn-primary btn-block mb-2" value="Send message"/>
-                                    <a th:if="${isSend}" style="border: 1px solid blue;background-color: lightblue;
-                                             padding: 10px; float: right;" class="text-bg-success text-center">
-                                        You have successfully sent the message!</a>
+                                    <input class="btn btn-primary btn-block mb-2" type="submit" value="Send message"/>
+
+                                    <div class=" alert alert-success text-center"
+                                         role="alert" th:if="${isSend}">
+                                        You have successfully sent the message!
+                                    </div>
                                 </form>
                             </th:block>
-                            <a th:if="${updated}" style="border: 1px solid blue;background-color: lightblue;
-                                             padding: 10px; float: right;" class="text-bg-success text-center">
-                                You successfully update product!</a>
+
+                            <div class=" alert alert-success text-center" role="alert"
+                                 th:if="${updated}">
+                                You successfully update product!
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -181,14 +185,14 @@
                 </h3>
 
             </div>
-            <div th:each="comment : *{comments}"
-                 id="commentBody" class="card">
-                <div id="nameAuthorAndDate" class="justify-content-between p-3">
+            <div class="card"
+                 id="commentBody" th:each="comment : *{comments}">
+                <div class="justify-content-between p-3" id="nameAuthorAndDate">
                     <p class="fw-bold mb-0" th:text="|${comment.getAuthor().getFullName()}|">nameAuthor</p>
                     <p class="text-muted small "
                        th:text="|Writen on: ${#temporals.format(comment.created,'dd-MM-yyyy HH:mm')}|">date</p>
                 </div>
-                <div id="commentTextContent" class="card-header d-flex ">
+                <div class="card-header d-flex " id="commentTextContent">
                     <p class="mb-0" th:text="${comment.textContent}">content</p>
                 </div>
             </div>
@@ -197,15 +201,15 @@
     </div>
 
     <div>
-        <form th:method="post"
-              th:action="@{/comments/add/{id}(id=${productInfoView.id})}"
+        <form th:action="@{/comments/add/{id}(id=${productInfoView.id})}"
+              th:method="post"
               th:object="${commentBindingDto}"
         >
-            <input th:field="*{textContent}"
-                   th:errorclass="is-invalid"
-                   name="textContent" id="textContent" class="form-control" placeholder="White your comment..."></input>
+            <input class="form-control"
+                   id="textContent"
+                   name="textContent" placeholder="White your comment..." th:errorclass="is-invalid" th:field="*{textContent}"></input>
             <small class="invalid-feedback text-danger">Comment content can NOT be null!</small>
-            <button type="submit" class="btn btn-info" for="description">Add comment</button>
+            <button class="btn btn-info" for="description" type="submit">Add comment</button>
         </form>
     </div>
 
@@ -216,9 +220,9 @@
 
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+<script crossorigin="anonymous"
         integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
-        crossorigin="anonymous"></script>
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 
