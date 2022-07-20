@@ -47,7 +47,7 @@
 
             <li class="nav-item active">
                 <a class="nav-link" th:href="@{/products/all/promotion}">
-                    <h4><span class="badge badge-primary">Promotions</span></h4>
+                    <h4><span class="badge badge-success">Promotions</span></h4>
                 </a>
             </li>
 
@@ -102,7 +102,7 @@
                     <a class="nav-link "
                        th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}">
                         <h4><span th:text="|${#authentication.principal.firstName} ${#authentication.principal.lastName}|"
-                                   class="badge badge-primary">Promotions
+                                   class="badge badge-secondary">
                         </span></h4>
                     </a>
                 </li>
@@ -110,7 +110,7 @@
 
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/messages/all}">
-                            <h4><span class="badge badge-success">Messages</span></h4>
+                            <h4><span class="badge badge-primary">Messages</span></h4>
                     </a>
                 </li>
 
@@ -123,7 +123,7 @@
                 <li class="nav-item active">
                     <a class="nav-link"
                        th:href="@{/users/{id}/products(id=${#authentication.principal.id})}">
-                        <h4><span class="badge badge-success"> My products</span></h4>
+                        <h4><span class="badge badge-primary"> My products</span></h4>
                     </a>
                 </li>
 
@@ -146,7 +146,7 @@
             <th:block sec:authorize="!isAuthenticated()">
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/users/login}">
-                        <h4><span class="badge badge-success">Log in</span></h4>
+                        <h4><span class="badge badge-primary">Log in</span></h4>
                     </a>
                 </li>
                 <li class="nav-item active">
