@@ -42,7 +42,6 @@ public class AdminController {
         return "admin-user-edit";
     }
 
-
     @PostMapping("/users/save/{userId}")
     public String editInfoByUserId(@Valid UserInfoViewModel userInfoViewModel,
                                    BindingResult bindingResult,
@@ -66,15 +65,8 @@ public class AdminController {
 
             return "redirect:/admin/users/edit/" + userId;
         }
-
         this.userService.updateUserByIdWithUserInfoViewModelAndIsAmin(userId,userInfoViewModel,isAdmin);
         redirectAttributes.addFlashAttribute("successfulUpdated",true);
-
-
         return "redirect:/admin/users";
-
     }
-
-
-
 }

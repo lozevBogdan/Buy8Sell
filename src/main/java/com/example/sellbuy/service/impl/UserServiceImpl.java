@@ -6,13 +6,16 @@ import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
+import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
 import com.example.sellbuy.repository.UserRepository;
 import com.example.sellbuy.securityUser.CurrentUser;
+import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,17 +34,20 @@ public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
+    private final ProductService productService;
 
 
     public UserServiceImpl(UserRepository userRepository, UserRoleServiceImpl userRoleService,
                            CurrentUser currentUser, ModelMapper modelMapper,
-                           PasswordEncoder passwordEncoder, UserDetailsService userDetailsService){
+                           PasswordEncoder passwordEncoder, UserDetailsService userDetailsService,
+                           @Lazy ProductService productService){
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
         this.currentUser = currentUser;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
+        this.productService = productService;
     }
 
 
@@ -316,9 +322,31 @@ public class UserServiceImpl implements UserService {
                 setLastName(userEditViewModel.getLastName()).
                 setEmail(userEditViewModel.getEmail()).
                 setMobileNumber(userEditViewModel.getMobileNumber());
-
-        System.out.println();
         return userEntity;
+    }
 
+    @Override
+    public List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts, Long userId){
+        List<ProductSearchViewModel> returnedList = new LinkedList<>();
+
+        for (ProductEntity product : favorProducts) {
+            ProductSearchViewModel productSearchViewModel =
+                    this.modelMapper.map(product, ProductSearchViewModel.class);
+
+            productSearchViewModel.setMainPicture(product.getPicture().getUrl());
+            UserEntity currentLoggedInUserEntity =
+                    this.getCurrentLoggedInUserEntityById(userId);
+
+            // Check for favorites products for current user
+            if(currentLoggedInUserEntity != null){
+                Set<ProductEntity> favoriteProducts =
+                        currentLoggedInUserEntity.getFavoriteProducts();
+                if(this.productService.isConsist(favoriteProducts,product)){
+                    productSearchViewModel.setProductIsFavorInCurrentUser(true);
+                }
+            }
+            returnedList.add(productSearchViewModel);
+        }
+        return returnedList;
     }
 }
