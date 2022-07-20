@@ -18,8 +18,9 @@
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark"
      th:fragment="navbar">
 
+    <a class="navbar-brand" ></a>
     <a class="navbar-brand" th:href="@{/}">
-        <img height="35" th:src="@{/images/sell8buy-buy-sell-logo-new.png}" width="80"/></a>
+        <img height="50" th:src="@{/images/sell8buy-buy-sell-logo-new.png}" width="120"/></a>
     <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
             class="navbar-toggler"
             data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
@@ -38,51 +39,45 @@
             <!--                </a>-->
             <!--            </li>-->
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" th:href="@{/products/all}">
-                    <i class="fa fa-envelope-o">
-                        <span class="badge badge-danger">11</span>
-                    </i>
-                    All Products
+                    <h4><span class="badge badge-success">All Products</span></h4>
                 </a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" th:href="@{/products/all/promotion}">
-                    <i class="fa fa-envelope-o">
-                        <span class="badge badge-danger">11</span>
-                    </i>
-                    Promotions
+                    <h4><span class="badge badge-primary">Promotions</span></h4>
                 </a>
             </li>
 
             <th:block sec:authorize="isAuthenticated()">
-                <li class="nav-item"
+                <li class="nav-item active"
                     sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/admin/users}">
-                        <i class="fa fa-envelope-o">
-                            <span class="badge badge-warning">11</span>
-                        </i>
-                        Users in system
+                        <h4><span class="badge badge-secondary">Users in system</span></h4>
                     </a>
                 </li>
-                <li class="nav-item dropdown"
-                    sec:authorize="hasRole('ADMIN')">
-                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"
-                       data-toggle="dropdown"
-                       href="#" id="navbarDropdown" role="button">
-                        <i class="fa fa-envelope-o">
-                            <span class="badge badge-primary">11</span>
-                        </i>
-                        Dropdown
-                    </a>
-                    <div aria-labelledby="navbarDropdown" class="dropdown-menu">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
+
+
+                <!--                <li class="nav-item dropdown active"-->
+                <!--                    sec:authorize="hasRole('ADMIN')">-->
+                <!--                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"-->
+                <!--                       data-toggle="dropdown"-->
+                <!--                       href="#" id="navbarDropdown" role="button">-->
+                <!--                        <i class="fa fa-envelope-o">-->
+                <!--                            <span class="badge badge-primary">11</span>-->
+                <!--                        </i>-->
+                <!--                        Dropdown-->
+                <!--                    </a>-->
+                <!--                    <div aria-labelledby="navbarDropdown" class="dropdown-menu">-->
+                <!--                        <a class="dropdown-item" href="#">Action</a>-->
+                <!--                        <a class="dropdown-item" href="#">Another action</a>-->
+                <!--                        <div class="dropdown-divider"></div>-->
+                <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+                <!--                    </div>-->
+                <!--                </li>-->
+
                 <th:block/>
 
         </ul>
@@ -92,78 +87,71 @@
 
             <th:block sec:authorize="isAuthenticated()">
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}"
-                       th:text="|${#authentication.principal.firstName} ${#authentication.principal.lastName}|">
-                        My profile
+<!--                <li class="nav-item active">-->
+
+<!--                    <h4><span class="badge badge-primary">-->
+<!--                    </span></h4>-->
+<!--                    <a class="nav-link"-->
+<!--                       th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}"-->
+<!--                       th:text="|${#authentication.principal.firstName} ${#authentication.principal.lastName}|">-->
+<!--                        My profile-->
+<!--                    </a>-->
+<!--                </li>-->
+
+                <li class="nav-item active">
+                    <a class="nav-link "
+                       th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}">
+                        <h4><span th:text="|${#authentication.principal.firstName} ${#authentication.principal.lastName}|"
+                                   class="badge badge-primary">Promotions
+                        </span></h4>
                     </a>
                 </li>
 
-                <li class="nav-item">
+
+                <li class="nav-item active">
                     <a class="nav-link" th:href="@{/messages/all}">
-                        <i class="fa fa-bell">
-                            <span class="badge badge-warning">11</span>
-                        </i>
-                        Messages
+                            <h4><span class="badge badge-success">Messages</span></h4>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" th:href="@{/users/{id}/favorites(id=${#authentication.principal.id})}">
-                        <i class="fa fa-bell">
-                            <span class="badge badge-danger">11</span>
-                        </i>
-                        Favorites
+                        <h4><span class="badge badge-primary">Favorites</span></h4>
                     </a>
                 </li>
 
-                <li class="nav-item">
-
+                <li class="nav-item active">
                     <a class="nav-link"
                        th:href="@{/users/{id}/products(id=${#authentication.principal.id})}">
-                        <i class="fa fa-bell">
-                            <span class="badge badge-danger">11</span>
-                        </i>
-                        My products
+                        <h4><span class="badge badge-success"> My products</span></h4>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" th:href="@{/products/add}">
-                        <!--                    <i class="bi bi-person-fill"></i>-->
-                        <!--                        <span class="badge badge-success">11</span>-->
-                        </i>
-                        Add Product
+                        <h4><span class="badge badge-primary">Add Product</span></h4>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                <li class="nav-item active">
                     <form th:action="@{/users/logout}" th:method="post">
-                        <button class="btn nav-link" type="submit">
-                            <!--                        <a type="submit" class="nav-link" >-->
+                        <button class="btn nav-link" type="submit"/>
                     </form>
+                    <h4><span class="badge badge-danger">Logout</span></h4>
 
-                    </i>
-                    Logout
-                    </a>
                 </li>
             </th:block>
 
 
             <th:block sec:authorize="!isAuthenticated()">
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" th:href="@{/users/login}">
-                        <!--                    <i class="bi bi-person-fill"></i>-->
-                        <!--                        <span class="badge badge-success">11</span>-->
-                        </i>
-                        Log in
+                        <h4><span class="badge badge-success">Log in</span></h4>
                     </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" th:href="@{/users/register}">
-                        </i>
-                        Register
+                        <h4><span class="badge badge-primary">Register</span></h4>
                     </a>
                 </li>
             </th:block>
@@ -171,12 +159,12 @@
 
         </ul>
 
-        <th:block sec:authorize="isAuthenticated()">
-            <form class="form-inline my-2 my-lg-0">
-                <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="text">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </th:block>
+<!--        <th:block sec:authorize="isAuthenticated()">-->
+<!--            <form class="form-inline my-2 my-lg-0">-->
+<!--                <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="text">-->
+<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+<!--            </form>-->
+<!--        </th:block>-->
 
     </div>
 </nav>
