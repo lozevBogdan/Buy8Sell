@@ -31,131 +31,91 @@ public class UserProductsController {
     }
 
     @GetMapping("/{id}/products")
-    public String myProducts(@PathVariable Long id, Model model){
+    public String myProducts(@PathVariable Long id, Model model) {
 
         Set<ProductEntity> myProducts = this.productService.findProductsByUserId(id);
         List<ProductSearchViewModel> myProductsSearchViewModelList =
-                this.userService.returnFavors(myProducts,id);
+                this.userService.returnFavors(myProducts, id);
 
-        if (!model.containsAttribute("myProductsSearchViewModelList")){
-            model.addAttribute("myProductsSearchViewModelList",myProductsSearchViewModelList);
+        if (!model.containsAttribute("myProductsSearchViewModelList")) {
+            model.addAttribute("myProductsSearchViewModelList", myProductsSearchViewModelList);
         }
         return "my-products";
     }
 
     @GetMapping("/{id}/favorites")
-    public String getAllFavorites(@PathVariable Long id, Model model){
+    public String getAllFavorites(@PathVariable Long id, Model model) {
 
         Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
 
         List<ProductSearchViewModel> productSearchViewModelList =
-                this.userService.returnFavors(favorList,id);
+                this.userService.returnFavors(favorList, id);
 
-        if (!model.containsAttribute("productSearchViewModelList")){
-            model.addAttribute("productSearchViewModelList",productSearchViewModelList);
+        if (!model.containsAttribute("productSearchViewModelList")) {
+            model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         }
         return "products-favorites";
-
     }
-    @PostMapping("/add/favorites/{id}")
+
+    @PostMapping("/add/favorites/{id}/{previousPage}")
     public String addFavorites(@PathVariable Long id,
-                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
+                               @PathVariable String previousPage) {
 
         UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
 
-        if(currentUser == null){
+        if (currentUser == null) {
             return "redirect:/users/login";
-        }else {
-
+        } else {
             ProductEntity product = this.productService.findById(id);
             product.getFans().add(currentUser);
             this.productService.addProductEntity(product);
 
             currentUser.getFavoriteProducts().add(product);
             currentUser = this.userService.addInDb(currentUser);
-            System.out.println();
-            return "redirect:/products/all";
+
+            String redirectPage = "";
+
+            if (previousPage.equals("promotion")) {
+                redirectPage = "redirect:/products/all/promotion";
+            } else if (previousPage.equals("all")) {
+                redirectPage = "redirect:/products/all";
+            } else if (previousPage.equals("favorites")) {
+                redirectPage = String.format("redirect:/users/%d/favorites", currentUser.getId());
+            } else if (previousPage.equals("info")) {
+                redirectPage = String.format("redirect:/products/info/%d", id);
+            }
+            return redirectPage;
         }
     }
 
-    @PostMapping("/add/favorites/{id}/info")
-    public String addFavoritesAndRedirectToInfoProductPage(@PathVariable Long id,
-                                                           @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
-        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
-
-        if(currentUser == null){
-            return "redirect:/users/login";
-        }else {
-
-            ProductEntity product = this.productService.findById(id);
-            product.getFans().add(currentUser);
-            this.productService.addProductEntity(product);
-
-            currentUser.getFavoriteProducts().add(product);
-            currentUser = this.userService.addInDb(currentUser);
-            System.out.println();
-            return  String.format("redirect:/products/info/%d",id);
-        }
-    }
-
-    @PostMapping("/remove/favorites/{id}")
+    @PostMapping("/remove/favorites/{id}/{previousPage}")
     public String removeFromFavorites(@PathVariable Long id,
-                                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
-
+                                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
+                                      @PathVariable String previousPage) {
         UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
-
-        if(currentUser == null){
+        if (currentUser == null) {
             return "redirect:/users/login";
-        }else {
-
-            ProductEntity product = this.productService.findById(id);
-            product.getFans().remove(currentUser);
-            this.productService.addProductEntity(product);
-            //  this.userService.addFavorProduct(product);
-            currentUser.getFavoriteProducts().remove(product);
-
-            currentUser = this.userService.addInDb(currentUser);
-            return String.format("redirect:/users/%d/favorites",currentUser.getId());
-        }
-    }
-
-    @PostMapping("/remove/favorites/{id}/all")
-    public String removeFromFavoritesAndRedirectToAll(@PathVariable Long id,
-                                                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
-
-        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
-
-        if(currentUser == null){
-            return "redirect:/users/login";
-        }else {
-            ProductEntity product = this.productService.findById(id);
-            product.getFans().remove(currentUser);
-            this.productService.addProductEntity(product);
-            //  this.userService.addFavorProduct(product);
-            currentUser.getFavoriteProducts().remove(product);
-
-            currentUser = this.userService.addInDb(currentUser);
-            return "redirect:/products/all";
-        }
-    }
-
-    @PostMapping("/remove/favorites/{id}/info")
-    public String removeFromFavoritesAndRedirectToInfoPageProduct(@PathVariable Long id,
-                                                                  @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
-
-        UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
-
-        if(currentUser == null){
-            return "redirect:/users/login";
-        }else {
+        } else {
             ProductEntity product = this.productService.findById(id);
             product.getFans().remove(currentUser);
             this.productService.addProductEntity(product);
             currentUser.getFavoriteProducts().remove(product);
-
             currentUser = this.userService.addInDb(currentUser);
-            return String.format("redirect:/products/info/%d",id);
+            String redirectPage = "";
+            if (previousPage.equals("promotion")) {
+                redirectPage = "redirect:/products/all/promotion";
+            } else if (previousPage.equals("favorites")) {
+                redirectPage = String.format("redirect:/users/%d/favorites", currentUser.getId());
+            } else if (previousPage.equals("info")) {
+                redirectPage = String.format("redirect:/products/info/%d", id);
+            } else if (previousPage.equals("all")) {
+                redirectPage = "redirect:/products/all";
+            }
+
+            return redirectPage;
         }
     }
+
 }

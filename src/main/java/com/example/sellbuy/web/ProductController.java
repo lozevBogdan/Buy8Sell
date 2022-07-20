@@ -42,35 +42,35 @@ public class ProductController {
     }
 
     @ModelAttribute
-    public CommentBindingDto commentBindingDto(){
+    public CommentBindingDto commentBindingDto() {
         return new CommentBindingDto();
     }
 
     @ModelAttribute
-    public ProductAddBindingModel productAddBindingModel(){
+    public ProductAddBindingModel productAddBindingModel() {
         return new ProductAddBindingModel();
     }
 
     @ModelAttribute
-    public MessageBindingModel messageBindingModel(){
+    public MessageBindingModel messageBindingModel() {
         return new MessageBindingModel();
     }
 
     @ModelAttribute
-    public ProductSearchingBindingModel productSearchingBindingModel(){
+    public ProductSearchingBindingModel productSearchingBindingModel() {
         return new ProductSearchingBindingModel();
     }
 
     @GetMapping("/all")
     public String productsPage(Model model,
-                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
         List<ProductSearchViewModel> productSearchViewModelList =
                 this.productService.filterBy(new ProductSearchingBindingModel(),
-                        sellAndBuyUser != null ? sellAndBuyUser.getId() : null,false);
+                        sellAndBuyUser != null ? sellAndBuyUser.getId() : null, false);
 
-        if (!model.containsAttribute("productSearchViewModelList")){
-            model.addAttribute("productSearchViewModelList",productSearchViewModelList);
+        if (!model.containsAttribute("productSearchViewModelList")) {
+            model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         }
 
         return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
@@ -78,29 +78,29 @@ public class ProductController {
 
     @GetMapping("/all/promotion")
     public String allPromotions(Model model,
-                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
         List<ProductSearchViewModel> productSearchViewModelList =
                 this.productService.filterBy(new ProductSearchingBindingModel().setOrderBy(OrderBYEnum.NEWEST),
                         sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
                         true);
-        if (!model.containsAttribute("productSearchViewModelList")){
-            model.addAttribute("productSearchViewModelList",productSearchViewModelList);
-            model.addAttribute("noResults",productSearchViewModelList.size()==0);
+        if (!model.containsAttribute("productSearchViewModelList")) {
+            model.addAttribute("productSearchViewModelList", productSearchViewModelList);
+            model.addAttribute("noResults", productSearchViewModelList.size() == 0);
         }
         return sellAndBuyUser != null ? "products-promotions" : "products-promotions-anonymous";
     }
 
     @PostMapping("/all/promotion")
     public String allPromotions(@Valid ProductSearchingBindingModel productSearchingBindingModel,
-                      BindingResult bindingResult,
-                      RedirectAttributes redirectAttributes,
-                      Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
-                      @RequestParam(value = "category",required = false) String category){
+                                BindingResult bindingResult,
+                                RedirectAttributes redirectAttributes,
+                                Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
+                                @RequestParam(value = "category", required = false) String category) {
 
         boolean isMinBiggerThanMax = false;
 
-        if (category != ""){
+        if (category != "") {
             productSearchingBindingModel.setCategory(CategoryEnum.valueOf(category));
         }
 
@@ -122,31 +122,31 @@ public class ProductController {
                         sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
                         true);
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-        model.addAttribute("noResults",productSearchViewModelList.size()==0);
+        model.addAttribute("noResults", productSearchViewModelList.size() == 0);
 
         return sellAndBuyUser != null ? "products-promotions" : "products-promotions-anonymous";
     }
 
     @GetMapping("/add")
-    public String allProducts(){
+    public String allProducts() {
         return "product-add";
     }
 
-//todo:make a delete post !!!!!!!
+    //todo:make a delete post !!!!!!!
     @PostMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id,
-                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+                                @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
         this.productService.deleteProductById(id);
-        return String.format("redirect:/users/%d/products",sellAndBuyUser.getId());
+        return String.format("redirect:/users/%d/products", sellAndBuyUser.getId());
     }
 
     @GetMapping("/edit/{id}")
-    public String editPage(@PathVariable Long id,Model model){
+    public String editPage(@PathVariable Long id, Model model) {
 
         ProductEditViewModel productEditViewModel =
                 this.productService.findByIdProductSearchAndEditViewModel(id);
-        if(!model.containsAttribute("productEditViewModel")){
-            model.addAttribute("productEditViewModel",productEditViewModel);
+        if (!model.containsAttribute("productEditViewModel")) {
+            model.addAttribute("productEditViewModel", productEditViewModel);
         }
         return "product-edit";
     }
@@ -156,9 +156,9 @@ public class ProductController {
                               @RequestParam(defaultValue = "false") boolean isPromo,
                               @Valid ProductEditViewModel productEditViewModel,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes){
+                              RedirectAttributes redirectAttributes) {
 
-         productEditViewModel.setPromo(isPromo);
+        productEditViewModel.setPromo(isPromo);
 
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("productEditViewModel", productEditViewModel);
@@ -167,26 +167,26 @@ public class ProductController {
                     bindingResult);
             return "redirect:/products/edit/" + id;
         }
-       ProductEntity updatedProduct =
-               this.productService.updateProductById(id,productEditViewModel);
+        ProductEntity updatedProduct =
+                this.productService.updateProductById(id, productEditViewModel);
         redirectAttributes.addFlashAttribute("updated", true);
         return "redirect:/products/info/" + id;
     }
 
     @GetMapping("/info/{id}")
-    public String productInfo(@PathVariable Long id,Model model,
-                              @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+    public String productInfo(@PathVariable Long id, Model model,
+                              @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
         ProductDetailsViewDto productInfoView = this.productService.getAndIncreaseViewsProductById(id);
 
-        if(sellAndBuyUser != null){
-            if(productService.isConsist(this.userService.findById(sellAndBuyUser.getId()).
-                    getFavoriteProducts(),productInfoView)) {
+        if (sellAndBuyUser != null) {
+            if (productService.isConsist(this.userService.findById(sellAndBuyUser.getId()).
+                    getFavoriteProducts(), productInfoView)) {
                 productInfoView.setProductIsFavorInCurrentUser(true);
             }
         }
 
-        model.addAttribute("productInfoView",productInfoView);
+        model.addAttribute("productInfoView", productInfoView);
 
 
         return sellAndBuyUser != null ? "product-Info" : "product-Info-anonymous";
@@ -197,7 +197,7 @@ public class ProductController {
                       @Valid ProductAddBindingModel productAddBindingModel,
                       BindingResult bindingResult,
                       RedirectAttributes redirectAttributes,
-                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
+                      @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
         productAddBindingModel.setPromo(isPromo);
 
@@ -210,22 +210,22 @@ public class ProductController {
         }
 
         ProductEntity newProduct =
-                this.productService.addProductBindingModel(productAddBindingModel,sellAndBuyUser);
+                this.productService.addProductBindingModel(productAddBindingModel, sellAndBuyUser);
 
         return String.format("redirect:/users/%d/products",
-               sellAndBuyUser.getId());
+                sellAndBuyUser.getId());
     }
 
     @PostMapping("/all")
     public String all(@Valid ProductSearchingBindingModel productSearchingBindingModel,
-                        BindingResult bindingResult,
-                        RedirectAttributes redirectAttributes,
-                        Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
-                      @RequestParam(value = "category",required = false) String category){
+                      BindingResult bindingResult,
+                      RedirectAttributes redirectAttributes,
+                      Model model, @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
+                      @RequestParam(value = "category", required = false) String category) {
 
         boolean isMinBiggerThanMax = false;
 
-        if (category != ""){
+        if (category != "") {
             productSearchingBindingModel.setCategory(CategoryEnum.valueOf(category));
         }
 
@@ -247,7 +247,7 @@ public class ProductController {
                         sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
                         false);
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-        model.addAttribute("noResults",productSearchViewModelList.size()==0);
+        model.addAttribute("noResults", productSearchViewModelList.size() == 0);
 
         return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
@@ -286,7 +286,6 @@ public class ProductController {
 //
 //        return "redirect:/products/all";
 //    }
-
 
 
 }

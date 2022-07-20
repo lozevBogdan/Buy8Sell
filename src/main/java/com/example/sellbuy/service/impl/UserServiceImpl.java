@@ -106,56 +106,6 @@ public class UserServiceImpl implements UserService {
                 orElse(null);
     }
 
-
-// FROM MOBILELLE !!!!!!!!!!!!!!!!-----------------------------------------------------------
-//    public void registerAndLogin(UserRegisterBindingModel userRegisterDTO) {
-//        UserEntity newUser = modelMapper.map(userRegisterDTO,UserEntity.class);
-//        newUser.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
-//        this.userRepository.save(newUser);
-//        login(newUser);
-//    }
-//
-//    private void login(UserEntity userEntity) {
-//        UserDetails userDetails =
-//                userDetailsService.loadUserByUsername(userEntity.getEmail());
-//        Authentication auth =
-//                new UsernamePasswordAuthenticationToken(
-//                        userDetails,
-//                        userDetails.getPassword(),
-//                        userDetails.getAuthorities()
-//                );
-//        SecurityContextHolder.
-//                getContext().
-//                setAuthentication(auth);
-//    }
-
-
-//// because spring security
-//    @Override
-//    public void loginUser(UserLoginBindingModel userLoginBindingModel) {
-//
-////todo: thish should be deleted!!
-////        UserEntity userByEmailAndPassword = this.userRepository.findByEmailAndPassword(userLoginBindingModel.getEmail(),
-////                userLoginBindingModel.getPassword()).get();
-////
-////        Long id = userByEmailAndPassword.getId();
-////        String email = userByEmailAndPassword.getEmail();
-////
-////
-////      currentUser.logInCurrUser(id,email);
-////
-//    }
-//
-//    // because spring security
-//    @Override
-//    public void logoutCurrentUser() {
-////            this.currentUser.
-////                    setEmail(null).
-////                    setId(null);
-////
-////
-//    }
-
     @Override
     public boolean isEmailFree(String email) {
         return this.userRepository.findByEmail(email).isEmpty();

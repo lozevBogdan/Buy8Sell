@@ -155,7 +155,7 @@
                         <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
 
                             <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
-                                <form th:action="@{/users/add/favorites/{id}(id=*{id})}"
+                                <form th:action="@{/users/add/favorites/{id}/{all}(id=*{id},all='all')}"
                                       th:method="post">
                                     <button
                                             class="btn btn-danger bi bi-heart" type="submit">Add to favorites
@@ -164,7 +164,7 @@
                             </th:block>
 
                             <th:block th:if="*{isProductIsFavorInCurrentUser()}">
-                                <form th:action="@{/users/remove/favorites/{id}/all(id=*{id})}"
+                                <form th:action="@{/users/remove/favorites/{id}/{all}(id=*{id},all='all')}"
                                       th:method="post">
                                     <button class="btn btn-success bi bi-heart" type="submit">
                                         <i class="bi bi-heart"></i>Remove from favorites
