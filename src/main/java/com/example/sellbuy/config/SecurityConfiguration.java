@@ -61,7 +61,7 @@ public class SecurityConfiguration {
                 // which is the logout url, must be POST request
                         logoutUrl("/users/logout").
                 // on logout go to the home page
-                        logoutSuccessUrl("/").
+                        logoutSuccessUrl("/users/login").
                 // invalidate the session and delete the cookies
                         invalidateHttpSession(true).
                 deleteCookies("JSESSIONID");

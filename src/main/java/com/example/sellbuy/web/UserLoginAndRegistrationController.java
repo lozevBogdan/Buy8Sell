@@ -27,6 +27,17 @@ public class UserLoginAndRegistrationController {
         return new UserRegisterBindingModel();
     }
 
+    @PostMapping("/login-error")
+    public String onFailedLogin(
+            @ModelAttribute("email") String email,
+                                RedirectAttributes redirectAttributes
+    ){
+        redirectAttributes.addFlashAttribute("email",email);
+        redirectAttributes.addFlashAttribute("invalidCredentials",true);
+
+        return "redirect:/users/login";
+    }
+
     @GetMapping("/register")
     public String register(){
         return "register";
