@@ -18,8 +18,8 @@
                     th:action="@{/users/login}">
 
                         <th:block th:if="${invalidCredentials}">
-                            <div class="text-danger">Invalid credentials! </div>
-                            <div class="text-danger">Incorrect username or password!</div>
+                            <div class="errors alert alert-danger text-center">Invalid credentials! </div>
+                            <div class="errors alert alert-danger text-center">Incorrect username or password!</div>
                         </th:block>
 
                         <!-- Email input -->
