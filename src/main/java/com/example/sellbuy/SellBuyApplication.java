@@ -12,7 +12,7 @@ public class SellBuyApplication {
 
         SpringApplication.run(SellBuyApplication.class, args);
 
-
+//todo: frond end validation
 //todo: About page
 
 //todo: IMPORTANT: implement somewhere Exception handling (error handling)
