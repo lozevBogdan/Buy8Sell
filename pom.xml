@@ -91,6 +91,14 @@
             <artifactId>hsqldb</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.icegreen/greenmail -->
+        <dependency>
+            <groupId>com.icegreen</groupId>
+            <artifactId>greenmail</artifactId>
+            <version>1.6.9</version>
+            <scope>test</scope>
+        </dependency>
+
 
     </dependencies>
 
