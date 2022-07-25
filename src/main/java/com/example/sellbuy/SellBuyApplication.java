@@ -15,13 +15,16 @@ public class SellBuyApplication {
 //todo: frond end validation
 //todo: About page
 
+
 //todo: IMPORTANT: implement somewhere Exception handling (error handling)
+//todo: IMPORTANT: intercetor
+//todo: IMPORTANT: shedule
 //todo: IMPORTANT: implement Event
-//todo: IMPORTANT: implement REST
-//todo: view in case the user do not have messages
-//todo: error exeption in case we wont to product with not exist id in DB
+//todo: IMPORTANT: implement REST.
+//todo: view in case the user do not have messages.
+//todo: error exception in case we wont to product with not exist id in DB.
 //todo: add a new comments for approved by Admin, before their visualisation.
-//todo: use a fetch api for chat messages with often fetch (for real time loading messages)
+//todo: use a fetch api for chat messages with often fetch (for real time loading messages).
 
     }
 
