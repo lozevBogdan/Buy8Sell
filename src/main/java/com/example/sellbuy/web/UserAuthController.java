@@ -14,17 +14,22 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/users")
-public class UserLoginAndRegistrationController {
+public class UserAuthController {
 
     private final UserService userService;
 
-    public UserLoginAndRegistrationController(UserService userService) {
+    public UserAuthController(UserService userService) {
         this.userService = userService;
     }
 
     @ModelAttribute
     public UserRegisterBindingModel userRegisterBindingModel(){
         return new UserRegisterBindingModel();
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
     }
 
     @PostMapping("/login-error")

@@ -23,7 +23,6 @@ public class UserProfileController {
 
     private final UserService userService;
 
-
     public UserProfileController(UserService userService) {
         this.userService = userService;
     }
@@ -31,16 +30,6 @@ public class UserProfileController {
     @ModelAttribute
     public PasswordChangingBindingModel passwordChangingBindingModel(){
         return new PasswordChangingBindingModel();
-    }
-
-    @ModelAttribute
-    public UserLoginBindingModel userLoginBindingModel(){
-        return new UserLoginBindingModel();
-    }
-
-    @GetMapping("/login")
-    public String login(){
-        return "login";
     }
 
     @GetMapping("/profile/{id}")
@@ -139,34 +128,4 @@ public class UserProfileController {
 
         return "redirect:/users/profile/" + sellAndBuyUser.getId() ;
     }
-
-
-
-
-//                      because spring security
-//    @PostMapping("/login")
-//    public String login(@Valid UserLoginBindingModel userLoginBindingModel,
-//                           BindingResult bindingResult,
-//                           RedirectAttributes redirectAttributes){
-//
-//            boolean isCredentialsAreValid =
-//                    this.userService.
-//                            isExistUserWithEmailAndPassword(userLoginBindingModel.getEmail(),
-//                                    userLoginBindingModel.getPassword());
-//
-//        if (bindingResult.hasErrors() || isCredentialsAreValid) {
-//            redirectAttributes.addFlashAttribute("userLoginBindingModel", userLoginBindingModel);
-//            redirectAttributes.addFlashAttribute(
-//                    "org.springframework.validation.BindingResult.userLoginBindingModel", bindingResult);
-//            redirectAttributes.addFlashAttribute("invalidCredentials", isCredentialsAreValid);
-//
-//            return "redirect:/users/login";
-//        }
-//
-//        userService.loginUser(userLoginBindingModel);
-//
-//        return "redirect:/";
-//    }
-
-
 }

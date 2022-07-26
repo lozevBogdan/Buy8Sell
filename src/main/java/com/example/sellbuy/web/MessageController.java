@@ -37,6 +37,7 @@ public class MessageController {
 
     @ModelAttribute
     public MessageBindingModel messageBindingModel(){return new MessageBindingModel();}
+
     @ModelAttribute(name = "allMessages")
     public Set<MessageEntity> messages(){return new HashSet<>();}
 
