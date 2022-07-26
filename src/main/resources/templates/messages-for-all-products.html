@@ -12,6 +12,11 @@
                 <h5 class="font-weight-bold mb-3 text-center text-lg-start">Products about your messages: </h5>
                 <div class="card">
                     <div class="card-body">
+
+                        <th:block th:if="${products.size() == 0}">
+                            <h3>You have no messages yet.</h3>
+                        </th:block>
+
                         <ul class="list-unstyled mb-0">
                             <li th:each="product : ${products}" th:object="${product}" class="p-2 border-bottom">
                                 <a th:href="@{/messages/products/{id}(id=*{id})}"
@@ -27,6 +32,7 @@
                                 </a>
                             </li>
                         </ul>
+
                     </div>
                 </div>
             </div>
