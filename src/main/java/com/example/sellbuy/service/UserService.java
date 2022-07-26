@@ -4,6 +4,7 @@ import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.model.view.productViews.ProductFavoriteViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
@@ -57,5 +58,5 @@ public interface UserService {
 
     UserEntity updateUserByIdWithUserInfoViewModelAndIsAmin(Long userId, UserInfoViewModel userInfoViewModel, boolean isAdmin);
 
-    List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts, Long userId);
+    List<ProductFavoriteViewModel> returnFavors(Set<ProductEntity> favorProducts, Long userId);
 }

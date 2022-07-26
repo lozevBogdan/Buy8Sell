@@ -2,6 +2,7 @@ package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.model.view.productViews.ProductFavoriteViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.ProductService;
@@ -34,7 +35,8 @@ public class UserProductsController {
     public String myProducts(@PathVariable Long id, Model model) {
 
         Set<ProductEntity> myProducts = this.productService.findProductsByUserId(id);
-        List<ProductSearchViewModel> myProductsSearchViewModelList =
+
+        List<ProductFavoriteViewModel> myProductsSearchViewModelList =
                 this.userService.returnFavors(myProducts, id);
 
         if (!model.containsAttribute("myProductsSearchViewModelList")) {

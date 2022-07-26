@@ -18,7 +18,7 @@
 <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark"
      th:fragment="navbar">
 
-    <a class="navbar-brand" ></a>
+    <a class="navbar-brand"></a>
     <a class="navbar-brand" th:href="@{/}">
         <img height="50" th:src="@{/images/sell8buy-buy-sell-logo-new.png}" width="120"/></a>
     <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
@@ -30,14 +30,6 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
         <ul class="navbar-nav mr-auto">
-
-            <!--            <li class="nav-item active">-->
-            <!--                <a class="nav-link" th:href="@{/}">-->
-            <!--                    <i class="fa fa-home"></i>-->
-            <!--                    Home-->
-            <!--                    <span class="sr-only">(current)</span>-->
-            <!--                </a>-->
-            <!--            </li>-->
 
             <li class="nav-item active">
                 <a class="nav-link" th:href="@{/products/all}">
@@ -58,27 +50,7 @@
                         <h4><span class="badge badge-secondary">Users in system</span></h4>
                     </a>
                 </li>
-
-
-                <!--                <li class="nav-item dropdown active"-->
-                <!--                    sec:authorize="hasRole('ADMIN')">-->
-                <!--                    <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle"-->
-                <!--                       data-toggle="dropdown"-->
-                <!--                       href="#" id="navbarDropdown" role="button">-->
-                <!--                        <i class="fa fa-envelope-o">-->
-                <!--                            <span class="badge badge-primary">11</span>-->
-                <!--                        </i>-->
-                <!--                        Dropdown-->
-                <!--                    </a>-->
-                <!--                    <div aria-labelledby="navbarDropdown" class="dropdown-menu">-->
-                <!--                        <a class="dropdown-item" href="#">Action</a>-->
-                <!--                        <a class="dropdown-item" href="#">Another action</a>-->
-                <!--                        <div class="dropdown-divider"></div>-->
-                <!--                        <a class="dropdown-item" href="#">Something else here</a>-->
-                <!--                    </div>-->
-                <!--                </li>-->
-
-                <th:block/>
+            </th:block>
 
         </ul>
 
@@ -86,23 +58,12 @@
         <ul class="navbar-nav ">
 
             <th:block sec:authorize="isAuthenticated()">
-
-<!--                <li class="nav-item active">-->
-
-<!--                    <h4><span class="badge badge-primary">-->
-<!--                    </span></h4>-->
-<!--                    <a class="nav-link"-->
-<!--                       th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}"-->
-<!--                       th:text="|${#authentication.principal.firstName} ${#authentication.principal.lastName}|">-->
-<!--                        My profile-->
-<!--                    </a>-->
-<!--                </li>-->
-
                 <li class="nav-item active">
                     <a class="nav-link "
                        th:href="@{/users/profile/{id}(id=${#authentication.principal.id})}">
-                        <h4><span th:text="|${#authentication.principal.firstName} ${#authentication.principal.lastName}|"
-                                   class="badge badge-secondary">
+                        <h4><span
+                                th:text="|${#authentication.principal.firstName} ${#authentication.principal.lastName}|"
+                                class="badge badge-secondary">
                         </span></h4>
                     </a>
                 </li>
@@ -110,12 +71,12 @@
 
                 <li class="nav-item active">
                     <a class="nav-link" th:href="@{/messages/all}">
-                            <h4><span class="badge badge-primary">Messages</span></h4>
+                        <h4><span class="badge badge-primary">Messages</span></h4>
                     </a>
                 </li>
 
                 <li class="nav-item active">
-                    <a class="nav-link" th:href="@{api/users/{id}/favorites(id=${#authentication.principal.id})}">
+                    <a class="nav-link" th:href="@{/api/users/{id}/favorites(id=${#authentication.principal.id})}">
                         <h4><span class="badge badge-primary">Favorites</span></h4>
                     </a>
                 </li>
@@ -159,12 +120,12 @@
 
         </ul>
 
-<!--        <th:block sec:authorize="isAuthenticated()">-->
-<!--            <form class="form-inline my-2 my-lg-0">-->
-<!--                <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="text">-->
-<!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-<!--            </form>-->
-<!--        </th:block>-->
+        <!--        <th:block sec:authorize="isAuthenticated()">-->
+        <!--            <form class="form-inline my-2 my-lg-0">-->
+        <!--                <input aria-label="Search" class="form-control mr-sm-2" placeholder="Search" type="text">-->
+        <!--                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
+        <!--            </form>-->
+        <!--        </th:block>-->
 
     </div>
 </nav>

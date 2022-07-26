@@ -6,6 +6,7 @@ import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
+import com.example.sellbuy.model.view.productViews.ProductFavoriteViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
@@ -276,26 +277,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<ProductSearchViewModel> returnFavors(Set<ProductEntity> favorProducts, Long userId){
-        List<ProductSearchViewModel> returnedList = new LinkedList<>();
+    public List<ProductFavoriteViewModel> returnFavors(Set<ProductEntity> favorProducts, Long userId){
+
+        List<ProductFavoriteViewModel> returnedList = new LinkedList<>();
 
         for (ProductEntity product : favorProducts) {
-            ProductSearchViewModel productSearchViewModel =
-                    this.modelMapper.map(product, ProductSearchViewModel.class);
 
-            productSearchViewModel.setMainPicture(product.getPicture().getUrl());
-            UserEntity currentLoggedInUserEntity =
-                    this.getCurrentLoggedInUserEntityById(userId);
+//            ProductSearchViewModel productSearchViewModel =
+//                    this.modelMapper.map(product, ProductSearchViewModel.class);
+
+            ProductFavoriteViewModel productFavoriteViewModel =
+                    this.modelMapper.map(product, ProductFavoriteViewModel.class);
+
+            System.out.println();
+
+//            productSearchViewModel.setMainPicture(product.getPicture().getUrl());
+
+//            UserEntity currentLoggedInUserEntity =
+//                    this.getCurrentLoggedInUserEntityById(userId);
 
             // Check for favorites products for current user
-            if(currentLoggedInUserEntity != null){
-                Set<ProductEntity> favoriteProducts =
-                        currentLoggedInUserEntity.getFavoriteProducts();
-                if(this.productService.isConsist(favoriteProducts,product)){
-                    productSearchViewModel.setProductIsFavorInCurrentUser(true);
-                }
-            }
-            returnedList.add(productSearchViewModel);
+//            if(currentLoggedInUserEntity != null){
+//                Set<ProductEntity> favoriteProducts =
+//                        currentLoggedInUserEntity.getFavoriteProducts();
+//
+//                if(this.productService.isConsist(favoriteProducts,product)){
+//                    productSearchViewModel.setProductIsFavorInCurrentUser(true);
+//                }
+//            }
+            returnedList.add(productFavoriteViewModel);
         }
         return returnedList;
     }

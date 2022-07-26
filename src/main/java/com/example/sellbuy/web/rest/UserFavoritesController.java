@@ -2,6 +2,7 @@ package com.example.sellbuy.web.rest;
 
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.view.messages.MessageChatViewModel;
+import com.example.sellbuy.model.view.productViews.ProductFavoriteViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.MessageService;
@@ -34,14 +35,16 @@ public class UserFavoritesController {
 
 
     @GetMapping("/{id}/favorites")
-    public ResponseEntity<List<ProductSearchViewModel>> getAllFavorites(@PathVariable Long id, Model model) {
+    public ResponseEntity<List<ProductFavoriteViewModel>> getAllFavorites(@PathVariable Long id, Model model) {
 
         Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
 
-        List<ProductSearchViewModel> productSearchViewModelList =
+        List<ProductFavoriteViewModel> productSearchViewModelList =
                 this.userService.returnFavors(favorList, id);
 
-        return ResponseEntity.ok().body(productSearchViewModelList);
+
+
+        return ResponseEntity.ok(productSearchViewModelList);
     }
 
 
