@@ -251,41 +251,4 @@ public class ProductController {
 
         return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
-
-    //EXAMPLE FOR REQUEST PARAM
-
-//    @GetMapping
-//    public String indexRedirect(
-//            @RequestParam(value = "category",required = false) String category, RedirectAttributes redirectAttributes){
-//
-//        CategoryEnum categoryEnum = null;
-//
-//        switch (category){
-//            case "HOUSEHOLD":
-//                categoryEnum = CategoryEnum.HOUSEHOLD;
-//            case "FASHION":
-//                categoryEnum = CategoryEnum.FASHION;
-//            case "SERVICES":
-//                categoryEnum = CategoryEnum.SERVICES;
-//            case "PROPERTY":
-//                categoryEnum = CategoryEnum.PROPERTIES;
-//            case "ELECTRONICS":
-//                categoryEnum = CategoryEnum.ELECTRONICS;
-//            case "VEHICLES":
-//                categoryEnum = CategoryEnum.VEHICLES;
-//            case "ANIMALS":
-//                categoryEnum = CategoryEnum.ANIMALS;
-//            case "OTHERS":
-//                categoryEnum = CategoryEnum.OTHER;
-//        }
-//
-//        ProductSearchingBindingModel productSearchingBindingModel = new ProductSearchingBindingModel();
-//        productSearchingBindingModel.setCategory(categoryEnum);
-//
-//        redirectAttributes.addFlashAttribute("productSearchingBindingModel", productSearchingBindingModel);
-//
-//        return "redirect:/products/all";
-//    }
-
-
 }

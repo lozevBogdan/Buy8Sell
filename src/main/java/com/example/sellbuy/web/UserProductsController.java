@@ -43,19 +43,19 @@ public class UserProductsController {
         return "my-products";
     }
 
-    @GetMapping("/{id}/favorites")
-    public String getAllFavorites(@PathVariable Long id, Model model) {
-
-        Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
-
-        List<ProductSearchViewModel> productSearchViewModelList =
-                this.userService.returnFavors(favorList, id);
-
-        if (!model.containsAttribute("productSearchViewModelList")) {
-            model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-        }
-        return "products-favorites";
-    }
+//    @GetMapping("/{id}/favorites")
+//    public String getAllFavorites(@PathVariable Long id, Model model) {
+//
+//        Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
+//
+//        List<ProductSearchViewModel> productSearchViewModelList =
+//                this.userService.returnFavors(favorList, id);
+//
+//        if (!model.containsAttribute("productSearchViewModelList")) {
+//            model.addAttribute("productSearchViewModelList", productSearchViewModelList);
+//        }
+//        return "products-favorites";
+//    }
 
     @PostMapping("/add/favorites/{id}/{previousPage}")
     public String addFavorites(@PathVariable Long id,

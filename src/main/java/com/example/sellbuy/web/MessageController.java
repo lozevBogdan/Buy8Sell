@@ -88,6 +88,7 @@ public class MessageController {
 
         return "messages-for-product";
     }
+
     @PostMapping("/send/{receiverId}/{productId}")
     public String sentMessage(@Valid MessageBindingModel messageBindingModel,
                               BindingResult bindingResult,
