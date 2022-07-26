@@ -6,8 +6,9 @@ import javax.persistence.*;
 @Table(name = "pictures")
 public class PictureEntity extends BaseEntity {
 
-    @Column
+
     @Lob
+    @Column
     private String url;
 
     @OneToOne(mappedBy = "picture",cascade = CascadeType.ALL, orphanRemoval = true)
