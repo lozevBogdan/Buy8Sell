@@ -38,7 +38,7 @@ const productAsHtmlPromo = (product) => `
                 <form method="post"
                       action="/users/remove/favorites/${product.id}/${'favorites'}">
                       <input type="hidden" name="_csrf" value=${csrfHeaderValue}>
-                    <button  type="submit" class="btn btn-danger bi bi-heart" >
+                    <button  type="submit" class="btn btn-success bi bi-heart" >
                         <i class="bi bi-heart"></i>Remove from favorites
                     </button>
                 </form>
@@ -65,7 +65,7 @@ const productAsHtmlNotPromo = (product) => `
                 <form method="post"
                       action="/users/remove/favorites/${product.id}/${'favorites'}">
                       <input type="hidden" name="_csrf" value=${csrfHeaderValue}>
-                    <button  type="submit" class="btn btn-danger bi bi-heart" >
+                    <button  type="submit" class="btn btn-success bi bi-heart" >
                         <i class="bi bi-heart"></i>Remove from favorites
                     </button>
                 </form>
