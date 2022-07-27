@@ -12,9 +12,6 @@ public class SellBuyApplication {
 
         SpringApplication.run(SellBuyApplication.class, args);
 
-//todo: frond end validation
-
-
 //todo: IMPORTANT: implement REST fetch - almost done
 //todo: IMPORTANT: implement somewhere Exception handling (error handling)
 //todo: IMPORTANT: intercetor
