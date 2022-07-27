@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -90,12 +91,18 @@ public class UserProductsController {
             return redirectPage;
         }
     }
-
+//    Request URL: http://localhost:8080/users/remove/favorites/4/promotion
+//    Request URL: http://localhost:8080/users/remove/favorites/5/favorites
 
     @PostMapping("/remove/favorites/{id}/{previousPage}")
     public String removeFromFavorites(@PathVariable Long id,
                                       @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,
-                                      @PathVariable String previousPage) {
+                                      @PathVariable String previousPage, HttpServletRequest httpServletRequest) {
+
+        String path = httpServletRequest.getServletPath();
+
+        System.out.println();
+
         UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
         if (currentUser == null) {
             return "redirect:/users/login";

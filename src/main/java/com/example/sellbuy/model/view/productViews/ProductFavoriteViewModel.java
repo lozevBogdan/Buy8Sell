@@ -8,7 +8,6 @@ public class ProductFavoriteViewModel {
     private String pictureUrl;
     private String title;
     private BigDecimal price;
-
     private boolean isPromo;
 
     public boolean isPromo() {
