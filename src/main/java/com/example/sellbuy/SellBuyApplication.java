@@ -2,12 +2,14 @@ package com.example.sellbuy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import java.lang.reflect.Field;
 
 @SpringBootApplication
 @EnableScheduling
+@EnableCaching
 public class SellBuyApplication {
 
     public static void main(String[] args) {
@@ -19,12 +21,14 @@ public class SellBuyApplication {
 //todo: IMPORTANT: implement REST fetch - almost done
 //todo: IMPORTANT: implement somewhere Exception handling (error handling)
 //todo: IMPORTANT: intercetor
+
 //todo: IMPORTANT: implement Event -
 //                  idea1- listener for getting product info -> increase a views with listener
-//                  idea2 - listeners for initializing DB.
-//        todo: IMPORTANT: implement Schedule -
+//         idea2 - listeners for initializing DB. - DONE!
+
+// todo: IMPORTANT: implement Schedule -
 //                  idea1- schedule for products which not updated more than 30 days.
-//                  idea2- rotate in every hour a different products on index page.
+//          idea2- rotate in every hour a different products on index page + Cache. - DONE!
 
 //todo: error exception in case we wont to product with not exist id in DB.
 //todo: MAYBE add a new comments for approved by Admin, before their visualisation.

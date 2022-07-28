@@ -15,8 +15,11 @@ import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.*;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +55,7 @@ public class ProductServiceImpl implements ProductService {
         this.commentsService = commentsService;
         this.messageService = messageService;
     }
+
     @Order(4)
     @EventListener(InitializationEvent.class)
     @Transactional
@@ -584,9 +588,39 @@ public class ProductServiceImpl implements ProductService {
         }
         return chatters;
     }
+    @Cacheable("randomProducts")
+    @Override
+    public List<ProductSearchViewModel> getTreeRandomProducts() {
+        List<ProductSearchViewModel> promotionProductsViews = this.
+                filterBy(new ProductSearchingBindingModel(), null, true);
+        return this.returnTreeRandomProductsFromPromotionProductsViewsList(promotionProductsViews);
+    }
+    private List<ProductSearchViewModel> returnTreeRandomProductsFromPromotionProductsViewsList(List<ProductSearchViewModel> promotionProductsViews) {
+        List<ProductSearchViewModel> returnedTreePromotion = new LinkedList<>();
+        List<Integer> lastSavedIndex = new LinkedList<>();
+
+        for (int i = 0; i < 3; ) {
+            Random random = new Random();
+            int randomIndex = random.nextInt(promotionProductsViews.size());
+            if (!lastSavedIndex.contains(randomIndex)) {
+                lastSavedIndex.add(randomIndex);
+                returnedTreePromotion.add(promotionProductsViews.get(randomIndex));
+                i++;
+            }
+        }
+        return returnedTreePromotion;
+    }
 
     private ProductChatViewModel mapToProductChatViewModel(ProductEntity productEntity) {
         return this.modelMapper.map(productEntity, ProductChatViewModel.class);
+    }
+
+
+    @Scheduled(cron = "0 0 * * * *")
+    @CacheEvict(cacheNames = "randomProducts",allEntries = true)
+    @Override
+    public void changePromotions(){
+
     }
 
 
