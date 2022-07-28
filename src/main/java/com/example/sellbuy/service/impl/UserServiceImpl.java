@@ -1,5 +1,6 @@
 package com.example.sellbuy.service.impl;
 
+import com.example.sellbuy.event.InitializationEvent;
 import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
@@ -17,6 +18,8 @@ import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -50,6 +53,7 @@ public class UserServiceImpl implements UserService {
         this.userDetailsService = userDetailsService;
         this.productService = productService;
     }
+
 
 
     private void initializeUsers() {
@@ -93,7 +97,8 @@ public class UserServiceImpl implements UserService {
 
 
     }
-
+    @Order(2)
+    @EventListener(InitializationEvent.class)
     @Override
     public void initializeUsersAndRoles() {
         this.userRoleService.initializeRoles();

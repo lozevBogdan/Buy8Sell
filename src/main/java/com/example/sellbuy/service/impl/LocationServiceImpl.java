@@ -1,9 +1,12 @@
 package com.example.sellbuy.service.impl;
 
+import com.example.sellbuy.event.InitializationEvent;
 import com.example.sellbuy.model.entity.LocationEntity;
 import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.repository.LocationRepository;
 import com.example.sellbuy.service.LocationService;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +17,8 @@ public class LocationServiceImpl implements LocationService {
     public LocationServiceImpl(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
     }
-
+    @Order(1)
+    @EventListener(InitializationEvent.class)
     @Override
     public void initializeLocations() {
         if(this.locationRepository.count() == 0){

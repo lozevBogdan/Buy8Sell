@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface PictureService {
 
-    void initializePictures();
+
 
     PictureEntity addPictureEntity(PictureEntity picture1);
 

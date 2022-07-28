@@ -1,5 +1,6 @@
 package com.example.sellbuy.service.impl;
 
+import com.example.sellbuy.event.InitializationEvent;
 import com.example.sellbuy.model.binding.ProductAddBindingModel;
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.*;
@@ -14,6 +15,8 @@ import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.*;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +52,8 @@ public class ProductServiceImpl implements ProductService {
         this.commentsService = commentsService;
         this.messageService = messageService;
     }
-
+    @Order(4)
+    @EventListener(InitializationEvent.class)
     @Transactional
     @Override
     public void initializeProducts() {
