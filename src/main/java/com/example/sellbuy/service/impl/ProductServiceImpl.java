@@ -588,15 +588,20 @@ public class ProductServiceImpl implements ProductService {
         }
         return chatters;
     }
+
+// Returning a random three promotions products and save them in cache.
     @Cacheable("randomProducts")
     @Override
-    public List<ProductSearchViewModel> getTreeRandomProducts() {
+    public List<ProductSearchViewModel> getThreeRandomProducts() {
         List<ProductSearchViewModel> promotionProductsViews = this.
                 filterBy(new ProductSearchingBindingModel(), null, true);
-        return this.returnTreeRandomProductsFromPromotionProductsViewsList(promotionProductsViews);
+        return this.returnThreeRandomProductsFromPromotionProductsViewsList(promotionProductsViews);
     }
-    private List<ProductSearchViewModel> returnTreeRandomProductsFromPromotionProductsViewsList(List<ProductSearchViewModel> promotionProductsViews) {
-        List<ProductSearchViewModel> returnedTreePromotion = new LinkedList<>();
+
+
+// Returning a random three promotions products
+    private List<ProductSearchViewModel> returnThreeRandomProductsFromPromotionProductsViewsList(List<ProductSearchViewModel> promotionProductsViews) {
+        List<ProductSearchViewModel> returnedThreePromotion = new LinkedList<>();
         List<Integer> lastSavedIndex = new LinkedList<>();
 
         for (int i = 0; i < 3; ) {
@@ -604,18 +609,18 @@ public class ProductServiceImpl implements ProductService {
             int randomIndex = random.nextInt(promotionProductsViews.size());
             if (!lastSavedIndex.contains(randomIndex)) {
                 lastSavedIndex.add(randomIndex);
-                returnedTreePromotion.add(promotionProductsViews.get(randomIndex));
+                returnedThreePromotion.add(promotionProductsViews.get(randomIndex));
                 i++;
             }
         }
-        return returnedTreePromotion;
+        return returnedThreePromotion;
     }
 
     private ProductChatViewModel mapToProductChatViewModel(ProductEntity productEntity) {
         return this.modelMapper.map(productEntity, ProductChatViewModel.class);
     }
 
-
+//    Clearing randomProducts cache in every hour
     @Scheduled(cron = "0 0 * * * *")
     @CacheEvict(cacheNames = "randomProducts",allEntries = true)
     @Override
@@ -624,4 +629,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+//  Daily check at 1 am for an expired 30 days period after the last product update.
+    @Scheduled(cron = "0 0 1 * * *")
+    @Override
+    public void removeExpiredProducts(){
+
+        LocalDateTime thirtyDayPeriod = LocalDateTime.now().minusDays(30);
+
+        for (ProductEntity product : this.productRepository.findAll()) {
+            if(product.getModified().isBefore(thirtyDayPeriod)){
+                this.productRepository.delete(product);
+            }
+        }
+    }
 }

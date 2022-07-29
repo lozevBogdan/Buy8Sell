@@ -43,8 +43,10 @@ public interface ProductService {
 
     Set<UserChatViewModel> findProductChattersByProductIdAndSellerId(Long productId, Long sellerId);
 
-    List<ProductSearchViewModel> getTreeRandomProducts();
+    List<ProductSearchViewModel> getThreeRandomProducts();
 
     public void changePromotions();
+
+    public void removeExpiredProducts();
 
 }

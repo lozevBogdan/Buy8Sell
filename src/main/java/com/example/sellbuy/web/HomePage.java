@@ -27,11 +27,13 @@ public class HomePage {
     @GetMapping("/")
     public String home(Model model){
 
-        List<ProductSearchViewModel> promotions = this.productService.getTreeRandomProducts();
+        List<ProductSearchViewModel> promotions = this.productService.getThreeRandomProducts();
 
         if (!model.containsAttribute("promotions")){
             model.addAttribute("promotions",promotions);
         }
+
+        this.productService.removeExpiredProducts();
 
         return "index";
     }
