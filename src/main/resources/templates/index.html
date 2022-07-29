@@ -10,39 +10,40 @@
 
 <div class="jumbotron jumbotron-fluid text-center">
 
-    <h3 class="display-6"><strong>Some of our promotions:</strong></h3>
+    <div class="container">
+        <h1 class="display-4"><strong> Welcome!</strong></h1>
+        <p class="lead">This is the best place, where you can easy Buy and Sell everything!</p>
+    </div>
 
-    <div class="row product-list">
-        <div th:each="product : ${promotions}" th:object="${product}" class="col-md-4">
+    <div class="row product-list" style="border:solid black">
+        <h3 class=""><strong>Some of our promotions:</strong></h3>
+        <div class="col-md-4" th:each="product : ${promotions}" th:object="${product}">
             <section class="panel">
-                <div  class="pro-img-box text-center">
-                    <img height="220" width="250" class="" th:src="*{mainPicture}">
+                <div class="pro-img-box text-center">
+                    <img class="" height="220" th:src="*{mainPicture}" width="250">
                 </div>
-                <a class="pro-title" th:href="@{/products/info/{id}(id=*{id})}" th:text="*{title}">
+                <a class="pro-title" th:href="@{/products/info/{id}(id=*{id})}">
+                    <strong th:text="*{title}"></strong>
                 </a>
+                <p class="price" th:text="|*{price} BGN|">$300.00</p>
             </section>
         </div>
     </div>
 
     <div class="">
-
-        <div class="container">
-            <h1 class="display-4">Welcome!</h1>
-            <p class="lead">This is the best place, where you can easy Buy and Sell everything!</p>
-        </div>
-
         <div class="d-inline-block">
             <div class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img src="https://thumbs.dreamstime.com/b/set-doodle-elements-sweet-home-vector-illustrations-interior-household-items-stay-covid-hand-drawing-186739907.jpg"
-                             width="250" height="220"/>
+                        <img height="220"
+                             src="https://thumbs.dreamstime.com/b/set-doodle-elements-sweet-home-vector-illustrations-interior-household-items-stay-covid-hand-drawing-186739907.jpg"
+                             width="250"/>
                     </div>
                     <div class="panel-body text-center">
                         <h4>
-                            <form th:method="post"
-                                  th:action="@{/products/all(category='HOUSEHOLD')}">
-                                <button type="submit" class="pro-title">HOUSEHOLD</button>
+                            <form th:action="@{/products/all(category='HOUSEHOLD')}"
+                                  th:method="post">
+                                <button class="pro-title" type="submit">HOUSEHOLD</button>
                             </form>
                         </h4>
                     </div>
@@ -55,15 +56,16 @@
                     class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img src="https://previews.123rf.com/images/orfeev/orfeev1401/orfeev140100014/25117924-clothes-sketches.jpg"
-                             width="250" height="220"/>
+                        <img height="220"
+                             src="https://previews.123rf.com/images/orfeev/orfeev1401/orfeev140100014/25117924-clothes-sketches.jpg"
+                             width="250"/>
                     </div>
                     <div class="panel-body text-center">
                         <h4>
                             <form
-                                    th:method="post"
-                                    th:action="@{/products/all(category='FASHION')}">
-                                <button type="submit" class="pro-title">FASHION</button>
+                                    th:action="@{/products/all(category='FASHION')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">FASHION</button>
                             </form>
                         </h4>
                     </div>
@@ -76,15 +78,16 @@
                     class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img src="https://media.istockphoto.com/vectors/home-repair-icons-vector-id498492471?k=20&m=498492471&s=612x612&w=0&h=i_9EKfEOeDyFhNuNt9kxKft0Z_i_GzipZdVUeTKj_uw="
-                             width="250" height="220"/>
+                        <img height="220"
+                             src="https://media.istockphoto.com/vectors/home-repair-icons-vector-id498492471?k=20&m=498492471&s=612x612&w=0&h=i_9EKfEOeDyFhNuNt9kxKft0Z_i_GzipZdVUeTKj_uw="
+                             width="250"/>
                     </div>
                     <div class="panel-body text-center">
                         <h4>
                             <form
-                                    th:method="post"
-                                    th:action="@{/products/all(category='SERVICES')}">
-                                <button type="submit" class="pro-title">SERVICES</button>
+                                    th:action="@{/products/all(category='SERVICES')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">SERVICES</button>
                             </form>
                         </h4>
                     </div>
@@ -97,15 +100,16 @@
                     class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img src="https://media.istockphoto.com/vectors/real-estate-line-icons-set-modern-graphic-design-concepts-simple-vector-id1158071752?k=20&m=1158071752&s=612x612&w=0&h=HgHq-3tOLt-qYXLfuoFRvpmmr4HgakJzxdMUTnry7Zk="
-                             width="250" height="220"/>
+                        <img height="220"
+                             src="https://media.istockphoto.com/vectors/real-estate-line-icons-set-modern-graphic-design-concepts-simple-vector-id1158071752?k=20&m=1158071752&s=612x612&w=0&h=HgHq-3tOLt-qYXLfuoFRvpmmr4HgakJzxdMUTnry7Zk="
+                             width="250"/>
                     </div>
                     <div class="panel-body text-center">
                         <h4>
                             <form
-                                    th:method="post"
-                                    th:action="@{/products/all(category='PROPERTIES')}">
-                                <button type="submit" class="pro-title">PROPERTIES</button>
+                                    th:action="@{/products/all(category='PROPERTIES')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">PROPERTIES</button>
                             </form>
                         </h4>
                     </div>
@@ -122,15 +126,16 @@
                     class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img src="https://i.pinimg.com/originals/1e/3f/8a/1e3f8a5d34e64577a4f691568e1ed84f.png"
-                             width="250" height="220"/>
+                        <img height="220"
+                             src="https://i.pinimg.com/originals/1e/3f/8a/1e3f8a5d34e64577a4f691568e1ed84f.png"
+                             width="250"/>
                     </div>
                     <div class="panel-body text-center">
                         <h4>
                             <form
-                                    th:method="post"
-                                    th:action="@{/products/all(category='ELECTRONICS')}">
-                                <button type="submit" class="pro-title">ELECTRONICS</button>
+                                    th:action="@{/products/all(category='ELECTRONICS')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">ELECTRONICS</button>
                             </form>
                         </h4>
                     </div>
@@ -143,15 +148,16 @@
                     class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img src="https://i.pinimg.com/originals/23/f2/ab/23f2ab142a59f5a41cc0523f8ad12f8d.jpg"
-                             width="250" height="220"/>
+                        <img height="220"
+                             src="https://i.pinimg.com/originals/23/f2/ab/23f2ab142a59f5a41cc0523f8ad12f8d.jpg"
+                             width="250"/>
                     </div>
                     <div class="panel-body text-center">
                         <h4>
                             <form
-                                    th:method="post"
-                                    th:action="@{/products/all(category='VEHICLES')}">
-                                <button type="submit" class="pro-title">VEHICLES</button>
+                                    th:action="@{/products/all(category='VEHICLES')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">VEHICLES</button>
                             </form>
                         </h4>
                     </div>
@@ -164,15 +170,16 @@
                     class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img src="https://static.vecteezy.com/system/resources/previews/001/249/077/original/creative-hand-drawn-education-books-sketch-vector.jpg"
-                             width="250" height="220"/>
+                        <img height="220"
+                             src="https://static.vecteezy.com/system/resources/previews/001/249/077/original/creative-hand-drawn-education-books-sketch-vector.jpg"
+                             width="250"/>
                     </div>
                     <div class="panel-body text-center">
                         <h4>
                             <form
-                                    th:method="post"
-                                    th:action="@{/products/all(category='BOOKS')}">
-                                <button type="submit" class="pro-title">BOOKS</button>
+                                    th:action="@{/products/all(category='BOOKS')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">BOOKS</button>
                             </form>
                         </h4>
                     </div>
@@ -185,15 +192,15 @@
                     class="col-md-4">
                 <section class="panel">
                     <div class="pro-img-box text-center">
-                        <img src="https://asgc.co.nz/images/categories/other_clients.jpg"
-                             width="250" height="220"/>
+                        <img height="220"
+                             src="https://asgc.co.nz/images/categories/other_clients.jpg" width="250"/>
                     </div>
                     <div class="panel-body text-center">
                         <h4 class="text-center">
                             <form
-                                    th:method="post"
-                                    th:action="@{/products/all(category='OTHER')}">
-                                <button type="submit" class="pro-title">OTHERS</button>
+                                    th:action="@{/products/all(category='OTHER')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">OTHERS</button>
                             </form>
                         </h4>
                     </div>
