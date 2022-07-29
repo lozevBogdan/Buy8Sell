@@ -16,13 +16,13 @@ public class SellBuyApplication {
 
         SpringApplication.run(SellBuyApplication.class, args);
 
-//todo: IMPORTANT: shedule
+
 //todo: IMPORTANT: Проверка дали някой може да изтрие нещо на няккой друг потребител, чрез манупулация на заявка.
 //todo: IMPORTANT: implement REST fetch - almost done
 
-//todo: IMPORTANT: implement somewhere Exception handling (error handling) -
-        // idea 1 - exeption for unauthorized user, try to edit product
-        // idea 2 -  error exception in case we wont to product with not exist id in DB.
+//todo: IMPORTANT: implement somewhere Exception handling (error handling)
+//        idea 1 - exeption for unauthorized user, try to edit product
+//          idea 2 -  error exception in case we wont to product with not exist id in DB.
 
 //todo: IMPORTANT: intercetor
 
