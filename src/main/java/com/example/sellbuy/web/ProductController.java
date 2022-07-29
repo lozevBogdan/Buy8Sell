@@ -141,7 +141,11 @@ public class ProductController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editPage(@PathVariable Long id, Model model) {
+    public String editPage(@PathVariable Long id, Model model,
+                           @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) throws NoSuchFieldException {
+
+        //todo: create exeption for unauthorization
+            checkAuthorizationOfUserBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId());
 
         ProductEditViewModel productEditViewModel =
                 this.productService.findByIdProductSearchAndEditViewModel(id);
@@ -151,12 +155,27 @@ public class ProductController {
         return "product-edit";
     }
 
+    private void checkAuthorizationOfUserBySellerIdAndCurrentUserId(Long productId, Long currentUserId) throws NoSuchFieldException {
+
+        System.out.println();
+        if (!this.productService.findById(productId).getSeller().getId().equals(currentUserId) && !userService.checkByIdIsAdmin(currentUserId)){
+            //todo : throw some exception !!!!!!!
+           throw new NoSuchFieldException("User DO NOT HAVE PERMISSION FOR THAT!!!");
+        }
+
+    }
+
     @PostMapping("/edit/{id}")
     public String editProduct(@PathVariable Long id,
                               @RequestParam(defaultValue = "false") boolean isPromo,
                               @Valid ProductEditViewModel productEditViewModel,
                               BindingResult bindingResult,
-                              RedirectAttributes redirectAttributes) {
+                              RedirectAttributes redirectAttributes,@AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
+
+        //todo: create exeption for unauthorization
+
+//            checkAuthorizationOfUserBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId());
+
 
         productEditViewModel.setPromo(isPromo);
 

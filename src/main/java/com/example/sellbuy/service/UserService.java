@@ -59,4 +59,6 @@ public interface UserService {
     UserEntity updateUserByIdWithUserInfoViewModelAndIsAmin(Long userId, UserInfoViewModel userInfoViewModel, boolean isAdmin);
 
     List<ProductFavoriteViewModel> returnFavors(Set<ProductEntity> favorProducts, Long userId);
+
+    boolean checkByIdIsAdmin(Long id);
 }

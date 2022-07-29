@@ -314,4 +314,18 @@ public class UserServiceImpl implements UserService {
         }
         return returnedList;
     }
+
+    @Override
+    public boolean checkByIdIsAdmin(Long userId) {
+
+        Set<UserEntity> admins = this.userRepository.
+                findUserEntitiesByRolesContaining(this.userRoleService.findByRole(UserRoleEnum.ADMIN));
+
+        for (UserEntity admin : admins) {
+            if (admin.getId().equals(userId)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
