@@ -545,6 +545,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDetailsViewDto getAndIncreaseViewsProductById(Long id) {
+        // TODO: FOR ERROR HANDLING IN CASE ID IS NULL
         ProductEntity currentProduct = this.findById(id);
         currentProduct.setViews(currentProduct.getViews() + 1);
         currentProduct = this.addProductEntity(currentProduct);

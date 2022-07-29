@@ -19,15 +19,17 @@ public class SellBuyApplication {
 //todo: IMPORTANT: shedule
 //todo: IMPORTANT: Проверка дали някой може да изтрие нещо на няккой друг потребител, чрез манупулация на заявка.
 //todo: IMPORTANT: implement REST fetch - almost done
+
 //todo: IMPORTANT: implement somewhere Exception handling (error handling)
+
 //todo: IMPORTANT: intercetor
 
 //todo: IMPORTANT: implement Event -
 //                  idea1- listener for getting product info -> increase a views with listener
 //         idea2 - listeners for initializing DB. - DONE!
 
-// todo: IMPORTANT: implement Schedule -
-//                  idea1- schedule for products which not updated more than 30 days.
+// DONE todo: IMPORTANT: implement Schedule  -
+//                  idea1- schedule for products which not updated more than 30 days - DONE.
 //          idea2- rotate in every hour a different products on index page + Cache. - DONE!
 
 //todo: error exception in case we wont to product with not exist id in DB.

@@ -32,29 +32,28 @@ public class UserProfileController {
         return new PasswordChangingBindingModel();
     }
 
-    @GetMapping("/profile/{id}")
-    public String myProfile(@PathVariable Long id,Model model){
-        UserEditViewModel  userEditViewModel = this.userService.findByIdUserEditViewModel(id);
+    @GetMapping("/profile")
+    public String myProfile(@AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser,Model model){
+        UserEditViewModel  userEditViewModel = this.userService.findByIdUserEditViewModel(sellAndBuyUser.getId());
         model.addAttribute("userEditViewModel",userEditViewModel);
         return "my-profile";
     }
 
-    @GetMapping("/profile/{userId}/edit")
-    public String editUserInfo(@PathVariable Long userId, Model model){
+    @GetMapping("/profile/edit")
+    public String editUserInfo(@AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser, Model model){
 
         if(!model.containsAttribute("userEditViewModel")) {
-            UserEditViewModel userEditViewModel = this.userService.findByIdUserEditViewModel(userId);
+            UserEditViewModel userEditViewModel = this.userService.findByIdUserEditViewModel(sellAndBuyUser.getId());
             model.addAttribute("userEditViewModel", userEditViewModel);
         }
 
         return "my-profile-edit";
     }
 
-    @PostMapping("/profile/{userId}/save")
+    @PostMapping("/profile/save")
     public String register(@Valid UserEditViewModel userEditViewModel,
                            BindingResult bindingResult,
                            RedirectAttributes redirectAttributes,
-                           @PathVariable Long userId,
                            @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser){
 
         boolean isEmailFree = true;
@@ -69,11 +68,11 @@ public class UserProfileController {
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.userEditViewModel", bindingResult);
 
-            return "redirect:/users/profile/" + userId + "/edit";
+            return "redirect:/users/profile/edit";
         }
-        userService.updateUserByIdWithUserEditViewModel(userId,userEditViewModel);
+        userService.updateUserByIdWithUserEditViewModel(sellAndBuyUser.getId(), userEditViewModel);
         redirectAttributes.addFlashAttribute("successfulUpdated",true);
-        return "redirect:/users/profile/" + userId ;
+        return "redirect:/users/profile" ;
     }
 
     @GetMapping("/passwords/change")
@@ -118,7 +117,6 @@ public class UserProfileController {
             redirectAttributes.addFlashAttribute("isThisNotOldPassword", !isThisOldPassword);
             redirectAttributes.addFlashAttribute("isNewPasswordIsEqualToOldPass", isNewPasswordIsEqualToOldPass);
 
-
             return "redirect:/users/passwords/change";
         }
 
@@ -126,6 +124,6 @@ public class UserProfileController {
 
         redirectAttributes.addFlashAttribute("successfulUpdated",true);
 
-        return "redirect:/users/profile/" + sellAndBuyUser.getId() ;
+        return "redirect:/users/profile";
     }
 }
