@@ -126,7 +126,7 @@ public class MessageController {
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.messageBindingModel",
                     bindingResult);
-            return "redirect:/products/info/" + productId ;
+            return "redirect:/messages/send/" + receiverId + "/" + productId ;
         }
 
         MessageEntity message =

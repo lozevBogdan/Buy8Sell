@@ -80,8 +80,12 @@
                               th:method="post"
                               th:object="${messageBindingModel}">
                                 <textarea class="form-control" id="textAreaExample2" placeholder="Write new message..."
-                                          rows="4" th:field="*{message}"></textarea>
+                                          rows="4"
+                                          th:field="*{message}"
+                                          th:errorclass="'is-invalid alert-danger'"
+                                ></textarea>
                             <button class="btn btn-info btn-rounded float-end" type="submit">Send</button>
+                            <small class="invalid-feedback text-danger"> Message can NOT be null! Please write something! </small>
                         </form>
                     </div>
                 </li>
