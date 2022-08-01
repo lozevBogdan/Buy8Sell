@@ -136,10 +136,13 @@ public class ProductController {
         return "product-add";
     }
 
-    //todo:make a delete post !!!!!!!
-    @PostMapping("/delete/{id}")
+
+    @DeleteMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id,
                                 @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
+
+        //todo check for authoritization
+        System.out.println();
         this.productService.deleteProductById(id);
         return String.format("redirect:/users/%d/products", sellAndBuyUser.getId());
     }
