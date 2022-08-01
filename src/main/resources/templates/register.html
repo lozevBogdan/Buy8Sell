@@ -74,6 +74,7 @@
                                    max="20" id="password" class="form-control" />
                             <label class="form-label" for="password">Password</label>
                             <small class="invalid-feedback text-danger">The password should be between 3 and 20 symbols and can not be null! </small>
+                            <p th:if="${passwordsNotMach}" class="text-danger">Passwords do not match! </p>
                         </div>
 
                         <!-- Password input -->
@@ -83,7 +84,7 @@
                                     type="password"
                                    id="confirmPassword" class="form-control" />
                             <label class="form-label" for="confirmPassword">Confirm Password</label>
-                            <small th:if="${passwordsNotMach}" class="invalid-feedback text-danger">Passwords do not match! </small>
+                            <p th:if="${passwordsNotMach}" class="text-danger">Passwords do not match! </p>
 
                         </div>
 
