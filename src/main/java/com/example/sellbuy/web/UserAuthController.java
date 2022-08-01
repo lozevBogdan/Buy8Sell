@@ -64,9 +64,10 @@ public class UserAuthController {
             redirectAttributes.addFlashAttribute("emailIsNotFree", !isEmailFree);
             redirectAttributes.addFlashAttribute(
                     "org.springframework.validation.BindingResult.userRegisterBindingModel", bindingResult);
-            redirectAttributes.addFlashAttribute(
-                    "passwordsNotMach",!passwordsAreEquals);
+            redirectAttributes.addFlashAttribute(  "passwordsNotMach",!passwordsAreEquals);
+
             return "redirect:/users/register";
+
         }
         userService.makeNewRegistration(userRegisterBindingModel);
         return "redirect:login";

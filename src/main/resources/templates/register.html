@@ -71,8 +71,8 @@
                                    th:errorclass="'is-invalid alert-danger'"
                                     type="password"
                                    min="3"
-                                   max="20" id="form2Example52" class="form-control" />
-                            <label class="form-label" for="form2Example2">Password</label>
+                                   max="20" id="password" class="form-control" />
+                            <label class="form-label" for="password">Password</label>
                             <small class="invalid-feedback text-danger">The password should be between 3 and 20 symbols and can not be null! </small>
                         </div>
 
@@ -81,11 +81,10 @@
                             <input th:field="*{confirmPassword}"
                                    th:errorclass="'is-invalid alert-danger'"
                                     type="password"
-                                   min="3"
-                                   max="20"
-                                   id="form2Example2" class="form-control" />
-                            <label class="form-label" for="form2Example2">Confirm Password</label>
+                                   id="confirmPassword" class="form-control" />
+                            <label class="form-label" for="confirmPassword">Confirm Password</label>
                             <small th:if="${passwordsNotMach}" class="invalid-feedback text-danger">Passwords do not match! </small>
+
                         </div>
 
 
