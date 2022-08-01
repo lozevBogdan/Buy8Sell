@@ -21,8 +21,8 @@ public class SellBuyApplication {
 //todo: IMPORTANT: implement REST fetch - almost done
 
 //todo: IMPORTANT: implement somewhere Exception handling (error handling)
-//        idea 1 - exeption for unauthorized user, try to edit product
-//          idea 2 -  error exception in case we wont to product with not exist id in DB.
+//   done     idea 1 - exeption for unauthorized user, try to edit product
+//      done     idea 2 -  error exception in case we wont to product with not exist id in DB - PRODUCT NOT FOUND EXCEPTION.
 
 //todo: IMPORTANT: intercetor
 

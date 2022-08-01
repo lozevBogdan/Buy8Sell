@@ -236,7 +236,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserInfoViewModel getUserInfoViewModelByUserId(Long userId) {
-        UserEntity userEntity = this.userRepository.findById(userId).get();
+        UserEntity userEntity = this.userRepository.findById(userId).orElse(null);
+        if(userEntity == null){
+            return null;
+        }
         UserInfoViewModel userViewModel =
                 this.modelMapper.map(userEntity,UserInfoViewModel.class);
        userViewModel.setAdmin(userViewModel.isHaveAdminRole());

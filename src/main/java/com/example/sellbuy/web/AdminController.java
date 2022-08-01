@@ -1,12 +1,15 @@
 package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
+import com.example.sellbuy.model.exception.ObjectNotFoundException;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
 import com.example.sellbuy.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -36,16 +39,30 @@ public class AdminController {
     public String getInfoForEdit(Model model, @PathVariable Long userId){
 
         UserInfoViewModel userInfoViewModel = this.userService.getUserInfoViewModelByUserId(userId);
+
+        if(userInfoViewModel == null){
+            throw new ObjectNotFoundException(userId,"User");
+        }
+
         if(!model.containsAttribute("userInfoViewModel")){
             model.addAttribute("userInfoViewModel",userInfoViewModel);
         }
         return "admin-user-edit";
     }
 
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler({ObjectNotFoundException.class})
+    public ModelAndView onObjectNotFound(ObjectNotFoundException onfe) {
+        ModelAndView modelAndView = new ModelAndView("object-not-found");
+        modelAndView.addObject("objectId", onfe.getObjectId());
+        modelAndView.addObject("typeOfObject", onfe.getTypeOfObject());
+        return modelAndView;
+    }
+
     @PostMapping("/users/save/{userId}")
     public String editInfoByUserId(@Valid UserInfoViewModel userInfoViewModel,
                                    BindingResult bindingResult,
-                                   RedirectAttributes redirectAttributes, Model model,
+                                   RedirectAttributes redirectAttributes,
                                    @RequestParam(defaultValue = "false") boolean isAdmin,
                                    @PathVariable Long userId){
 

@@ -7,6 +7,8 @@ import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.enums.CategoryEnum;
 import com.example.sellbuy.model.entity.enums.OrderBYEnum;
+import com.example.sellbuy.model.exception.NotAuthorizedException;
+import com.example.sellbuy.model.exception.ObjectNotFoundException;
 import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
 import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
@@ -15,11 +17,13 @@ import com.example.sellbuy.service.PictureService;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -144,8 +148,10 @@ public class ProductController {
     public String editPage(@PathVariable Long id, Model model,
                            @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) throws NoSuchFieldException {
 
-        //todo: create exeption for unauthorization
-            checkAuthorizationOfUserBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId());
+        //todo: create exception for unauthorization
+        if(!isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId())){
+            throw new NotAuthorizedException();
+        }
 
         ProductEditViewModel productEditViewModel =
                 this.productService.findByIdProductSearchAndEditViewModel(id);
@@ -155,15 +161,14 @@ public class ProductController {
         return "product-edit";
     }
 
-    private void checkAuthorizationOfUserBySellerIdAndCurrentUserId(Long productId, Long currentUserId) throws NoSuchFieldException {
-
-        System.out.println();
+    private boolean isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(Long productId, Long currentUserId) {
         if (!this.productService.findById(productId).getSeller().getId().equals(currentUserId) && !userService.checkByIdIsAdmin(currentUserId)){
-            //todo : throw some exception !!!!!!!
-           throw new NoSuchFieldException("User DO NOT HAVE PERMISSION FOR THAT!!!");
+           return false;
         }
-
+            return true;
     }
+
+
 
     @PostMapping("/edit/{id}")
     public String editProduct(@PathVariable Long id,
@@ -172,10 +177,9 @@ public class ProductController {
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes,@AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
-        //todo: create exeption for unauthorization
-
-//            checkAuthorizationOfUserBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId());
-
+        if(!isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId())){
+            throw new NotAuthorizedException();
+        }
 
         productEditViewModel.setPromo(isPromo);
 
@@ -192,11 +196,23 @@ public class ProductController {
         return "redirect:/products/info/" + id;
     }
 
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler({NotAuthorizedException.class})
+    public String notAuthorized () {
+
+        return "not-authorized";
+
+    }
+
     @GetMapping("/info/{id}")
     public String productInfo(@PathVariable Long id, Model model,
                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
         ProductDetailsViewDto productInfoView = this.productService.getAndIncreaseViewsProductById(id);
+
+        if(productInfoView == null){
+            throw new ObjectNotFoundException(id,"Product");
+        }
 
         if (sellAndBuyUser != null) {
             if (productService.isConsist(this.userService.findById(sellAndBuyUser.getId()).
@@ -207,9 +223,18 @@ public class ProductController {
 
         model.addAttribute("productInfoView", productInfoView);
 
-
         return sellAndBuyUser != null ? "product-Info" : "product-Info-anonymous";
     }
+
+  @ResponseStatus(value = HttpStatus.NOT_FOUND)
+  @ExceptionHandler({ObjectNotFoundException.class})
+  public ModelAndView onProductNotFound(ObjectNotFoundException onfe) {
+    ModelAndView modelAndView = new ModelAndView("object-not-found");
+    modelAndView.addObject("objectId", onfe.getObjectId());
+    modelAndView.addObject("typeOfObject", onfe.getTypeOfObject());
+    return modelAndView;
+
+  }
 
     @PostMapping("/add")
     public String add(@RequestParam(defaultValue = "false") boolean isPromo,

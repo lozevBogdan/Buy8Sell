@@ -443,7 +443,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity findById(Long productId) {
-        return this.productRepository.findById(productId).get();
+        return this.productRepository.findById(productId).orElse(null);
     }
 
     @Override
@@ -545,8 +545,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDetailsViewDto getAndIncreaseViewsProductById(Long id) {
+
         // TODO: FOR ERROR HANDLING IN CASE ID IS NULL
         ProductEntity currentProduct = this.findById(id);
+
+        if (currentProduct == null) {
+            return null;
+        }
         currentProduct.setViews(currentProduct.getViews() + 1);
         currentProduct = this.addProductEntity(currentProduct);
         return this.modelMapper.map(currentProduct, ProductDetailsViewDto.class);
@@ -590,7 +595,7 @@ public class ProductServiceImpl implements ProductService {
         return chatters;
     }
 
-// Returning a random three promotions products and save them in cache.
+    // Returning a random three promotions products and save them in cache.
     @Cacheable("randomProducts")
     @Override
     public List<ProductSearchViewModel> getThreeRandomProducts() {
@@ -600,7 +605,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-// Returning a random three promotions products
+    // Returning a random three promotions products
     private List<ProductSearchViewModel> returnThreeRandomProductsFromPromotionProductsViewsList(List<ProductSearchViewModel> promotionProductsViews) {
         List<ProductSearchViewModel> returnedThreePromotion = new LinkedList<>();
         List<Integer> lastSavedIndex = new LinkedList<>();
@@ -621,24 +626,24 @@ public class ProductServiceImpl implements ProductService {
         return this.modelMapper.map(productEntity, ProductChatViewModel.class);
     }
 
-//    Clearing randomProducts cache in every hour
+    //    Clearing randomProducts cache in every hour
     @Scheduled(cron = "0 0 * * * *")
-    @CacheEvict(cacheNames = "randomProducts",allEntries = true)
+    @CacheEvict(cacheNames = "randomProducts", allEntries = true)
     @Override
-    public void changePromotions(){
+    public void changePromotions() {
 
     }
 
 
-//  Daily check at 1 am for an expired 30 days period after the last product update.
+    //  Daily check at 1 am for an expired 30 days period after the last product update.
     @Scheduled(cron = "0 0 1 * * *")
     @Override
-    public void removeExpiredProducts(){
+    public void removeExpiredProducts() {
 
         LocalDateTime thirtyDayPeriod = LocalDateTime.now().minusDays(30);
 
         for (ProductEntity product : this.productRepository.findAll()) {
-            if(product.getModified().isBefore(thirtyDayPeriod)){
+            if (product.getModified().isBefore(thirtyDayPeriod)) {
                 this.productRepository.delete(product);
             }
         }
