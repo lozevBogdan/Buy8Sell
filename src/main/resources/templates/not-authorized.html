@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+
+<div class="jumbotron jumbotron-fluid text-center">
+
+    <div class="container">
+        <h1 class="display-4" style="color: red"><strong> You do not have authorization to do that !!!  </strong></h1>
+    </div>
+
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+
+<th:block th:replace="fragments/scripts::scripts">
+
+</th:block>
+
+</body>
+
+</html>
