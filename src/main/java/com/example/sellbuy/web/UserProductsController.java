@@ -32,13 +32,13 @@ public class UserProductsController {
         this.productService = productService;
     }
 
-    @GetMapping("/{id}/products")
-    public String myProducts(@PathVariable Long id, Model model) {
+    @GetMapping("/products")
+    public String myProducts(Model model,@AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
-        Set<ProductEntity> myProducts = this.productService.findProductsByUserId(id);
+        Set<ProductEntity> myProducts = this.productService.findProductsByUserId(sellAndBuyUser.getId());
 
         List<ProductFavoriteViewModel> myProductsSearchViewModelList =
-                this.userService.returnFavors(myProducts, id);
+                this.userService.returnFavors(myProducts, sellAndBuyUser.getId());
 
         if (!model.containsAttribute("myProductsSearchViewModelList")) {
             model.addAttribute("myProductsSearchViewModelList", myProductsSearchViewModelList);
@@ -46,8 +46,8 @@ public class UserProductsController {
         return "my-products";
     }
 
-    @GetMapping("/{id}/favorites")
-    public String getAllFavorites(@PathVariable Long id, Model model) {
+    @GetMapping("/favorites")
+    public String getAllFavorites() {
 
 //        Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
 //
@@ -91,8 +91,7 @@ public class UserProductsController {
             return redirectPage;
         }
     }
-//    Request URL: http://localhost:8080/users/remove/favorites/4/promotion
-//    Request URL: http://localhost:8080/users/remove/favorites/5/favorites
+
 
     @PostMapping("/remove/favorites/{id}/{previousPage}")
     public String removeFromFavorites(@PathVariable Long id,
@@ -116,7 +115,7 @@ public class UserProductsController {
             if (previousPage.equals("promotion")) {
                 redirectPage = "redirect:/products/all/promotion";
             } else if (previousPage.equals("favorites")) {
-                redirectPage = String.format("redirect:/users/%d/favorites", currentUser.getId());
+                redirectPage = "redirect:/users/favorites";
             } else if (previousPage.equals("info")) {
                 redirectPage = String.format("redirect:/products/info/%d", id);
             } else if (previousPage.equals("all")) {
