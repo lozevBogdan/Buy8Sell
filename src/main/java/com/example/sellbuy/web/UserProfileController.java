@@ -1,13 +1,9 @@
 package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.binding.PasswordChangingBindingModel;
-import com.example.sellbuy.model.binding.UserLoginBindingModel;
-import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
-import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
