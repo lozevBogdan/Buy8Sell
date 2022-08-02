@@ -1,11 +1,9 @@
 package com.example.sellbuy.service;
 
-import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.view.productViews.ProductFavoriteViewModel;
-import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
 
@@ -17,10 +15,6 @@ public interface UserService {
     void initializeUsersAndRoles();
 
     UserEntity getByEmail(String email);
-
-//    void loginUser(UserLoginBindingModel userLoginBindingModel);
-//
-//    void logoutCurrentUser();
 
     boolean isEmailFree(String email);
 

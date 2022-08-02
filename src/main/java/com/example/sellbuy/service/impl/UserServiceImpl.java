@@ -1,14 +1,12 @@
 package com.example.sellbuy.service.impl;
 
 import com.example.sellbuy.event.InitializationEvent;
-import com.example.sellbuy.model.binding.UserLoginBindingModel;
 import com.example.sellbuy.model.binding.UserRegisterBindingModel;
 import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
 import com.example.sellbuy.model.view.productViews.ProductFavoriteViewModel;
-import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
 import com.example.sellbuy.repository.UserRepository;
@@ -37,23 +35,16 @@ public class UserServiceImpl implements UserService {
     private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
-    private final UserDetailsService userDetailsService;
-    private final ProductService productService;
-
 
     public UserServiceImpl(UserRepository userRepository, UserRoleServiceImpl userRoleService,
                            CurrentUser currentUser, ModelMapper modelMapper,
-                           PasswordEncoder passwordEncoder, UserDetailsService userDetailsService,
-                           @Lazy ProductService productService){
+                           PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
         this.currentUser = currentUser;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
-        this.userDetailsService = userDetailsService;
-        this.productService = productService;
     }
-
 
 
     private void initializeUsers() {
@@ -291,28 +282,9 @@ public class UserServiceImpl implements UserService {
 
         for (ProductEntity product : favorProducts) {
 
-//            ProductSearchViewModel productSearchViewModel =
-//                    this.modelMapper.map(product, ProductSearchViewModel.class);
-
             ProductFavoriteViewModel productFavoriteViewModel =
                     this.modelMapper.map(product, ProductFavoriteViewModel.class);
 
-            System.out.println();
-
-//            productSearchViewModel.setMainPicture(product.getPicture().getUrl());
-
-//            UserEntity currentLoggedInUserEntity =
-//                    this.getCurrentLoggedInUserEntityById(userId);
-
-            // Check for favorites products for current user
-//            if(currentLoggedInUserEntity != null){
-//                Set<ProductEntity> favoriteProducts =
-//                        currentLoggedInUserEntity.getFavoriteProducts();
-//
-//                if(this.productService.isConsist(favoriteProducts,product)){
-//                    productSearchViewModel.setProductIsFavorInCurrentUser(true);
-//                }
-//            }
             returnedList.add(productFavoriteViewModel);
         }
         return returnedList;
