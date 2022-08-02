@@ -98,8 +98,6 @@ public class UserProductsController {
 
         String path = httpServletRequest.getServletPath();
 
-        System.out.println();
-
         UserEntity currentUser = this.userService.getCurrentLoggedInUserEntityById(sellAndBuyUser.getId());
         if (currentUser == null) {
             return "redirect:/users/login";
