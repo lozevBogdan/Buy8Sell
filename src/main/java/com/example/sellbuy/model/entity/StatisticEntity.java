@@ -42,6 +42,29 @@ public class StatisticEntity extends BaseEntity {
     public StatisticEntity() {
     }
 
+    public StatisticEntity(Long authenticatedRequests, Long anonymousRequests,
+                           Long indexPageViews, Long allProductsPageViews,
+                           Long loginPageViews, Long registerPageViews,
+                           Long promotionsPageViews, Long messagesPageViews,
+                           Long favoritesPageViews, Long myProfilePageViews,
+                           Long myProductsPageViews, Long addProductPageViews,
+                           Long userInSystemPageViews, Long statisticsPageViews) {
+        this.authenticatedRequests = authenticatedRequests;
+        this.anonymousRequests = anonymousRequests;
+        this.indexPageViews = indexPageViews;
+        this.allProductsPageViews = allProductsPageViews;
+        this.loginPageViews = loginPageViews;
+        this.registerPageViews = registerPageViews;
+        this.promotionsPageViews = promotionsPageViews;
+        this.messagesPageViews = messagesPageViews;
+        this.favoritesPageViews = favoritesPageViews;
+        this.myProfilePageViews = myProfilePageViews;
+        this.myProductsPageViews = myProductsPageViews;
+        this.addProductPageViews = addProductPageViews;
+        this.userInSystemPageViews = userInSystemPageViews;
+        this.statisticsPageViews = statisticsPageViews;
+    }
+
     public Long getAuthenticatedRequests() {
         return authenticatedRequests;
     }
