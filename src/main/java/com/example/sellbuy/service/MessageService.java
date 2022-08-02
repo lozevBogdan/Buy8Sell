@@ -2,7 +2,6 @@ package com.example.sellbuy.service;
 
 import com.example.sellbuy.model.binding.MessageBindingModel;
 import com.example.sellbuy.model.entity.MessageEntity;
-import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.view.messages.MessageChatViewModel;
 
 import java.util.Set;
