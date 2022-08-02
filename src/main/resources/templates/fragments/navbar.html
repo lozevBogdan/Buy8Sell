@@ -44,10 +44,17 @@
             </li>
 
             <th:block sec:authorize="isAuthenticated()">
+
                 <li class="nav-item active"
                     sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link" th:href="@{/admin/users}">
                         <h4><span class="badge badge-secondary">Users in system</span></h4>
+                    </a>
+                </li>
+                <li class="nav-item active"
+                    sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link" th:href="@{/admin/statistic}">
+                        <h4><span class="badge badge-secondary">Statistic</span></h4>
                     </a>
                 </li>
             </th:block>
@@ -76,14 +83,14 @@
 
                 <li class="nav-item active">
                     <a id="favorites" class="nav-link"
-                       th:href="@{/users/{id}/favorites(id=${#authentication.principal.id})}">
+                       th:href="@{/users/favorites}">
                         <h4><span class="badge badge-primary">Favorites</span></h4>
                     </a>
                 </li>
 
                 <li class="nav-item active">
                     <a class="nav-link"
-                       th:href="@{/users/{id}/products(id=${#authentication.principal.id})}">
+                       th:href="@{/users/products}">
                         <h4><span class="badge badge-primary"> My products</span></h4>
                     </a>
                 </li>
