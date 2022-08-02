@@ -1,8 +1,9 @@
 package com.example.sellbuy.web;
 
-import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
 import com.example.sellbuy.model.exception.ObjectNotFoundException;
+import com.example.sellbuy.model.view.statisticViews.StatisticViewModel;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
+import com.example.sellbuy.service.StatisticService;
 import com.example.sellbuy.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -14,17 +15,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
     private final UserService userService;
+    private final StatisticService statisticService;
 
-    public AdminController(UserService userService) {
+    public AdminController(UserService userService, StatisticService statisticService) {
         this.userService = userService;
+        this.statisticService = statisticService;
     }
 
 
@@ -33,6 +34,15 @@ public class AdminController {
         List<UserInfoViewModel> allUsersViewModels = this.userService.getAllUsers();
         model.addAttribute("allUsersViewModels",allUsersViewModels);
         return "admin-all-users";
+    }
+
+    @GetMapping("/statistic")
+    public String getStatistic(Model model){
+        StatisticViewModel statisticInfo = this.statisticService.getStatisticInfo();
+        model.addAttribute("statisticInfo",statisticInfo);
+
+
+        return "admin-statistic";
     }
 
     @GetMapping("/users/edit/{userId}")
