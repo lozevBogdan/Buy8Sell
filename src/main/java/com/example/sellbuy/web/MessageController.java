@@ -3,7 +3,6 @@ package com.example.sellbuy.web;
 import com.example.sellbuy.model.binding.MessageBindingModel;
 import com.example.sellbuy.model.entity.MessageEntity;
 import com.example.sellbuy.model.entity.ProductEntity;
-import com.example.sellbuy.model.entity.UserEntity;
 import com.example.sellbuy.model.view.messages.MessageChatViewModel;
 import com.example.sellbuy.model.view.productViews.ProductChatViewModel;
 import com.example.sellbuy.model.view.userViews.UserChatViewModel;
