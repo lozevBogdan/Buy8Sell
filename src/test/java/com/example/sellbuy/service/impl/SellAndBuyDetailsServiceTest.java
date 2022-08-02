@@ -5,9 +5,10 @@ import com.example.sellbuy.model.entity.UserRoleEntity;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
 import com.example.sellbuy.repository.UserRepository;
 import com.example.sellbuy.service.UserService;
-import org.junit.Test;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
