@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<body>
+<nav th:replace="fragments/navbar.html"></nav>
+
+<section style="background-color: #eee;">
+    <div class="container py-5">
+
+        <div class="row" th:if="${!(senders.size() > 0) && (allMessages.size() == 0) }">
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+                <h5 class="font-weight-bold mb-3 text-center text-lg-start">Your sended messages: </h5>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li class="p-2 border-bottom">
+                                <a class="d-flex justify-content-between"
+                                   th:href="@{/messages/send/{senderId}/{productId}(senderId=${seller},productId = ${productId})}">
+                                    <div class="d-flex flex-row">
+                                        <div class="pt-1">
+                                            <p class="fw-bold"
+                                               th:text="|You do not have an answer yet! Click to see your message.|">
+                                                Danny Smith</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" th:if="${senders.size() > 0}">
+            <div class="col-md-6 col-lg-5 col-xl-4 mb-4 mb-md-0">
+                <h5 class="font-weight-bold mb-3 text-center text-lg-start">You have messages from: </h5>
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-unstyled mb-0">
+                            <li class="p-2 border-bottom" th:each="sender : ${senders}" th:object="${sender}">
+                                <a class="d-flex justify-content-between"
+                                   th:href="@{/messages/send/{senderId}/{productId}(senderId=*{id},productId = ${productId})}">
+                                    <div class="d-flex flex-row">
+                                        <div class="pt-1">
+                                            <p class="fw-bold" th:text="|From: *{fullName}. Click to see your chat.|">
+                                                Danny Smith</p>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-7 col-xl-8" th:if="${allMessages.size() > 0}">
+            <ul class="list-unstyled">
+                <li class="d-flex justify-content-between mb-4" th:each="message : ${allMessages}"
+                    th:object="${message}">
+                    <div class="card">
+                        <div class="col card-header d-flex justify-content-between p-3">
+                            <p class="fw-bold mb-0" th:text="*{sender.getFullName()}"></p>
+
+                            <p class="col text-muted small mb-0"><i class="far fa-clock"
+                            th:text="|Sent: ${#temporals.format(message.created,'dd-MM-yyyy HH:mm')}|"></i>
+                            </p>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="mb-0" th:text="*{message}"></p>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="bg-white mb-3">
+                    <div class="form-outline">
+                        <form th:action="@{/messages/send/{receiverId}/{productId}/{senderId}(receiverId =${chatWitUserId}, productId =${productId},senderId=${#authentication.principal.id})}"
+                              th:method="post"
+                              th:object="${messageBindingModel}">
+                                <textarea class="form-control" id="textAreaExample2" placeholder="Write new message..."
+                                          rows="4"
+                                          th:field="*{message}"
+                                          th:errorclass="'is-invalid alert-danger'"
+                                ></textarea>
+                            <button class="btn btn-info btn-rounded float-end" type="submit">Send</button>
+                            <small class="invalid-feedback text-danger"> Message can NOT be null! Please write something! </small>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<footer th:replace="fragments/footer::footer"></footer>
+
+<th:block th:replace="fragments/scripts::scripts"></th:block>
+
+</body>
+</html>

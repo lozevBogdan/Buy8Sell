@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+
+
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+
+<!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />-->
+
+<div class="container bootdey">
+
+    <div class="row mb-4">
+
+        <section class="panel">
+
+            <div class="panel-body">
+
+                <div class="text-center">
+                    <h1></h1>
+                </div>
+
+                <form role="form product-form"
+                      th:action="@{/products/all}"
+                      th:method="post"
+                      th:object="${productSearchingBindingModel}">
+
+
+                    <div id="rol2">
+
+                        <div class="float-left">
+                            <div class="form-group ">
+                                <label>SEARCH</label>
+                                <input class="form-control"
+                                       placeholder="Search by title"
+                                       th:field="*{title}" type="text"/>
+                            </div>
+                        </div>
+
+                        <div class="float-left">
+                            <div class="form-group">
+                                <label>PRICE</label>
+                                <input class="form-control"
+                                       placeholder="Minimum price"
+                                       th:errorclass="is-invalid" th:field="*{min}" type="number"/>
+                                <small class="invalid-feedback text-danger">Minimum price should be bigger than
+                                    zero! </small>
+
+                                <input class="form-control"
+                                       placeholder="Maximim price"
+                                       th:errorclass="is-invalid" th:field="*{max}" type="number"/>
+                                <small class="invalid-feedback text-danger">Maximum price should be bigger than
+                                    zero! </small>
+                                <small class="text-danger" th:if="${isMinBiggerThanMax}">Maximum price should be
+                                    bigger
+                                    than
+                                    minimum! </small>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div id="rol1">
+
+                        <div class="float-left">
+                            <div class="form-group">
+                                <label>LOCATION</label>
+                                <select class="browser-default custom-select"
+                                        name="style"
+                                        th:errorclass="'is-invalid alert-danger'"
+                                        th:field="*{location}">
+                                    <option value="">All LOCATIONS</option>
+                                    <option th:each=" location : ${T(com.example.sellbuy.model.entity.enums.LocationEnum).values()}"
+                                            th:text="${location}" th:value="${location}">Location
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class=float-left>
+                            <div class="form-group">
+                                <label>SORT BY</label>
+                                <select class="browser-default custom-select"
+                                        name="style" th:errorclass="'is-invalid alert-danger'" th:field="*{orderBy}">
+                                    <option value="">SORT BY</option>
+                                    <option th:each=" orderBy : ${T(com.example.sellbuy.model.entity.enums.OrderBYEnum).values()}"
+                                            th:text="${orderBy}" th:value="${orderBy}">OrderBy
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="float-left">
+                            <div class="form-group">
+                                <label>CATEGORY</label>
+                                <select class="browser-default custom-select"
+                                        name="style" th:errorclass="'is-invalid alert-danger'" th:field="*{category}">
+                                    <option value="">ALL CATEGORIES</option>
+                                    <option th:each=" category : ${T(com.example.sellbuy.model.entity.enums.CategoryEnum).values()}"
+                                            th:text="${category}" th:value="${category}">Category
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="d-inline-block" id="down">
+                                <button class="btn btn-primary" type="submit">Apply filter</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+
+
+    <div class="col-md-9">
+        <section class="panel">
+            <div class="panel-body">
+                <div class="pull-right">
+                    <ul class="pagination pagination-sm pro-page-list">
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">»</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="row product-list">
+
+            <div class="col-md-4" th:each="productView : ${productSearchViewModelList}"
+                 th:object="${productView}">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             th:src="*{mainPicture}" width="250"/>
+
+
+                        <th:block th:if="*{!seller.email.equals(#authentication.principal.username)}">
+
+                            <th:block th:if="*{!isProductIsFavorInCurrentUser()}">
+                                <form th:action="@{/users/add/favorites/{id}/{all}(id=*{id},all='all')}"
+                                      th:method="post">
+                                    <button
+                                            class="btn btn-danger bi bi-heart" type="submit">Add to favorites
+                                    </button>
+                                </form>
+                            </th:block>
+
+                            <th:block th:if="*{isProductIsFavorInCurrentUser()}">
+                                <form th:action="@{/users/remove/favorites/{id}/{all}(id=*{id},all='all')}"
+                                      th:method="post">
+                                    <button class="btn btn-success bi bi-heart" type="submit">
+                                        <i class="bi bi-heart"></i>Remove from favorites
+                                    </button>
+                                </form>
+                            </th:block>
+                        </th:block>
+
+                        <th:block th:if="*{seller.email.equals(#authentication.principal.username)}">
+
+                            <button class="btn btn-info bi bi-heart">Your product</button>
+
+                        </th:block>
+
+                    </div>
+
+                    <div class="panel-body text-center">
+                        <h4>
+                            <a class="pro-title" th:href="@{/products/info/{id}(id=*{id})}" th:text="*{title}">
+                                tittle
+                            </a>
+                        </h4>
+                        <h5 th:if="*{isPromo()}"><span class="badge badge-warning">PROMO</span></h5>
+                        <p class="price" th:text="|*{price} BGN|">$300.00</p>
+
+                    </div>
+                </section>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="text-center" th:if="${noResults}">
+        <h1>
+            Тhere are no matches for the specified criteria!</h1>
+    </div>
+</div>
+
+
+<footer th:replace="fragments/footer::footer"></footer>
+
+<th:block th:replace="fragments/scripts::scripts">
+
+</th:block>
+</body>
+
+</html>

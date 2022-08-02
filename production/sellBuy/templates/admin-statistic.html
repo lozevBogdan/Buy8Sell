@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Start date:</th>
+        <th scope="col">End date:</th>
+        <th scope="col">Authenticated Requests:</th>
+        <th scope="col">Anonymous Requests:</th>
+        <th scope="col">Index page /:</th>
+        <th scope="col">All Products /products/all:</th>
+        <th scope="col">Promotions /products/all/promotion:</th>
+        <th scope="col">Login /users/login:</th>
+        <th scope="col">Register /users/register:</th>
+        <th scope="col">Users in system /admin/users:</th>
+        <th scope="col">My profile /users/profile:</th>
+        <th scope="col">Messages /messages/all:</th>
+        <th scope="col">My products /users/products:</th>
+        <th scope="col">Favorites /users/favorites:</th>
+        <th scope="col">Add product /products/add:</th>
+        <th scope="col">Statistic /admin/statistic:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:object="${statisticInfo}">
+
+        <th scope="row" th:text="${#temporals.format(statisticInfo.created,'dd-MM-yyyy HH:mm')}">1</th>
+        <td th:text="${#temporals.format(statisticInfo.modified,'dd-MM-yyyy HH:mm')}">1</td>
+        <td th:text="*{authenticatedRequests}">authenticatedRequests</td>
+        <td th:text="*{anonymousRequests}">anonymousRequests</td>
+        <td th:text="*{indexPageViews}">indexPageViews</td>
+        <td th:text="*{allProductsPageViews}">allProductsPageViews</td>
+        <td th:text="*{promotionsPageViews}">promotionsPageViews</td>
+        <td th:text="*{loginPageViews}">loginPageViews</td>
+        <td th:text="*{registerPageViews}">registerPageViews</td>
+        <td th:text="*{userInSystemPageViews}">userInSystemPageViews</td>
+        <td th:text="*{myProfilePageViews}">myProfilePageViews</td>
+        <td th:text="*{messagesPageViews}">messagesPageViews</td>
+        <td th:text="*{myProductsPageViews}">myProductsPageViews</td>
+        <td th:text="*{favoritesPageViews}">favoritesPageViews</td>
+        <td th:text="*{addProductPageViews}">addProductPageViews</td>
+        <td th:text="*{statisticsPageViews}">statisticsPageViews</td>
+
+<!--        <td><a class="btn btn-danger" th:href="@{/admin/users/edit/{userId}(userId=*{id})}">Edit</a></td>-->
+    </tr>
+
+    </tbody>
+</table>
+
+<footer th:replace="fragments/footer::footer"></footer>
+
+<th:block th:replace="fragments/scripts::scripts">
+
+</th:block>
+
+</body>
+
+</html>

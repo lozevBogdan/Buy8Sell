@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+<div class="container mt-5">
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card px-5 py-5" id="form1">
+                <h2 class="text-center">Login</h2>
+                <div class="form-data">
+
+                    <form th:method="post"
+                    th:action="@{/users/login}">
+
+                        <th:block th:if="${invalidCredentials}">
+                            <div class="errors alert alert-danger text-center">Invalid credentials! </div>
+                            <div class="errors alert alert-danger text-center">Incorrect username or password!</div>
+                        </th:block>
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input name="email"
+                             th:value="${email}"
+                                    type="email" id="form2Example1" class="form-control" />
+                            <label class="form-label" for="form2Example1">Email address</label>
+                            <small class="invalid-feedback text-danger">The email should be valid and can not be null! </small>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            <input name="password"
+                                    type="password"
+                                   min="3"
+                                   max="20" id="form2Example2" class="form-control" />
+                            <label class="form-label" for="form2Example2">Password</label>
+                            <small class="invalid-feedback text-danger">The password should be between 3 and 20 symbols and can not be null! </small>
+
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                            <p>Not a member? <a th:href="@{/users/register}">Register</a></p>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </div>
+</form>
+
+<footer th:replace="fragments/footer::footer" ></footer>
+
+<th:block th:replace="fragments/scripts::scripts"></th:block>
+
+</body>
+
+
+
+</html>

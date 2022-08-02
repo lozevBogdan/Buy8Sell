@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head">
+
+</head>
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+
+<!--<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" />-->
+<div class="container bootdey">
+
+    <div class="col-md-12">
+
+        <div  id="favorCtr" class="col mb-4 row product-list">
+
+            <input type="hidden" id="idPrincipal" name="routeId" th:value="${#authentication.principal.id}">
+
+<!--            <button id="loadBtn">Favorites</button>-->
+
+            <div >
+
+<!--                 th:each="productView : ${productSearchViewModelList}" th:object="${productView}"-->
+<!--                 class="col-md-4">-->
+<!--                <section class="panel">-->
+<!--                    <div id="imageHolder" class="pro-img-box text-center">-->
+<!--                        <img id="image" th:src="*{pictureUrl}"-->
+<!--                             width="250" height="220" />-->
+
+<!--                        <th:block th:if="*{isProductIsFavorInCurrentUser()}">-->
+<!--                            <form th:method="post"-->
+<!--                                  th:action="@{/users/remove/favorites/{id}/favorites(id=*{id},favorites ='favorites')}">-->
+<!--                                <button  type="submit" class="btn btn-danger bi bi-heart" >-->
+<!--                                    <i class="bi bi-heart"></i>Remove from favorites-->
+<!--                                </button>-->
+<!--                            </form>-->
+<!--                        </th:block>-->
+<!--                    </div>-->
+<!--                    <div class="panel-body text-center">-->
+<!--                        <h4>-->
+<!--                            <a th:href="@{/products/info/{id}(id=*{id})}" th:text="*{title}" class="pro-title">-->
+<!--                                tittle-->
+<!--                            </a>-->
+<!--                        </h4>-->
+<!--                        <h5 th:if="*{isPromo()}"><span class="badge badge-warning">PROMO</span></h5>-->
+<!--                        <p class="price" th:text="|*{price} BGN|">$300.00</p>-->
+<!--                    </div>-->
+<!--                </section>-->
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/favorites.js}"></script>
+
+<footer th:replace="fragments/footer::footer" ></footer>
+
+<th:block th:replace="fragments/scripts::scripts"></th:block>
+
+<!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>-->
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>-->
+
+</body>
+
+
+
+</html>

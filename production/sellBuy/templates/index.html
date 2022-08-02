@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+
+<div class="jumbotron jumbotron-fluid text-center">
+
+    <div class="container">
+        <h1 class="display-4"><strong> Welcome!</strong></h1>
+        <p class="lead">This is the best place, where you can easy Buy and Sell everything!</p>
+    </div>
+
+    <div class="row product-list" style="border:solid black">
+        <h3 class=""><strong>Some of our promotions:</strong></h3>
+        <div class="col-md-4" th:each="product : ${promotions}" th:object="${product}">
+            <section class="panel">
+                <div class="pro-img-box text-center">
+                    <img class="" height="220" th:src="*{mainPicture}" width="250">
+                </div>
+                <a class="pro-title" th:href="@{/products/info/{id}(id=*{id})}">
+                    <strong th:text="*{title}"></strong>
+                </a>
+                <p class="price" th:text="|*{price} BGN|">$300.00</p>
+            </section>
+        </div>
+    </div>
+
+    <div class="">
+        <div class="d-inline-block">
+            <div class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             src="https://thumbs.dreamstime.com/b/set-doodle-elements-sweet-home-vector-illustrations-interior-household-items-stay-covid-hand-drawing-186739907.jpg"
+                             width="250"/>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4>
+                            <form th:action="@{/products/all(category='HOUSEHOLD')}"
+                                  th:method="post">
+                                <button class="pro-title" type="submit">HOUSEHOLD</button>
+                            </form>
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="d-inline-block">
+            <div
+                    class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             src="https://previews.123rf.com/images/orfeev/orfeev1401/orfeev140100014/25117924-clothes-sketches.jpg"
+                             width="250"/>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4>
+                            <form
+                                    th:action="@{/products/all(category='FASHION')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">FASHION</button>
+                            </form>
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="d-inline-block">
+            <div
+                    class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             src="https://media.istockphoto.com/vectors/home-repair-icons-vector-id498492471?k=20&m=498492471&s=612x612&w=0&h=i_9EKfEOeDyFhNuNt9kxKft0Z_i_GzipZdVUeTKj_uw="
+                             width="250"/>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4>
+                            <form
+                                    th:action="@{/products/all(category='SERVICES')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">SERVICES</button>
+                            </form>
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="d-inline-block">
+            <div
+                    class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             src="https://media.istockphoto.com/vectors/real-estate-line-icons-set-modern-graphic-design-concepts-simple-vector-id1158071752?k=20&m=1158071752&s=612x612&w=0&h=HgHq-3tOLt-qYXLfuoFRvpmmr4HgakJzxdMUTnry7Zk="
+                             width="250"/>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4>
+                            <form
+                                    th:action="@{/products/all(category='PROPERTIES')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">PROPERTIES</button>
+                            </form>
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="">
+
+        <div class="d-inline-block">
+            <div
+                    class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             src="https://i.pinimg.com/originals/1e/3f/8a/1e3f8a5d34e64577a4f691568e1ed84f.png"
+                             width="250"/>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4>
+                            <form
+                                    th:action="@{/products/all(category='ELECTRONICS')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">ELECTRONICS</button>
+                            </form>
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="d-inline-block">
+            <div
+                    class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             src="https://i.pinimg.com/originals/23/f2/ab/23f2ab142a59f5a41cc0523f8ad12f8d.jpg"
+                             width="250"/>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4>
+                            <form
+                                    th:action="@{/products/all(category='VEHICLES')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">VEHICLES</button>
+                            </form>
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="d-inline-block">
+            <div
+                    class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             src="https://static.vecteezy.com/system/resources/previews/001/249/077/original/creative-hand-drawn-education-books-sketch-vector.jpg"
+                             width="250"/>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4>
+                            <form
+                                    th:action="@{/products/all(category='BOOKS')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">BOOKS</button>
+                            </form>
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <div class="d-inline-block">
+            <div
+                    class="col-md-4">
+                <section class="panel">
+                    <div class="pro-img-box text-center">
+                        <img height="220"
+                             src="https://asgc.co.nz/images/categories/other_clients.jpg" width="250"/>
+                    </div>
+                    <div class="panel-body text-center">
+                        <h4 class="text-center">
+                            <form
+                                    th:action="@{/products/all(category='OTHER')}"
+                                    th:method="post">
+                                <button class="pro-title" type="submit">OTHERS</button>
+                            </form>
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+
+<th:block th:replace="fragments/scripts::scripts">
+
+</th:block>
+
+</body>
+
+</html>

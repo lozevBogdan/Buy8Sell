@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+<div class="container">
+    <div class="main-body">
+
+        <h5> Main profile information:</h5>
+
+        <div class="row gutters-sm" th:object="${userEditViewModel}">
+
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">First Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary" th:text="*{firstName}">
+                                Kenneth Valdez
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Last Name</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary" th:text="*{lastName}">
+                                Kenneth Valdez
+                            </div>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary" th:text="*{email}">
+                                fip@jukmuh.al
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Mobile</h6>
+                            </div>
+                            <div class="col-sm-9 text-secondary" th:text="*{mobileNumber}">
+                                (320) 380-4539
+                            </div>
+                        </div>
+                        <hr>
+
+                        <div class="row mb-4">
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <a class="btn btn-danger"
+                                           th:href="@{/users/profile/edit}">
+                                            Edit profile information</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <a class="btn btn-danger " th:href="@{/users/passwords/change}">Change
+                                            password</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class=" alert alert-success text-center" role="alert"
+                         th:if="${successfulUpdated}">
+                        Your changes have been successfully saved!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer th:replace="fragments/footer::footer"></footer>
+<th:block th:replace="fragments/scripts::scripts">
+
+</th:block>
+
+</body>
+</html>

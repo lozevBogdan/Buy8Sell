@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: "jdbc:mysql://localhost:3306/sellBuy?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+    username: root
+    password: 6460
+  jpa:
+      hibernate:
+        ddl-auto: create-drop
+      defer-datasource-initialization: true
+  sql:
+    init:
+      mode: never
+
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+<div class="container">
+    <div class="main-body">
+        <h5>Edit profile information:</h5>
+        <div class="row gutters-sm">
+            <form
+                    th:action="@{/users/profile/save}"
+                    th:method="post"
+                    th:object="${userEditViewModel}">
+                <div class="card mb-3">
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">First Name</h6>
+                            </div>
+                            <input class="col-sm-9"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                   th:field="*{firstName}">
+
+                            </input>
+                            <small class="invalid-feedback text-danger">First name must between 3 na 20
+                                characters! </small>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Last Name</h6>
+                            </div>
+                            <input class="col-sm-9" th:errorclass="'is-invalid alert-danger'"
+                                   th:field="*{lastName}">
+
+                            </input>
+                            <small class="invalid-feedback text-danger">Last name must between 3 na 20
+                                characters! </small>
+                        </div>
+
+                        <hr>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Email</h6>
+                            </div>
+                            <input class="col-sm-9 "
+                                   th:errorclass="'is-invalid alert-danger'"
+                                   th:field="*{email}">
+
+                            </input>
+                            <small class="invalid-feedback text-danger">The email should be valid and can not be
+                                null! </small>
+                            <p class="text-danger"
+                               style="color: red" th:if="${emailIsNotFree}"> This email is registered already! </p>
+                        </div>
+                        <hr>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <h6 class="mb-0">Mobile</h6>
+                            </div>
+                            <input class="col-sm-9 "
+                                   th:errorclass="'is-invalid alert-danger'"
+                                   th:field="*{mobileNumber}">
+                            </input>
+                            <small class="invalid-feedback text-danger">The mobile number should be ten numbers and can
+                                not be null! </small>
+                        </div>
+                        <hr>
+                        <div class="row mb-4">
+                            <div class="col d-flex justify-content-center">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-primary" type="submit"> Save Changes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+<footer th:replace="fragments/footer::footer"></footer>
+<th:block th:replace="fragments/scripts::scripts">
+
+</th:block>
+
+</body>
+</html>

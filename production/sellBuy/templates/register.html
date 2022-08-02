@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head::head"></head>
+<body>
+
+<nav th:replace="fragments/navbar.html"></nav>
+
+<div class="container mt-5">
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+            <div class="card px-5 py-5" id="form1">
+
+                <h2 class="text-center">Register</h2>
+                <p class="text-center hint-text">Create your account. It's free and only takes a minute.</p>
+
+
+                <div class="form-data">
+
+                    <form th:method="post"
+                          th:object="${userRegisterBindingModel}"
+                          th:action="@{/users/register}">
+
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input th:field="*{firstName}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="text"
+                                   min="3"
+                                   max="20" id="form2Example21" class="form-control" />
+                            <label class="form-label" for="form2Example21">First Name</label>
+                            <small class="invalid-feedback text-danger">First name must between 3 na 20 characters! </small>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input th:field="*{lastName}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="text"
+                                   min="3"
+                                   max="20" id="form2Example115" class="form-control" />
+                            <label class="form-label" for="form2Example21">Last Name</label>
+                            <small class="invalid-feedback text-danger">Last name must between 3 na 20 characters! </small>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input  th:field="*{email}"
+                                    th:errorclass="'is-invalid alert-danger'"
+                                    type="email"
+                                     id="form2Example13" class="form-control" />
+                            <label class="form-label" for="form2Example21">Email address</label>
+                            <small class="invalid-feedback text-danger">The email should be valid and can not be null! </small>
+                            <p th:if="${emailIsNotFree}"
+                                   class="text-danger" style="color: red"> This email is registered already! </p>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input  th:field="*{mobileNumber}"
+                                    th:errorclass="'is-invalid alert-danger'"
+                                    type="tel"
+                                    min="10"
+                                    max="10"
+                                    id="form2Example132" class="form-control" />
+                            <label class="form-label" for="form2Example21">Mobile number</label>
+                            <small class="invalid-feedback text-danger">The mobile number should be ten numbers and can not be null! </small>
+                        </div>
+
+                        <div class="form-outline mb-4">
+                            <input th:field="*{password}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="password"
+                                   min="3"
+                                   max="20" id="password" class="form-control" />
+                            <label class="form-label" for="password">Password</label>
+                            <small class="invalid-feedback text-danger">The password should be between 3 and 20 symbols and can not be null! </small>
+                            <p th:if="${passwordsNotMach}" class="text-danger">Passwords do not match! </p>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            <input th:field="*{confirmPassword}"
+                                   th:errorclass="'is-invalid alert-danger'"
+                                    type="password"
+                                   id="confirmPassword" class="form-control" />
+                            <label class="form-label" for="confirmPassword">Confirm Password</label>
+                            <p th:if="${passwordsNotMach}" class="text-danger">Passwords do not match! </p>
+
+                        </div>
+
+
+
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block mb-4">Register</button>
+
+                        <!-- Register buttons -->
+                        <div class="text-center">
+                            <p>Already you have a registration? <a th:href="@{/users/login}">Login</a></p>
+
+<!--                            <p>or sign up with:</p>-->
+<!--                            <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--                                <i class="fab fa-facebook-f"></i>-->
+<!--                            </button>-->
+
+<!--                            <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--                                <i class="fab fa-google"></i>-->
+<!--                            </button>-->
+
+<!--                            <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--                                <i class="fab fa-twitter"></i>-->
+<!--                            </button>-->
+
+<!--                            <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--                                <i class="fab fa-github"></i>-->
+<!--                            </button>-->
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--        <p>or sign up with:</p>-->
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-facebook-f"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-google"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-twitter"></i>-->
+<!--        </button>-->
+
+<!--        <button type="button" class="btn btn-link btn-floating mx-1">-->
+<!--            <i class="fab fa-github"></i>-->
+<!--        </button>-->
+
+    </div>
+</form>
+
+<footer th:replace="fragments/footer::footer" ></footer>
+
+<th:block th:replace="fragments/scripts::scripts"></th:block>
+
+</body>
+
+
+
+</html>
