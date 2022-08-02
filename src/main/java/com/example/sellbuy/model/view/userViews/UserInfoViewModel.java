@@ -2,16 +2,12 @@ package com.example.sellbuy.model.view.userViews;
 
 import com.example.sellbuy.model.entity.UserRoleEntity;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 public class UserInfoViewModel {
 
