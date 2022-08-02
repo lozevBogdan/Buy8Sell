@@ -17,14 +17,14 @@ public class SellBuyApplication {
         SpringApplication.run(SellBuyApplication.class, args);
 
 
-//todo: IMPORTANT: Проверка дали някой може да изтрие нещо на няккой друг потребител, чрез манупулация на заявка.
+
 //todo: IMPORTANT: implement REST fetch - almost done
 
 //todo: IMPORTANT: implement somewhere Exception handling (error handling)
 //   done     idea 1 - exeption for unauthorized user, try to edit product
 //      done     idea 2 -  error exception in case we wont to product with not exist id in DB - PRODUCT NOT FOUND EXCEPTION.
 
-//todo: IMPORTANT: intercetor
+//todo: IMPORTANT: intercetor - statistic for visiting
 
 //todo: IMPORTANT: implement Event -
 //                  idea1- listener for getting product info -> increase a views with listener
