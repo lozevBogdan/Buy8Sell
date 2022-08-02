@@ -139,20 +139,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getCurrentLoggedInUserEntityById(Long id) {
-        return  this.userRepository.findById(id).get();
+        return this.userRepository.findById(id).get();
     }
 
     @Override
     public UserEntity addInDb(UserEntity userEntity) {
-        return  this.userRepository.save(userEntity);
+        return this.userRepository.save(userEntity);
     }
 
-    @Override
-    public void addFavorProduct(ProductEntity product) {
-        UserEntity byId = this.userRepository.findById(currentUser.getId()).get();
-        byId.getFavoriteProducts().add(product);
-        userRepository.save(byId);
-    }
+//todo: DELETE CURRENT USER
+//    @Override
+//    public void addFavorProduct(ProductEntity product) {
+//        UserEntity byId = this.userRepository.findById(currentUser.getId()).get();
+//        byId.getFavoriteProducts().add(product);
+//        userRepository.save(byId);
+//    }
 
     @Override
     public Set<ProductEntity> getFavorListOf(Long id) {

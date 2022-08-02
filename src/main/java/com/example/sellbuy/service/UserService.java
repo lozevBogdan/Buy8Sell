@@ -26,7 +26,7 @@ public interface UserService {
 
     UserEntity addInDb(UserEntity currentUser);
 
-    void addFavorProduct(ProductEntity product);
+//    void addFavorProduct(ProductEntity product);
 
     Set<ProductEntity> getFavorListOf(Long id);
 
