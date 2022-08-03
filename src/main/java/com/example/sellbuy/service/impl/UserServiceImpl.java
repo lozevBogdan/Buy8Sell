@@ -292,6 +292,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<ProductFavoriteViewModel> returnFavoritesViwModels(Long userId) {
+        return this.returnFavors(this.getFavorListOf(userId),userId);
+    }
+
+    @Override
     public boolean checkByIdIsAdmin(Long userId) {
 
         Set<UserEntity> admins = this.userRepository.

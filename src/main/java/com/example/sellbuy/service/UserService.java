@@ -54,5 +54,7 @@ public interface UserService {
 
     List<ProductFavoriteViewModel> returnFavors(Set<ProductEntity> favorProducts, Long userId);
 
+    List<ProductFavoriteViewModel> returnFavoritesViwModels(Long userId);
+
     boolean checkByIdIsAdmin(Long id);
 }
