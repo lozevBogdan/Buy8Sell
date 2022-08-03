@@ -16,17 +16,13 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/users")
 public class UserFavoritesController {
-
     private final UserService userService;
-
     public UserFavoritesController(UserService userService) {
         this.userService = userService;
     }
-
     @GetMapping("/{id}/favorites")
     public ResponseEntity<List<ProductFavoriteViewModel>> getAllFavorites(@PathVariable Long id) {
         List<ProductFavoriteViewModel> returnFavoritesViwModels = this.userService.returnFavoritesViwModels(id);
         return ResponseEntity.ok(returnFavoritesViwModels);
     }
-
 }
