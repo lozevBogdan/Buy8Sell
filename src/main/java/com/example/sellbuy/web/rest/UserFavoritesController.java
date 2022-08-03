@@ -25,13 +25,8 @@ public class UserFavoritesController {
 
     @GetMapping("/{id}/favorites")
     public ResponseEntity<List<ProductFavoriteViewModel>> getAllFavorites(@PathVariable Long id) {
-
-        Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
-
-        List<ProductFavoriteViewModel> productSearchViewModelList =
-                this.userService.returnFavors(favorList, id);
-
-        return ResponseEntity.ok(productSearchViewModelList);
+        List<ProductFavoriteViewModel> returnFavoritesViwModels = this.userService.returnFavoritesViwModels(id);
+        return ResponseEntity.ok(returnFavoritesViwModels);
     }
 
 }
