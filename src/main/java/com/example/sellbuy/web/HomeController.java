@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.List;
 
 @Controller
-public class HomePage {
+public class HomeController {
 
     private final ProductService productService;
 
-    public HomePage(ProductService productService) {
+    public HomeController(ProductService productService) {
         this.productService = productService;
     }
 
