@@ -140,19 +140,17 @@ public class ProductController {
     @DeleteMapping("/delete/{id}")
     public String deleteProduct(@PathVariable Long id,
                                 @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
-
-        //todo check for authoritization
-        System.out.println();
         this.productService.deleteProductById(id);
-        return String.format("redirect:/users/%d/products", sellAndBuyUser.getId());
+        return "redirect:/users/products";
     }
 
     @GetMapping("/edit/{id}")
     public String editPage(@PathVariable Long id, Model model,
-                           @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) throws NoSuchFieldException {
+                           @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
-        //todo: create exception for unauthorization
-        if(!isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId())){
+        if(!isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
+                id, sellAndBuyUser.getId()
+        )){
             throw new NotAuthorizedException();
         }
 
