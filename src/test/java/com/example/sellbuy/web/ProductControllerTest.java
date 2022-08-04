@@ -1,23 +1,45 @@
 package com.example.sellbuy.web;
 
-import com.example.sellbuy.model.entity.CategoryEntity;
-import com.example.sellbuy.model.entity.LocationEntity;
-import com.example.sellbuy.model.entity.PictureEntity;
-import com.example.sellbuy.model.entity.UserEntity;
+import com.example.sellbuy.init.TestDataInit;
+import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
+import com.example.sellbuy.model.entity.*;
 import com.example.sellbuy.model.entity.enums.CategoryEnum;
 import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.model.view.productViews.ProductDetailsViewDto;
+import com.example.sellbuy.model.view.productViews.ProductEditViewModel;
+import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
+import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.ProductService;
-import org.junit.jupiter.api.Test;
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.Rule;
+import org.junit.jupiter.api.*;
+import org.junit.rules.TestName;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.transaction.AfterTransaction;
+import org.springframework.test.context.transaction.BeforeTransaction;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+
+import static org.junit.Assume.assumeTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,26 +56,61 @@ public class ProductControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    private UserEntity testUser;
+
+    private UserEntity testAdmin;
+
+    @Autowired
+    private TestDataInit testDataInit;
+
+    @Inject
+    private EntityManager em;
+
+    @Inject
+    PlatformTransactionManager txManager;
+
+
+    //Unfortunately, we can't do easily @WithUserDetails with @Before,
+    // because Spring @WithUserDetails annotation will invoke Spring security context test listener,
+    // before running setUp method with @Before.
+    // In this reason we will use @BeforeTransaction, @AfterTransaction,
+    // annotated test method with @Transactional and use @Inject to inject
+    // PlatformTransactionManager txManager and  private EntityManager em;
+    @BeforeTransaction
+    public void setup() {
+        new TransactionTemplate(txManager).execute(status -> {
+            testUser = this.testDataInit.createTestUser("test@abv.bg");
+            return null;
+        });
+    }
+
+    @AfterTransaction
+    public void cleanup() {
+        new TransactionTemplate(txManager).execute(status -> {
+            // Check if the entity is managed by EntityManager.
+            // If not, make it managed with merge() and remove it.
+            em.remove(em.contains(testUser) ? testUser : em.merge(testUser));
+            return null;
+        });
+    }
+
 
     @Test
     void loadAllProductsPage_with_notLoggedInUser() throws Exception {
-
         mockMvc.perform(get("/products/all")).
                 andExpect(status().isOk()).
                 andExpect(view().name("products-all-anonymous"));
     }
 
-//    @Test
-//    @WithMockUser(
-//            username = "test@example.com",
-//            roles = "USER"
-//    )
-//    void loadAllProductsPage_with_loggedInUser() throws Exception {
-//
-//        mockMvc.perform(get("/products/all")).
-//                andExpect(status().isOk()).
-//                andExpect(view().name("products-all"));
-//    }
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void loadAllProductsPage_with_loggedInUser() throws Exception {
+
+        mockMvc.perform(get("/products/all")).
+                andExpect(status().isOk()).
+                andExpect(view().name("products-all"));
+    }
 
 
     @Test
@@ -61,6 +118,16 @@ public class ProductControllerTest {
         mockMvc.perform(get("/products/all/promotion")).
                 andExpect(status().isOk()).
                 andExpect(view().name("products-promotions-anonymous"));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void loadAllPromotionsPage_with_loggedInUser() throws Exception {
+
+        mockMvc.perform(get("/products/all/promotion")).
+                andExpect(status().isOk()).
+                andExpect(view().name("products-promotions"));
     }
 
 
@@ -97,6 +164,259 @@ public class ProductControllerTest {
                 andExpect(status().isNotFound()).
                 andExpect(view().name("object-not-found"));
     }
+
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void addProduct_with_loggedInUser_Successfull() throws Exception {
+
+        mockMvc.perform(post("/products/add").
+                        param("title","Test Product").
+                        param("category",CategoryEnum.ELECTRONICS.name()).
+                        param("description","Testov product").
+                        param("price","100").
+                        param("location",LocationEnum.SOFIA_GRAD.name()).
+                        with(csrf())
+                ).
+                andExpect(status().is3xxRedirection()).
+                andExpect(redirectedUrl("/users/" + this.testUser.getId() + "/products"));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void addProduct_WithoutTitle_with_loggedInUser_NotSuccessfull_RedirectToAddProductPage() throws Exception {
+
+        mockMvc.perform(post("/products/add").
+                        param("category",CategoryEnum.ELECTRONICS.name()).
+                        param("description","Testov product").
+                        param("price","100").
+                        param("location",LocationEnum.SOFIA_GRAD.name()).
+                        with(csrf())
+                ).
+                andExpect(status().is3xxRedirection()).
+                andExpect(redirectedUrl("/products/add"));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void allProductPage_with_loggedInUser_Successfull() throws Exception {
+
+//todo:check this test
+//
+//        ProductEntity testProduct1 = this.testDataInit.createTestProduct(
+//                "Test product 1,for testing purpose",
+//                "Test Product 1",
+//                BigDecimal.valueOf(20L),
+//                LocationEnum.SOFIA_GRAD,
+//                this.testUser,
+//                CategoryEnum.ELECTRONICS,
+//                true
+//        );
+//
+//        ProductEntity testProduct2 = this.testDataInit.createTestProduct(
+//                "Test product 2,for testing purpose",
+//                "Test Product 2",
+//                BigDecimal.valueOf(10L),
+//                LocationEnum.SOFIA_GRAD,
+//                this.testUser,
+//                CategoryEnum.ELECTRONICS,
+//                false
+//        );
+//
+//        List<ProductSearchViewModel> testProducts =
+//                Stream.of(testProduct1, testProduct2).
+//                        map(p->(this.modelMapper.map(p,ProductSearchViewModel.class))).
+//                        collect(Collectors.toList());
+//
+//        ProductSearchingBindingModel productSearchingBindingModel = new ProductSearchingBindingModel().
+//                setTitle("Test Product").
+//                setLocation(null).
+//                setCategory(null).
+//                setOrderBy(null).
+//                setMax(null).
+//                setMin(null);
+//
+//
+//        when(productService.filterBy(
+//                productSearchingBindingModel,this.testUser.getId(),false)
+//        ).
+//                thenReturn(testProducts);
+
+
+        mockMvc.perform(post("/products/all").
+                        param("title","Test Product").
+                        with(csrf())
+                ).
+                andExpect(status().isOk()).
+           //     andExpect(model().attribute("productSearchViewModelList", testProducts)).
+                andExpect((view().name("products-all")));
+    }
+
+
+
+
+    @Test
+    void allProductPage_view_with_NotLoggedInUser_Successfull() throws Exception {
+
+//        ProductEntity testProduct1 = this.testDataInit.createTestProduct(
+//                "Test product 1,for testing purpose",
+//                "Test Product 1",
+//                BigDecimal.ONE,
+//                LocationEnum.SOFIA_GRAD,
+//                this.testUser,
+//                CategoryEnum.ELECTRONICS,
+//                true
+//        );
+//
+//        ProductEntity testProduct2 = this.testDataInit.createTestProduct(
+//                "Test product 2,for testing purpose",
+//                "Test Product 2",
+//                BigDecimal.TEN,
+//                LocationEnum.SOFIA_GRAD,
+//                this.testUser,
+//                CategoryEnum.ELECTRONICS,
+//                false
+//        );
+
+        mockMvc.perform(post("/products/all").
+                        param("title","Test Product").
+                        with(csrf())
+                ).
+                andExpect(status().isOk()).
+              //  andExpect(model().attribute("productSearchViewModelList", List.of(testProduct1,testProduct2))).
+                andExpect((view().name("products-all-anonymous")));
+    }
+
+    @Test
+    void allPromotionsProductPage_view_with_NotLoggedInUser_Successfull() throws Exception {
+
+        mockMvc.perform(post("/products/all/promotion").
+                        with(csrf())
+                ).
+                andExpect(status().isOk()).
+                        andExpect((view().name("products-promotions-anonymous")));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void allPromotionsProductPage_view_with_LoggedInUser_Successfull() throws Exception {
+
+        mockMvc.perform(post("/products/all/promotion").
+                        with(csrf())
+                ).
+                andExpect(status().isOk()).
+                andExpect((view().name("products-promotions")));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void searchingInAllProductPage_withMinPriceBiggerThenMaxPrice_with_loggedInUser_Redirect() throws Exception {
+
+        mockMvc.perform(post("/products/all").
+                        param("min","50").
+                        param("max","10").
+                        with(csrf())
+                ).
+                andExpect(status().is3xxRedirection()).
+                andExpect(redirectedUrl("/products/all"));
+    }
+
+
+    @Test
+    void searchingInAllProductPage_withMinPriceBiggerThenMaxPrice_with_NotLoggedInUser_Redirect() throws Exception {
+
+        mockMvc.perform(post("/products/all").
+                        param("min","50").
+                        param("max","10").
+                        with(csrf())
+                ).
+                andExpect(status().is3xxRedirection()).
+                andExpect(redirectedUrl("/products/all"));
+    }
+
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void loadEditProductPage_with_loggedInUser() throws Exception {
+
+        when(productService.
+                isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
+                        1L,this.testUser.getId()
+                )).thenReturn(true);
+
+        when(productService.findByIdProductSearchAndEditViewModel(1L)).thenReturn(
+
+                new ProductEditViewModel().
+                        setTitle("Test edit").
+                        setCategory(CategoryEnum.ELECTRONICS).
+                        setDescription("This is for testing purpose.").
+                        setLocation(LocationEnum.SOFIA_GRAD).
+                        setPrice(BigDecimal.TEN).setUrlPicture("test_picture_url")
+        );
+
+        mockMvc.perform(get("/products/edit/"+1L)).
+                andExpect(status().isOk()).
+                andExpect(view().name("product-edit"));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void loadEditProductPage_with_loggedInUser_with_NoAuthorization() throws Exception {
+
+        when(productService.
+                isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
+                        1L,this.testUser.getId()
+                )).thenReturn(false);
+
+        mockMvc.perform(get("/products/edit/"+1L)).
+                andExpect(status().isUnauthorized()).
+                andExpect(view().name("not-authorized"));
+    }
+
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void postEditProductPage_with_loggedInUser_with_NoAuthorization() throws Exception {
+
+        when(productService.
+                isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
+                        1L,this.testUser.getId()
+                )).thenReturn(false);
+
+        mockMvc.perform(post("/products/edit/"+1L)
+                        .with(csrf())).
+                andExpect(status().isUnauthorized()).
+                andExpect(view().name("not-authorized"));
+    }
+
+
+    @Test
+    @Transactional
+    @WithUserDetails(value = "test@abv.bg")
+    void postEditProductPage_with_loggedInUser_with_EmptyParams_NoSuccess() throws Exception {
+
+        Long productId = 1L;
+
+        when(productService.
+                isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
+                        productId,this.testUser.getId()
+                )).thenReturn(true);
+
+        mockMvc.perform(post("/products/edit/"+productId)
+                        .with(csrf())).
+                andExpect(status().is3xxRedirection()).
+                andExpect(redirectedUrl("/products/edit/" + productId ));
+    }
+
+
 
 
 }
