@@ -16,8 +16,6 @@ public interface PictureService {
 
     void deleteByProductId(Long id);
 
-    PictureEntity findByProductId(Long id);
-
    Optional <PictureEntity> findByUrl(String urlPicture);
 
     void deleteOldPictureById(Long id);

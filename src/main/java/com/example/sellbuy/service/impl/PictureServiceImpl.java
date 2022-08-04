@@ -22,8 +22,6 @@ public class PictureServiceImpl implements PictureService {
         this.productService = productService;
     }
 
-
-
     @Override
     public PictureEntity addPictureEntity(PictureEntity picture1) {
         return pictureRepository.save(picture1);
@@ -46,24 +44,15 @@ public class PictureServiceImpl implements PictureService {
         ProductEntity productById = this.productService.findById(id);
         PictureEntity pictureByProductPictureId = this.pictureRepository.findById(productById.getPicture().getId()).get();
 
-        System.out.println();
-
         pictureByProductPictureId.setProduct(null);
         pictureByProductPictureId = this.pictureRepository.save(pictureByProductPictureId);
 
         this.pictureRepository.deleteById(pictureByProductPictureId.getId());
-        System.out.println();
-    }
 
-    @Override
-    public PictureEntity findByProductId(Long id) {
-       // return this.pictureRepository.findByProductId(id);
-        return null;
     }
 
     @Override
     public Optional<PictureEntity> findByUrl(String urlPicture) {
-
        return this.pictureRepository.findByUrl(urlPicture);
     }
 
