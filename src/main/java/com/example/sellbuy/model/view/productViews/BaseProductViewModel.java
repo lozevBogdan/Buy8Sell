@@ -109,4 +109,19 @@ public abstract class BaseProductViewModel {
         isProductIsFavorInCurrentUser = productIsFavorInCurrentUser;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "BaseProductViewModel{" +
+                "title='" + title + '\'' +
+                ", condition=" + condition +
+                ", category=" + category +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", location=" + location +
+                ", id=" + id +
+                ", isPromo=" + isPromo +
+                ", isProductIsFavorInCurrentUser=" + isProductIsFavorInCurrentUser +
+                '}';
+    }
 }
