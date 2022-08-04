@@ -28,7 +28,6 @@ public class AdminController {
         this.statisticService = statisticService;
     }
 
-
     @GetMapping("/users")
     public String allUsers(Model model){
         List<UserInfoViewModel> allUsersViewModels = this.userService.getAllUsers();
@@ -40,7 +39,6 @@ public class AdminController {
     public String getStatistic(Model model){
         StatisticViewModel statisticInfo = this.statisticService.getStatisticInfo();
         model.addAttribute("statisticInfo",statisticInfo);
-
 
         return "admin-statistic";
     }
@@ -77,7 +75,7 @@ public class AdminController {
                                    @PathVariable Long userId){
 
         boolean emailIsFree = true;
-
+        System.out.println();
         if(!userInfoViewModel.getEmail().equals(this.userService.getUserInfoViewModelByUserId(userId).getEmail())){
             emailIsFree = this.userService.isEmailFree(userInfoViewModel.getEmail());
         }
