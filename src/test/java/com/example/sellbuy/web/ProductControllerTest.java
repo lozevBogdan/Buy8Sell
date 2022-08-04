@@ -12,6 +12,7 @@ import com.example.sellbuy.securityUser.SellAndBuyUserDetails;
 import com.example.sellbuy.service.ProductService;
 
 
+import com.example.sellbuy.util.TestUserDetailsService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.Rule;
 import org.junit.jupiter.api.*;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.transaction.AfterTransaction;
@@ -63,11 +65,20 @@ public class ProductControllerTest {
     @Autowired
     private TestDataInit testDataInit;
 
-    @Inject
-    private EntityManager em;
+    @BeforeEach
+    void setUp(){
+        testUser = this.testDataInit.createTestUser("user@abv.bg");
+        testAdmin = this.testDataInit.createTestAdmin("admin@abv.bg");}
+    @AfterEach
+    void tearDown(){
+        testDataInit.cleanUpDatabase();
+    }
 
-    @Inject
-    PlatformTransactionManager txManager;
+//    @Inject
+//    private EntityManager em;
+//
+//    @Inject
+//    PlatformTransactionManager txManager;
 
 
     //Unfortunately, we can't do easily @WithUserDetails with @Before,
@@ -76,23 +87,23 @@ public class ProductControllerTest {
     // In this reason we will use @BeforeTransaction, @AfterTransaction,
     // annotated test method with @Transactional and use @Inject to inject
     // PlatformTransactionManager txManager and  private EntityManager em;
-    @BeforeTransaction
-    public void setup() {
-        new TransactionTemplate(txManager).execute(status -> {
-            testUser = this.testDataInit.createTestUser("test@abv.bg");
-            return null;
-        });
-    }
-
-    @AfterTransaction
-    public void cleanup() {
-        new TransactionTemplate(txManager).execute(status -> {
-            // Check if the entity is managed by EntityManager.
-            // If not, make it managed with merge() and remove it.
-            em.remove(em.contains(testUser) ? testUser : em.merge(testUser));
-            return null;
-        });
-    }
+//    @BeforeTransaction
+//    public void setup() {
+//        new TransactionTemplate(txManager).execute(status -> {
+//            testUser = this.testDataInit.createTestUser("test@abv.bg");
+//            return null;
+//        });
+//    }
+//
+//    @AfterTransaction
+//    public void cleanup() {
+//        new TransactionTemplate(txManager).execute(status -> {
+//            // Check if the entity is managed by EntityManager.
+//            // If not, make it managed with merge() and remove it.
+//            em.remove(em.contains(testUser) ? testUser : em.merge(testUser));
+//            return null;
+//        });
+//    }
 
 
     @Test
@@ -102,9 +113,9 @@ public class ProductControllerTest {
                 andExpect(view().name("products-all-anonymous"));
     }
 
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
     void loadAllProductsPage_with_loggedInUser() throws Exception {
 
         mockMvc.perform(get("/products/all")).
@@ -121,8 +132,8 @@ public class ProductControllerTest {
     }
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void loadAllPromotionsPage_with_loggedInUser() throws Exception {
 
         mockMvc.perform(get("/products/all/promotion")).
@@ -167,9 +178,11 @@ public class ProductControllerTest {
 
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void addProduct_with_loggedInUser_Successfull() throws Exception {
+
+        Long userDetailsId = 1L;
 
         mockMvc.perform(post("/products/add").
                         param("title","Test Product").
@@ -180,12 +193,12 @@ public class ProductControllerTest {
                         with(csrf())
                 ).
                 andExpect(status().is3xxRedirection()).
-                andExpect(redirectedUrl("/users/" + this.testUser.getId() + "/products"));
+                andExpect(redirectedUrl("/users/" + userDetailsId + "/products"));
     }
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void addProduct_WithoutTitle_with_loggedInUser_NotSuccessfull_RedirectToAddProductPage() throws Exception {
 
         mockMvc.perform(post("/products/add").
@@ -200,8 +213,8 @@ public class ProductControllerTest {
     }
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void allProductPage_with_loggedInUser_Successfull() throws Exception {
 
 //todo:check this test
@@ -301,8 +314,8 @@ public class ProductControllerTest {
     }
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void allPromotionsProductPage_view_with_LoggedInUser_Successfull() throws Exception {
 
         mockMvc.perform(post("/products/all/promotion").
@@ -313,8 +326,8 @@ public class ProductControllerTest {
     }
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void searchingInAllProductPage_withMinPriceBiggerThenMaxPrice_with_loggedInUser_Redirect() throws Exception {
 
         mockMvc.perform(post("/products/all").
@@ -341,13 +354,15 @@ public class ProductControllerTest {
 
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void loadEditProductPage_with_loggedInUser() throws Exception {
+
+        Long userDetailsId = 1L;
 
         when(productService.
                 isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
-                        1L,this.testUser.getId()
+                        1L, userDetailsId
                 )).thenReturn(true);
 
         when(productService.findByIdProductSearchAndEditViewModel(1L)).thenReturn(
@@ -366,9 +381,12 @@ public class ProductControllerTest {
     }
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void loadEditProductPage_with_loggedInUser_with_NoAuthorization() throws Exception {
+
+
+
 
         when(productService.
                 isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
@@ -382,8 +400,8 @@ public class ProductControllerTest {
 
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void postEditProductPage_with_loggedInUser_with_NoAuthorization() throws Exception {
 
         when(productService.
@@ -399,15 +417,16 @@ public class ProductControllerTest {
 
 
     @Test
-    @Transactional
-    @WithUserDetails(value = "test@abv.bg")
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
     void postEditProductPage_with_loggedInUser_with_EmptyParams_NoSuccess() throws Exception {
 
         Long productId = 1L;
+        Long userDetailsId = 1L;
 
         when(productService.
                 isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
-                        productId,this.testUser.getId()
+                        productId,userDetailsId
                 )).thenReturn(true);
 
         mockMvc.perform(post("/products/edit/"+productId)
