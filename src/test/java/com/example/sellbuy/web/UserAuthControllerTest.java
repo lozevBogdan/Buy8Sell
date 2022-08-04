@@ -40,6 +40,7 @@ public class UserAuthControllerTest {
 
     @Test
     void testUserRegistration_Success() throws Exception {
+
        mockMvc.perform(post("/users/register").
                param("firstName","Ivan").
                param("lastName","Ivanov").
@@ -55,6 +56,7 @@ public class UserAuthControllerTest {
 
     @Test
     void testUserRegistration_withDifferentPasswords_NotSuccessfull_redirectToRegisterPage() throws Exception {
+
         mockMvc.perform(post("/users/register").
                         param("firstName","Ivan").
                         param("lastName","Ivanov").
