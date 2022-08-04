@@ -648,4 +648,11 @@ public class ProductServiceImpl implements ProductService {
             }
         }
     }
+
+    public boolean isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(Long productId, Long currentUserId) {
+        if (!this.findById(productId).getSeller().getId().equals(currentUserId) && !this.userService.checkByIdIsAdmin(currentUserId)){
+            return false;
+        }
+        return true;
+    }
 }

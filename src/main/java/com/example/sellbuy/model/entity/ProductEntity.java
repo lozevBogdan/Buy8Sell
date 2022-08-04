@@ -13,6 +13,7 @@ import java.util.Set;
 @Table(name = "products")
 public class ProductEntity extends BaseEntity {
 
+
     @Enumerated(EnumType.STRING)
     @Column(name = "_condition")
     private ConditionEnum condition;

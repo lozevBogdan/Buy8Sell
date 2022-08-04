@@ -49,4 +49,6 @@ public interface ProductService {
 
     public void removeExpiredProducts();
 
+     boolean isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(Long productId, Long currentUserId);
+
 }

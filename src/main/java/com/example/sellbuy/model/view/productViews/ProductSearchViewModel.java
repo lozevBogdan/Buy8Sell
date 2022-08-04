@@ -12,4 +12,11 @@ public class ProductSearchViewModel extends BaseProductViewModel {
         this.mainPicture = mainPicture;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "ProductSearchViewModel{" +
+                "mainPicture='" + mainPicture + '\'' +
+                '}';
+    }
 }
