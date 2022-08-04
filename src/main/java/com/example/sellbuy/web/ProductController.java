@@ -104,7 +104,7 @@ public class ProductController {
 
         boolean isMinBiggerThanMax = false;
 
-        if (category != "") {
+        if (category != "" && category != null ) {
             productSearchingBindingModel.setCategory(CategoryEnum.valueOf(category));
         }
 
@@ -148,7 +148,7 @@ public class ProductController {
     public String editPage(@PathVariable Long id, Model model,
                            @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
 
-        if(!isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
+        if(!this.productService.isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
                 id, sellAndBuyUser.getId()
         )){
             throw new NotAuthorizedException();
@@ -162,14 +162,6 @@ public class ProductController {
         return "product-edit";
     }
 
-    private boolean isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(Long productId, Long currentUserId) {
-        if (!this.productService.findById(productId).getSeller().getId().equals(currentUserId) && !userService.checkByIdIsAdmin(currentUserId)){
-           return false;
-        }
-            return true;
-    }
-
-
 
     @PostMapping("/edit/{id}")
     public String editProduct(@PathVariable Long id,
@@ -177,8 +169,7 @@ public class ProductController {
                               @Valid ProductEditViewModel productEditViewModel,
                               BindingResult bindingResult,
                               RedirectAttributes redirectAttributes,@AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
-
-        if(!isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId())){
+        if(!this.productService.isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(id, sellAndBuyUser.getId())){
             throw new NotAuthorizedException();
         }
 
@@ -270,7 +261,7 @@ public class ProductController {
 
         boolean isMinBiggerThanMax = false;
 
-        if (category != "") {
+        if (category != "" && category != null) {
             productSearchingBindingModel.setCategory(CategoryEnum.valueOf(category));
         }
 
@@ -278,6 +269,7 @@ public class ProductController {
             isMinBiggerThanMax =
                     productSearchingBindingModel.getMin() > productSearchingBindingModel.getMax();
         }
+
 
         if (bindingResult.hasErrors() || isMinBiggerThanMax) {
             redirectAttributes.addFlashAttribute("productSearchingBindingModel", productSearchingBindingModel);
@@ -292,7 +284,7 @@ public class ProductController {
                         sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
                         false);
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-        model.addAttribute("noResults", productSearchViewModelList.size() == 0);
+
 
         return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
