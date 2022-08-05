@@ -67,6 +67,9 @@ public class ProductControllerTest {
     @Autowired
     private TestDataInit testDataInit;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @BeforeEach
     void setUp(){
         testUser = this.testDataInit.createTestUser("user@abv.bg");
@@ -215,7 +218,7 @@ public class ProductControllerTest {
     @Test
     @WithUserDetails(value = "test@abv.bg",
             userDetailsServiceBeanName = "testUserDetailsService")
-    void allProductPage_with_loggedInUser_Successfull() throws Exception {
+    void post_allProductPage_with_loggedInUser_Successfull() throws Exception {
 
 //todo:check this test
 //
@@ -254,7 +257,7 @@ public class ProductControllerTest {
 //
 //
 //        when(productService.filterBy(
-//                productSearchingBindingModel,this.testUser.getId(),false)
+//                productSearchingBindingModel,userDetailsId,false)
 //        ).
 //                thenReturn(testProducts);
 
@@ -264,7 +267,7 @@ public class ProductControllerTest {
                         with(csrf())
                 ).
                 andExpect(status().isOk()).
-           //     andExpect(model().attribute("productSearchViewModelList", testProducts)).
+ //               andExpect(model().attribute("productSearchViewModelList", testProducts)).
                 andExpect((view().name("products-all")));
     }
 
