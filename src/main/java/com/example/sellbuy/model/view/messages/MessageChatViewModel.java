@@ -17,23 +17,26 @@ public class MessageChatViewModel {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public MessageChatViewModel setCreated(LocalDateTime created) {
         this.created = created;
+        return this;
     }
 
     public UserChatViewModel getSender() {
         return sender;
     }
 
-    public void setSender(UserChatViewModel sender) {
+    public MessageChatViewModel setSender(UserChatViewModel sender) {
         this.sender = sender;
+        return this;
     }
 
     public String getMessage() {
         return message;
     }
 
-    public void setMessage(String message) {
+    public MessageChatViewModel setMessage(String message) {
         this.message = message;
+        return this;
     }
 }

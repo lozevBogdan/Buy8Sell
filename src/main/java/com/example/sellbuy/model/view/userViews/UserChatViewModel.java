@@ -14,16 +14,18 @@ public class UserChatViewModel {
         return id;
     }
 
-    public void setId(Long id) {
+    public UserChatViewModel setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName) {
+    public UserChatViewModel setFullName(String fullName) {
         this.fullName = fullName;
+        return this;
     }
 
     @Override

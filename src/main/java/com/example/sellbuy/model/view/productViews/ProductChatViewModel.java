@@ -14,23 +14,26 @@ public class ProductChatViewModel {
         return id;
     }
 
-    public void setId(Long id) {
+    public ProductChatViewModel setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public ProductChatViewModel setTitle(String title) {
         this.title = title;
+        return this;
     }
 
     public PictureEntity getPicture() {
         return picture;
     }
 
-    public void setPicture(PictureEntity picture) {
+    public ProductChatViewModel setPicture(PictureEntity picture) {
         this.picture = picture;
+        return this;
     }
 }
