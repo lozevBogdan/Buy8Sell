@@ -248,8 +248,7 @@ public class ProductController {
         ProductEntity newProduct =
                 this.productService.addProductBindingModel(productAddBindingModel, sellAndBuyUser);
 
-        return String.format("redirect:/users/%d/products",
-                sellAndBuyUser.getId());
+        return "redirect:/users/products";
     }
 
     @PostMapping("/all")
