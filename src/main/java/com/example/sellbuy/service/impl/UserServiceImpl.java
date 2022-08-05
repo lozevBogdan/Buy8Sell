@@ -10,7 +10,6 @@ import com.example.sellbuy.model.view.productViews.ProductFavoriteViewModel;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
 import com.example.sellbuy.repository.UserRepository;
-import com.example.sellbuy.securityUser.CurrentUser;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -29,19 +28,16 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private final UserRepository userRepository;
     private final UserRoleServiceImpl userRoleService;
-    private final CurrentUser currentUser;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, UserRoleServiceImpl userRoleService,
-                           CurrentUser currentUser, ModelMapper modelMapper,
+                           ModelMapper modelMapper,
                            PasswordEncoder passwordEncoder){
         this.userRepository = userRepository;
         this.userRoleService = userRoleService;
-        this.currentUser = currentUser;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
     }
@@ -146,14 +142,6 @@ public class UserServiceImpl implements UserService {
     public UserEntity addInDb(UserEntity userEntity) {
         return this.userRepository.save(userEntity);
     }
-
-//todo: DELETE CURRENT USER
-//    @Override
-//    public void addFavorProduct(ProductEntity product) {
-//        UserEntity byId = this.userRepository.findById(currentUser.getId()).get();
-//        byId.getFavoriteProducts().add(product);
-//        userRepository.save(byId);
-//    }
 
     @Override
     public Set<ProductEntity> getFavorListOf(Long id) {
