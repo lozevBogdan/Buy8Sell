@@ -52,6 +52,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class ProductControllerTest {
 
+    private final Long userDetailsId = 1L;
+
     @MockBean
     ProductService productService;
 
@@ -181,8 +183,6 @@ public class ProductControllerTest {
     @WithUserDetails(value = "test@abv.bg",
             userDetailsServiceBeanName = "testUserDetailsService")
     void addProduct_with_loggedInUser_Successfull() throws Exception {
-
-        Long userDetailsId = 1L;
 
         mockMvc.perform(post("/products/add").
                         param("title","Test Product").
@@ -358,8 +358,6 @@ public class ProductControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void loadEditProductPage_with_loggedInUser() throws Exception {
 
-        Long userDetailsId = 1L;
-
         when(productService.
                 isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
                         1L, userDetailsId
@@ -384,9 +382,6 @@ public class ProductControllerTest {
     @WithUserDetails(value = "test@abv.bg",
             userDetailsServiceBeanName = "testUserDetailsService")
     void loadEditProductPage_with_loggedInUser_with_NoAuthorization() throws Exception {
-
-
-
 
         when(productService.
                 isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(
@@ -422,7 +417,6 @@ public class ProductControllerTest {
     void postEditProductPage_with_loggedInUser_with_EmptyParams_NoSuccess() throws Exception {
 
         Long productId = 1L;
-        Long userDetailsId = 1L;
 
         when(productService.
                 isCurrentUserHaveAuthorizationToEditProductCheckingBySellerIdAndCurrentUserId(

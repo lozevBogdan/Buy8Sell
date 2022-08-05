@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class UserProfileControllerTest {
 
+    private final Long userDetailsId = 1L;
 
     @Autowired
     private MockMvc mockMvc;
@@ -58,8 +59,6 @@ public class UserProfileControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void loadingMyProfile_EditPage_view_Successfull() throws Exception {
 
-        Long userDetailsId = 1L;
-
         UserEditViewModel userEditViewModel = new UserEditViewModel().
                 setId(userDetailsId).
                 setEmail("test@abv.bg").
@@ -82,8 +81,6 @@ public class UserProfileControllerTest {
     @WithUserDetails(value = "test@abv.bg",
             userDetailsServiceBeanName = "testUserDetailsService")
     void postMyProfile_SaveInfo_withoutChanges_Successfull() throws Exception {
-
-        Long userDetailsId = 1L;
 
         UserEditViewModel userEditViewModel = new UserEditViewModel().
                 setId(userDetailsId).
@@ -111,8 +108,6 @@ public class UserProfileControllerTest {
     @WithUserDetails(value = "test@abv.bg",
             userDetailsServiceBeanName = "testUserDetailsService")
     void postMyProfile_SaveInfo_withChanges_NotExistingEmail_Successfull() throws Exception {
-
-        Long userDetailsId = 1L;
 
         String newEmail = "different@email.com";
 
@@ -146,8 +141,6 @@ public class UserProfileControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void postMyProfile_SaveInfo_withChanges_ExistEmail_NotSuccessfull() throws Exception {
 
-        Long userDetailsId = 1L;
-
         String newEmail = "different@email.com";
 
         UserEditViewModel userEditViewModel = new UserEditViewModel().
@@ -174,8 +167,6 @@ public class UserProfileControllerTest {
 
     }
 
-
-
     @Test
     @WithUserDetails(value = "test@abv.bg",
             userDetailsServiceBeanName = "testUserDetailsService")
@@ -192,10 +183,7 @@ public class UserProfileControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void postChange_Password_Successfull() throws Exception {
 
-        Long userDetailsId = 1L;
-
-
-        PasswordChangingBindingModel passwordChangingBindingModel =
+      PasswordChangingBindingModel passwordChangingBindingModel =
                 new PasswordChangingBindingModel().
                         setOldPassword("12345").
                         setNewPassword("54321").
@@ -226,10 +214,7 @@ public class UserProfileControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void postChange_Password_SamePassword_NotSuccessfull() throws Exception {
 
-        Long userDetailsId = 1L;
-
-
-        PasswordChangingBindingModel passwordChangingBindingModel =
+      PasswordChangingBindingModel passwordChangingBindingModel =
                 new PasswordChangingBindingModel().
                         setOldPassword("12345").
                         setNewPassword("54321").
@@ -260,10 +245,7 @@ public class UserProfileControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void postChange_Password_NotEqualsPasswords_NotSuccessfull() throws Exception {
 
-        Long userDetailsId = 1L;
-
-
-        PasswordChangingBindingModel passwordChangingBindingModel =
+      PasswordChangingBindingModel passwordChangingBindingModel =
                 new PasswordChangingBindingModel().
                         setOldPassword("12345").
                         setNewPassword("54321").
@@ -294,10 +276,7 @@ public class UserProfileControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void postChange_Password_NotMatchOldPassword_NotSuccessfull() throws Exception {
 
-        Long userDetailsId = 1L;
-
-
-        PasswordChangingBindingModel passwordChangingBindingModel =
+      PasswordChangingBindingModel passwordChangingBindingModel =
                 new PasswordChangingBindingModel().
                         setOldPassword("12345").
                         setNewPassword("54321").
@@ -328,9 +307,7 @@ public class UserProfileControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void postChange_Password_ShortNewPassword_WithTwoSymbols_NotSuccessfull() throws Exception {
 
-        Long userDetailsId = 1L;
-
-        PasswordChangingBindingModel passwordChangingBindingModel =
+      PasswordChangingBindingModel passwordChangingBindingModel =
                 new PasswordChangingBindingModel().
                         setOldPassword("12345").
                         setNewPassword("54").
@@ -360,9 +337,7 @@ public class UserProfileControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void postChange_Password_LongNewPassword_With21Symbols_NotSuccessfull() throws Exception {
 
-        Long userDetailsId = 1L;
-
-        PasswordChangingBindingModel passwordChangingBindingModel =
+      PasswordChangingBindingModel passwordChangingBindingModel =
                 new PasswordChangingBindingModel().
                         setOldPassword("12345").
                         setNewPassword("123456789qwertyuiopas").
