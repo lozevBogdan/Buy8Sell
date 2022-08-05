@@ -120,7 +120,7 @@
                             <th:block th:if="*{(seller.email.equals(#authentication.principal.username))}">
 
                                 <form th:action="@{/products/delete/{id}(id=*{id})}"
-                                      th:method="post">
+                                      th:method="delete">
                                     <input class="btn btn-primary btn-block mb-2"
                                            type="submit" value="Delete"></input>
                                 </form>
