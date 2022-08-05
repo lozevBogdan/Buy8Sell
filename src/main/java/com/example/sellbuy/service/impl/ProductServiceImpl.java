@@ -233,7 +233,7 @@ public class ProductServiceImpl implements ProductService {
                     setSeller(petyr).
                     setPicture(harryPotherBookPicture).
                     setPromo(true).
-                    setTitle("Labrador 2 years old").
+                    setTitle("Harry pother").
                     setCategory(categoryBooks);
 
             ProductEntity plumbingServicesBg = new ProductEntity().
