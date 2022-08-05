@@ -24,23 +24,26 @@ public class PasswordChangingBindingModel {
         return oldPassword;
     }
 
-    public void setOldPassword(String oldPassword) {
+    public PasswordChangingBindingModel setOldPassword(String oldPassword) {
         this.oldPassword = oldPassword;
+        return this;
     }
 
     public String getNewPassword() {
         return newPassword;
     }
 
-    public void setNewPassword(String newPassword) {
+    public PasswordChangingBindingModel setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+        return this;
     }
 
     public String getNewPasswordConfirm() {
         return newPasswordConfirm;
     }
 
-    public void setNewPasswordConfirm(String newPasswordConfirm) {
+    public PasswordChangingBindingModel setNewPasswordConfirm(String newPasswordConfirm) {
         this.newPasswordConfirm = newPasswordConfirm;
+        return this;
     }
 }
