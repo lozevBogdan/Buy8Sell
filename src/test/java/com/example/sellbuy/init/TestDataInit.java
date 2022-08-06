@@ -5,9 +5,11 @@ import com.example.sellbuy.model.entity.enums.CategoryEnum;
 import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
 import com.example.sellbuy.repository.*;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,25 +18,24 @@ import java.util.stream.Collectors;
 public class TestDataInit {
 
     private final UserRepository userRepository;
-
     private final CategoryRepository categoryRepository;
-
     private final ProductRepository productRepository;
-
     private final CommentRepository commentRepository;
     private final UserRoleRepository userRoleRepository;
     private final LocationRepository locationRepository;
+    private final MessageRepository messageRepository;
 
 
 
 
-    public TestDataInit(UserRepository userRepository, CategoryRepository categoryRepository, ProductRepository productRepository, CommentRepository commentRepository, UserRoleRepository userRoleRepository, LocationRepository locationRepository) {
+    public TestDataInit(UserRepository userRepository, CategoryRepository categoryRepository, ProductRepository productRepository, CommentRepository commentRepository, UserRoleRepository userRoleRepository, LocationRepository locationRepository, MessageRepository messageRepository) {
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.commentRepository = commentRepository;
         this.userRoleRepository = userRoleRepository;
         this.locationRepository = locationRepository;
+        this.messageRepository = messageRepository;
     }
 
     private void initializeRoles() {
@@ -66,6 +67,19 @@ public class TestDataInit {
                 setApproved(true);
 
        return this.commentRepository.save(newComment);
+    }
+
+    public MessageEntity createMessage(String content,UserEntity sender,UserEntity receiver, ProductEntity product){
+
+        MessageEntity newMessage =  new MessageEntity().
+                setSeen(true).
+                setMessage(content).
+                setReceiver(receiver).
+                setSender(sender);
+        newMessage.setProduct(product);
+
+       return this.messageRepository.save(newMessage);
+
     }
 
 
@@ -135,7 +149,10 @@ public class TestDataInit {
                 setTitle(title).
                 setPrice(price).
                 setLocation(locationEntity).
-                setSeller(seller).setCategory(categoryEntity).setPromo(isPromo);
+                setSeller(seller).
+                setCategory(categoryEntity).
+                setPromo(isPromo).
+                setMessages(new HashSet<>());
 
         return this.productRepository.save(product);
 
@@ -152,6 +169,8 @@ public class TestDataInit {
         userRoleRepository.deleteAll();
         categoryRepository.deleteAll();
         locationRepository.deleteAll();
+        messageRepository.deleteAll();
+        commentRepository.deleteAll();
     }
 
 
