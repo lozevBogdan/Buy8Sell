@@ -44,7 +44,7 @@ public class ProductEntity extends BaseEntity {
     @OneToMany(mappedBy = "productEntity",fetch = FetchType.EAGER)
     private Set<CommentEntity> comments= new HashSet<>();
 
-    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product",fetch = FetchType.EAGER)
     private Set<MessageEntity> messages;
 
     @ManyToOne
