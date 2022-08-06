@@ -10,6 +10,7 @@ import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CommentServiceImpl implements CommentsService {
@@ -25,6 +26,7 @@ public class CommentServiceImpl implements CommentsService {
         this.productService = productService;
     }
 
+    @Transactional
     @Override
     public void deleteByProductId(Long id) {
         this.commentRepository.deleteByProductEntityId(id);

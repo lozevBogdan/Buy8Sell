@@ -12,6 +12,7 @@ import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -63,6 +64,7 @@ public class MessageServiceImpl  implements MessageService {
 
     }
 
+    @Transactional
     @Override
     public void deleteByProductId(Long id) {
         this.messageRepository.deleteByProductId(id);
