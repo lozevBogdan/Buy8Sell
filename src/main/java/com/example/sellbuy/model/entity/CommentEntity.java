@@ -41,15 +41,6 @@ public class CommentEntity extends BaseEntity {
         return this;
     }
 
-    public ProductEntity getProductEntity() {
-        return productEntity;
-    }
-
-    public CommentEntity setProductEntity(ProductEntity productEntity) {
-        this.productEntity = productEntity;
-        return this;
-    }
-
     public ProductEntity getProduct() {
         return productEntity;
     }
