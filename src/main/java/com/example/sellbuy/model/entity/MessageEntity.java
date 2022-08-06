@@ -17,7 +17,7 @@ public class MessageEntity extends BaseEntity{
     @ManyToOne
     private UserEntity receiver;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     private ProductEntity product;
 
     public MessageEntity() {
