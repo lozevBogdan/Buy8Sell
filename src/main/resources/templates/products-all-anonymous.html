@@ -128,18 +128,19 @@
 
 
     <div class="col-md-9">
-        <section class="panel">
-            <div class="panel-body">
-                <div class="pull-right">
-                    <ul class="pagination pagination-sm pro-page-list">
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">»</a></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
+
+<!--        <section class="panel">-->
+<!--            <div class="panel-body">-->
+<!--                <div class="pull-right">-->
+<!--                    <ul class="pagination pagination-sm pro-page-list">-->
+<!--                        <li><a href="#">1</a></li>-->
+<!--                        <li><a href="#">2</a></li>-->
+<!--                        <li><a href="#">3</a></li>-->
+<!--                        <li><a href="#">»</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </section>-->
 
 
         <div class="row product-list">
@@ -165,13 +166,13 @@
                 </section>
             </div>
 
-
+        </div>
+        <div class="text-center" th:if="${noResults}">
+            <h1>
+                Тhere are no matches for the specified criteria!</h1>
         </div>
     </div>
-    <div class="text-center" th:if="${noResults}">
-        <h1>
-            Тhere are no matches for the specified criteria!</h1>
-    </div>
+
 </div>
 
 
