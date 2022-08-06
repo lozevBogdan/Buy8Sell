@@ -1,14 +1,12 @@
 package com.example.sellbuy.service.impl;
 
 import com.example.sellbuy.model.entity.PictureEntity;
-import com.example.sellbuy.model.entity.ProductEntity;
 import com.example.sellbuy.repository.PictureRepository;
 import com.example.sellbuy.service.PictureService;
 import com.example.sellbuy.service.ProductService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -40,15 +38,8 @@ public class PictureServiceImpl implements PictureService {
 
 
     @Override
-    public void deleteByProductId(Long id) {
-        ProductEntity productById = this.productService.findById(id);
-        PictureEntity pictureByProductPictureId = this.pictureRepository.findById(productById.getPicture().getId()).get();
-
-        pictureByProductPictureId.setProduct(null);
-        pictureByProductPictureId = this.pictureRepository.save(pictureByProductPictureId);
-
-        this.pictureRepository.deleteById(pictureByProductPictureId.getId());
-
+    public void deletePictureById(Long id) {
+        this.pictureRepository.deleteById(id);
     }
 
     @Override
