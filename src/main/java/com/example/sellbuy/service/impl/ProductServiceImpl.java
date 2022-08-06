@@ -326,10 +326,6 @@ public class ProductServiceImpl implements ProductService {
 
         newProduct = this.productRepository.save(newProduct);
 
-        //pictureEntity = this.pictureService.addPictureInDb(pictureEntity);
-
-        //   this.categoryService.updateCategory(categoryEntity);
-
         return newProduct;
     }
 
@@ -469,22 +465,21 @@ public class ProductServiceImpl implements ProductService {
         return false;
     }
 
-    @Transactional
+   // @Transactional
     @Override
     public void deleteProductById(Long id) {
 
-        // with those activities, we avoid to use CascadeType between entities.
-// todo: make this with use CascadeTypeAll an mapped by in other side
         ProductEntity productForDeleted =
                 this.productRepository.
                         findById(id).get();
 
+        Long pictureId = productForDeleted.getPicture().getId();
+
         this.commentsService.deleteByProductId(id);
-        this.userService.deleteByProductIdFrom(productForDeleted);
+        this.userService.deleteByProductIdFromUserProduct(productForDeleted);
         this.messageService.deleteByProductId(id);
         this.productRepository.deleteById(id);
-        //todo: delete method doesnt work picture
-        this.pictureService.deleteByProductId(id);
+        this.pictureService.deletePictureById(pictureId);
 
     }
 

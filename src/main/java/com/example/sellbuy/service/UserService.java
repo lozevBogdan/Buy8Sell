@@ -32,7 +32,7 @@ public interface UserService {
 
     Set<ProductEntity> getMyProductsById(Long id);
 
-    void deleteByProductIdFrom(ProductEntity id);
+    void deleteByProductIdFromUserProduct(ProductEntity id);
 
     UserEntity findById(Long authorId);
 

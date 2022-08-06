@@ -10,14 +10,10 @@ import com.example.sellbuy.model.view.productViews.ProductFavoriteViewModel;
 import com.example.sellbuy.model.view.userViews.UserEditViewModel;
 import com.example.sellbuy.model.view.userViews.UserInfoViewModel;
 import com.example.sellbuy.repository.UserRepository;
-import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -156,7 +152,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteByProductIdFrom(ProductEntity productForDelete) {
+    public void deleteByProductIdFromUserProduct(ProductEntity productForDelete) {
         UserEntity currentLoggedInUserEntity = this.getCurrentLoggedInUserEntityById(productForDelete.getSeller().getId());
         Set<ProductEntity> products = currentLoggedInUserEntity.getProducts();
         for (ProductEntity product : products) {
