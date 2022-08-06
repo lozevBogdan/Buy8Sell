@@ -233,7 +233,7 @@ public class ProductServiceImpl implements ProductService {
                     setSeller(petyr).
                     setPicture(harryPotherBookPicture).
                     setPromo(true).
-                    setTitle("Harry pother").
+                    setTitle("Harry potter").
                     setCategory(categoryBooks);
 
             ProductEntity plumbingServicesBg = new ProductEntity().
@@ -266,7 +266,7 @@ public class ProductServiceImpl implements ProductService {
                     setSeller(ivan).
                     setPicture(rakiaPicture).
                     setPromo(true).
-                    setTitle("Домашна ракиа").
+                    setTitle("Домашна ракия").
                     setCategory(categoryOther);
 
 
@@ -400,7 +400,7 @@ public class ProductServiceImpl implements ProductService {
                             sort((a, b) -> a.getCreated().compareTo(b.getCreated()));
                     break;
 
-                case EXPENSIVEST:
+                case MOST_EXPENSIVE:
                     allProducts.
                             sort((a, b) -> (b.getPrice().intValue()) - (a.getPrice().intValue()));
                     break;
