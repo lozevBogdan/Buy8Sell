@@ -44,8 +44,7 @@ import java.util.stream.Stream;
 import static org.junit.Assume.assumeTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -196,7 +195,29 @@ public class ProductControllerTest {
                         with(csrf())
                 ).
                 andExpect(status().is3xxRedirection()).
-                andExpect(redirectedUrl("/users/" + userDetailsId + "/products"));
+                andExpect(redirectedUrl("/users/products"));
+    }
+
+    @Test
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
+    void deleteProduct_correctRedirectAfterDeleteProduct() throws Exception {
+
+                ProductEntity testProduct1 = this.testDataInit.createTestProduct(
+                "Test product 1,for testing purpose",
+                "Test Product 1",
+                BigDecimal.valueOf(20L),
+                LocationEnum.SOFIA_GRAD,
+                this.testUser,
+                CategoryEnum.ELECTRONICS,
+                true
+        );
+
+        mockMvc.perform(delete("/products/delete/" + testProduct1.getId()).
+                        with(csrf())
+                ).
+                andExpect(status().is3xxRedirection()).
+                andExpect(redirectedUrl("/users/products"));
     }
 
     @Test
@@ -213,6 +234,17 @@ public class ProductControllerTest {
                 ).
                 andExpect(status().is3xxRedirection()).
                 andExpect(redirectedUrl("/products/add"));
+    }
+
+
+    @Test
+    @WithUserDetails(value = "test@abv.bg",
+            userDetailsServiceBeanName = "testUserDetailsService")
+    void addProduct_loadingView() throws Exception {
+
+        mockMvc.perform(get("/products/add")).
+                andExpect(status().isOk()).
+                andExpect(view().name("product-add"));
     }
 
     @Test
