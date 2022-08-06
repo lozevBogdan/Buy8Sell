@@ -16,9 +16,7 @@ public interface PictureRepository extends JpaRepository<PictureEntity,Long> {
 
     void deleteByProductId(Long id);
 
-    // THE METHOD BELOW DO NOT WORK ??????
-//    @Query(value = "select p from PictureEntity p where p.product.id = :id")
-//    PictureEntity findByProductId(@Param("id") Long id);
+    void deleteById(Long id);
 
    Optional<PictureEntity> findByUrl(String urlPicture);
 }
