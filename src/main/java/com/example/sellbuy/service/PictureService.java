@@ -14,7 +14,7 @@ public interface PictureService {
 
     PictureEntity addPictureInDb(PictureEntity pictureEntity);
 
-    void deleteByProductId(Long id);
+    void deletePictureById(Long id);
 
    Optional <PictureEntity> findByUrl(String urlPicture);
 
