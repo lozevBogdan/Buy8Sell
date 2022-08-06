@@ -75,10 +75,7 @@ public class ProductController {
 
         if (!model.containsAttribute("productSearchViewModelList")) {
             model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-            model.addAttribute("noResults", productSearchViewModelList.size() == 0);
         }
-
-
 
         return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
