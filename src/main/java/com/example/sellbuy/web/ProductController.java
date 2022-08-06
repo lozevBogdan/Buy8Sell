@@ -75,7 +75,10 @@ public class ProductController {
 
         if (!model.containsAttribute("productSearchViewModelList")) {
             model.addAttribute("productSearchViewModelList", productSearchViewModelList);
+            model.addAttribute("noResults", productSearchViewModelList.size() == 0);
         }
+
+
 
         return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
@@ -90,7 +93,7 @@ public class ProductController {
                         true);
         if (!model.containsAttribute("productSearchViewModelList")) {
             model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-            model.addAttribute("noResults", productSearchViewModelList.size() == 0);
+
         }
         return sellAndBuyUser != null ? "products-promotions" : "products-promotions-anonymous";
     }
@@ -283,7 +286,7 @@ public class ProductController {
                         sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
                         false);
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-
+        model.addAttribute("noResults", productSearchViewModelList.size() == 0);
 
         return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
