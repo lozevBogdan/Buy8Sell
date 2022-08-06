@@ -2,7 +2,6 @@ package com.example.sellbuy.init;
 
 import com.example.sellbuy.model.entity.*;
 import com.example.sellbuy.model.entity.enums.CategoryEnum;
-import com.example.sellbuy.model.entity.enums.ConditionEnum;
 import com.example.sellbuy.model.entity.enums.LocationEnum;
 import com.example.sellbuy.model.entity.enums.UserRoleEnum;
 import com.example.sellbuy.repository.*;
@@ -22,16 +21,18 @@ public class TestDataInit {
 
     private final ProductRepository productRepository;
 
+    private final CommentRepository commentRepository;
     private final UserRoleRepository userRoleRepository;
     private final LocationRepository locationRepository;
 
 
 
 
-    public TestDataInit(UserRepository userRepository, CategoryRepository categoryRepository, ProductRepository productRepository, UserRoleRepository userRoleRepository, LocationRepository locationRepository) {
+    public TestDataInit(UserRepository userRepository, CategoryRepository categoryRepository, ProductRepository productRepository, CommentRepository commentRepository, UserRoleRepository userRoleRepository, LocationRepository locationRepository) {
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
+        this.commentRepository = commentRepository;
         this.userRoleRepository = userRoleRepository;
         this.locationRepository = locationRepository;
     }
@@ -54,6 +55,17 @@ public class TestDataInit {
                 this.locationRepository.save(newLocation);
             }
         }
+    }
+
+    public CommentEntity createComment(UserEntity author,ProductEntity product){
+
+        CommentEntity newComment = new CommentEntity().
+                setAuthor(author).
+                setProduct(product).
+                setTextContent("Test comment content.").
+                setApproved(true);
+
+       return this.commentRepository.save(newComment);
     }
 
 
