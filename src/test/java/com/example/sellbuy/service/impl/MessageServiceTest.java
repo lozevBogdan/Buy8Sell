@@ -14,6 +14,7 @@ import com.example.sellbuy.service.CommentsService;
 import com.example.sellbuy.service.MessageService;
 import com.example.sellbuy.service.ProductService;
 import com.example.sellbuy.service.UserService;
+import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,25 +52,62 @@ public class MessageServiceTest {
     @Mock
     private ProductService productService;
 
-    private MessageService messageServiceToTest;
+   private MessageService messageServiceToTest;
 
-    private UserEntity sender;
-    private UserEntity receiver;
-    private ProductEntity product;
+// todo: check this case!!!!!!!!!!
+//    private UserEntity sender;
+//
+//    private UserEntity receiver;
+//    private ProductEntity product;
+//
+//    private MessageEntity messageBeforeSave;
+//
+//    private MessageEntity messageAfterSave;
 
-    private MessageEntity messageBeforeSave;
+//    @BeforeEach
+//    void setUp(){
+//
+//        messageServiceToTest = new MessageServiceImpl(messageRepository,userService,modelMapper,productService);
+//
+//        sender = this.testDataInit.createTestUser("sender@abv.bg");
+//
+//        receiver = this.testDataInit.createTestUser("receiver@abv.bg");
+//
+//        product = this.testDataInit.createTestProduct(
+//                "Test product 1,for testing purpose",
+//                "Test Product 1",
+//                BigDecimal.valueOf(20L),
+//                LocationEnum.SOFIA_GRAD,
+//                receiver,
+//                CategoryEnum.ELECTRONICS,
+//                true
+//        );
+//
+//        messageBeforeSave =
+//                this.testDataInit.createMessage("Test message",sender,receiver,product);
+//        messageBeforeSave.setId(null);
+//
+//        messageAfterSave =
+//                this.testDataInit.createMessage("Test message",sender,receiver,product);
+//
+//    }
+//
+//    @AfterEach
+//    void tearDown(){
+//        this.testDataInit.cleanUpDatabase();
+//    }
 
-    private MessageEntity messageAfterSave;
 
-    @BeforeEach
-    void setUp(){
+    @Test
+    void createAndSave_Message(){
+
         messageServiceToTest = new MessageServiceImpl(messageRepository,userService,modelMapper,productService);
 
-        sender = this.testDataInit.createTestUser("sender@abv.bg");
+       UserEntity sender = this.testDataInit.createTestUser("sender@abv.bg");
 
-        receiver = this.testDataInit.createTestUser("receiver@abv.bg");
+        UserEntity  receiver = this.testDataInit.createTestUser("receiver@abv.bg");
 
-        product = this.testDataInit.createTestProduct(
+      ProductEntity  product = this.testDataInit.createTestProduct(
                 "Test product 1,for testing purpose",
                 "Test Product 1",
                 BigDecimal.valueOf(20L),
@@ -79,25 +117,16 @@ public class MessageServiceTest {
                 true
         );
 
-        messageBeforeSave =
+      MessageEntity messageBeforeSave =
                 this.testDataInit.createMessage("Test message",sender,receiver,product);
         messageBeforeSave.setId(null);
 
-        messageAfterSave =
+        MessageEntity messageAfterSave =
                 this.testDataInit.createMessage("Test message",sender,receiver,product);
 
-    }
 
-    @AfterEach
-    void tearDown(){
-        this.testDataInit.cleanUpDatabase();
-    }
-
-
-    @Test
-    void createAndSave_Message(){
-
-        MessageBindingModel messageBindingModel = new MessageBindingModel().setMessage(messageAfterSave.getMessage());
+        MessageBindingModel messageBindingModel =
+                new MessageBindingModel().setMessage(messageAfterSave.getMessage());
 
         when(userService.findById(receiver.getId())).
                 thenReturn(receiver);
@@ -127,6 +156,34 @@ public class MessageServiceTest {
     @Test
     void getMessageBySenderId_AndReceiverId(){
 
+        messageServiceToTest = new MessageServiceImpl(messageRepository,userService,modelMapper,productService);
+
+        UserEntity sender = this.testDataInit.createTestUser("sender2@abv.bg");
+
+        UserEntity  receiver = this.testDataInit.createTestUser("receiver2@abv.bg");
+
+        ProductEntity  product = this.testDataInit.createTestProduct(
+                "Test product 1,for testing purpose",
+                "Test Product 1",
+                BigDecimal.valueOf(20L),
+                LocationEnum.SOFIA_GRAD,
+                receiver,
+                CategoryEnum.ELECTRONICS,
+                true
+        );
+
+        MessageEntity messageBeforeSave =
+                this.testDataInit.createMessage("Test message",sender,receiver,product);
+        messageBeforeSave.setId(null);
+
+        MessageEntity messageAfterSave =
+                this.testDataInit.createMessage("Test message",sender,receiver,product);
+
+
+        MessageBindingModel messageBindingModel =
+                new MessageBindingModel().setMessage(messageAfterSave.getMessage());
+
+
         Set<MessageEntity> expectedSetOfMessageEntity = Set.of(messageAfterSave);
 
         when(messageRepository.findBySenderIdAndReceiverId(sender.getId(),receiver.getId())).
@@ -140,6 +197,34 @@ public class MessageServiceTest {
 
     @Test
     void findChatsMessagesByProductIdSenderIdReceiverId(){
+
+
+        messageServiceToTest = new MessageServiceImpl(messageRepository,userService,modelMapper,productService);
+
+        UserEntity sender = this.testDataInit.createTestUser("sender3@abv.bg");
+
+        UserEntity  receiver = this.testDataInit.createTestUser("receiver3@abv.bg");
+
+        ProductEntity  product = this.testDataInit.createTestProduct(
+                "Test product 1,for testing purpose",
+                "Test Product 1",
+                BigDecimal.valueOf(20L),
+                LocationEnum.SOFIA_GRAD,
+                receiver,
+                CategoryEnum.ELECTRONICS,
+                true
+        );
+
+        MessageEntity messageBeforeSave =
+                this.testDataInit.createMessage("Test message",sender,receiver,product);
+        messageBeforeSave.setId(null);
+
+        MessageEntity messageAfterSave =
+                this.testDataInit.createMessage("Test message",sender,receiver,product);
+
+
+        MessageBindingModel messageBindingModel =
+                new MessageBindingModel().setMessage(messageAfterSave.getMessage());
 
         when(productService.findById(product.getId())).
                 thenReturn(product);
