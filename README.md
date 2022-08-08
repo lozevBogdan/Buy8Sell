@@ -1,1 +1,1 @@
-# Buy8Sell[README.docx](https://github.com/lozevBogdan/Buy8Sell/files/9275468/README.docx)
+# BuyAndSell [README.docx](https://github.com/lozevBogdan/Buy8Sell/files/9276700/README.docx)
