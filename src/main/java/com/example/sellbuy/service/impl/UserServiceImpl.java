@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService {
 
             UserEntity user1 = new UserEntity();
             user1.
-                    setFirstName("Bogdan").
-                    setLastName("Lozev").
-                    setEmail("lozev.bogdan@abv.bg").
+                    setFirstName("Admin").
+                    setLastName("Adminov").
+                    setEmail("admin@abv.bg").
                     setMobileNumber("0888888888").
-                    setPassword(this.passwordEncoder.encode("123"));
+                    setPassword(this.passwordEncoder.encode("acer"));
 
             UserEntity user2 = new UserEntity();
             user2.

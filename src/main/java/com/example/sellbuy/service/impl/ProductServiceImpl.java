@@ -64,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
 
         if (productRepository.count() == 0) {
 
-            UserEntity lozev = userService.getByEmail("lozev.bogdan@abv.bg");
+            UserEntity lozev = userService.getByEmail("admin@abv.bg");
             UserEntity petyr = userService.getByEmail("petyr@abv.bg");
             UserEntity ivan = userService.getByEmail("ivan@abv.bg");
 
