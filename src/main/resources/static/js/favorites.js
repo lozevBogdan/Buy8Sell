@@ -33,7 +33,7 @@ const productAsHtmlPromo = (product) => `
    <div class="col-md-4">
     <section class="panel">
         <div id="imageHolder" class="pro-img-box text-center">
-            <img id="image" src = ${product.pictureUrl}
+            <img style='width: 100%;' id="image" src = ${product.pictureUrl}
                  width="250" height="220" />
                 <form method="post"
                       action="/users/remove/favorites/${product.id}/${'favorites'}">
@@ -60,7 +60,7 @@ const productAsHtmlNotPromo = (product) => `
    <div class="col-md-4">
     <section class="panel">
         <div id="imageHolder" class="pro-img-box text-center">
-            <img id="image" src = ${product.pictureUrl}
+            <img style='width: 100%;' id="image" src = ${product.pictureUrl}
                  width="250" height="220" />
                 <form method="post"
                       action="/users/remove/favorites/${product.id}/${'favorites'}">
