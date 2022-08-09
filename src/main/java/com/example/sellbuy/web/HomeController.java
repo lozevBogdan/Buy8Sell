@@ -1,12 +1,16 @@
 package com.example.sellbuy.web;
 
 import com.example.sellbuy.model.binding.ProductSearchingBindingModel;
+import com.example.sellbuy.model.exception.NotAuthorizedException;
 import com.example.sellbuy.model.view.productViews.ProductSearchViewModel;
 import com.example.sellbuy.service.ProductService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.List;
 
@@ -37,5 +41,16 @@ public class HomeController {
 
         return "index";
     }
+
+    @ResponseStatus(value = HttpStatus.TOO_EARLY)
+    @ExceptionHandler({IllegalArgumentException.class})
+    public String notAuthorized () {
+
+        return "error-products-not-loaded-yet";
+
+    }
+
+
+
 
 }
