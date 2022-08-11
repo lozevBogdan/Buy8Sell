@@ -34,15 +34,12 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final PictureService pictureService;
     private final UserService userService;
-    private final ModelMapper modelMapper;
 
-    public ProductController(ProductService productService, PictureService pictureService, UserService userService, ModelMapper modelMapper) {
+    public ProductController(ProductService productService, UserService userService) {
         this.productService = productService;
-        this.pictureService = pictureService;
         this.userService = userService;
-        this.modelMapper = modelMapper;
+
     }
 
     @ModelAttribute
@@ -188,14 +185,6 @@ public class ProductController {
         return "redirect:/products/info/" + id;
     }
 
-    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler({NotAuthorizedException.class})
-    public String notAuthorized () {
-
-        return "not-authorized";
-
-    }
-
     @GetMapping("/info/{id}")
     public String productInfo(@PathVariable Long id, Model model,
                               @AuthenticationPrincipal SellAndBuyUserDetails sellAndBuyUser) {
@@ -217,16 +206,6 @@ public class ProductController {
 
         return sellAndBuyUser != null ? "product-Info" : "product-Info-anonymous";
     }
-
-  @ResponseStatus(value = HttpStatus.NOT_FOUND)
-  @ExceptionHandler({ObjectNotFoundException.class})
-  public ModelAndView onProductNotFound(ObjectNotFoundException onfe) {
-    ModelAndView modelAndView = new ModelAndView("object-not-found");
-    modelAndView.addObject("objectId", onfe.getObjectId());
-    modelAndView.addObject("typeOfObject", onfe.getTypeOfObject());
-    return modelAndView;
-
-  }
 
     @PostMapping("/add")
     public String add(@RequestParam(defaultValue = "false") boolean isPromo,
@@ -282,9 +261,27 @@ public class ProductController {
                 this.productService.filterBy(productSearchingBindingModel,
                         sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
                         false);
+        System.out.println();
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         model.addAttribute("noResults", productSearchViewModelList.size() == 0);
 
         return sellAndBuyUser != null ? "products-all" : "products-all-anonymous";
     }
+
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler({NotAuthorizedException.class})
+    public String notAuthorized () {
+        return "not-authorized";
+    }
+
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ExceptionHandler({ObjectNotFoundException.class})
+    public ModelAndView onProductNotFound(ObjectNotFoundException onfe) {
+        ModelAndView modelAndView = new ModelAndView("object-not-found");
+        modelAndView.addObject("objectId", onfe.getObjectId());
+        modelAndView.addObject("typeOfObject", onfe.getTypeOfObject());
+        return modelAndView;
+
+    }
+
 }

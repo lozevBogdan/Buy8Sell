@@ -22,13 +22,10 @@ import javax.validation.Valid;
 public class CommentController {
 
     private final CommentsService commentsService;
-    private final UserService userService;
 
-    public CommentController(CommentsService commentsService, UserService userService) {
+    public CommentController(CommentsService commentsService) {
         this.commentsService = commentsService;
-        this.userService = userService;
     }
-
 
     @PostMapping("/add/{id}")
    public String addComment(@PathVariable Long id,
