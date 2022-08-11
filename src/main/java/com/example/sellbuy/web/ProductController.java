@@ -261,7 +261,7 @@ public class ProductController {
                 this.productService.filterBy(productSearchingBindingModel,
                         sellAndBuyUser != null ? sellAndBuyUser.getId() : null,
                         false);
-        System.out.println();
+
         model.addAttribute("productSearchViewModelList", productSearchViewModelList);
         model.addAttribute("noResults", productSearchViewModelList.size() == 0);
 
