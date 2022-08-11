@@ -3,6 +3,7 @@ package com.example.sellbuy.securityUser;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
+// After implement Spring security, this class is NOT used !
 @Component
 @SessionScope
 public class CurrentUser {
