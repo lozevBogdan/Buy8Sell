@@ -24,9 +24,7 @@ public class MessageServiceImpl  implements MessageService {
 
     private final MessageRepository messageRepository;
     private final UserService userService;
-
     private final ModelMapper modelMapper;
-
     private final ProductService productService;
 
     public MessageServiceImpl(MessageRepository messageRepository, UserService userService, ModelMapper modelMapper, @Lazy ProductService productService) {

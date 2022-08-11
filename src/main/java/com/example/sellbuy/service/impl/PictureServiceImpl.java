@@ -13,11 +13,9 @@ import java.util.Optional;
 public class PictureServiceImpl implements PictureService {
 
     private final PictureRepository pictureRepository;
-    private final ProductService productService;
 
-    public PictureServiceImpl(PictureRepository pictureRepository, @Lazy ProductService productService) {
+    public PictureServiceImpl(PictureRepository pictureRepository) {
         this.pictureRepository = pictureRepository;
-        this.productService = productService;
     }
 
     @Override
@@ -35,7 +33,6 @@ public class PictureServiceImpl implements PictureService {
 
         return this.pictureRepository.save(pictureEntity);
     }
-
 
     @Override
     public void deletePictureById(Long id) {
