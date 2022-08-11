@@ -72,7 +72,7 @@ public class ProductControllerTest {
     @BeforeEach
     void setUp(){
         testUser = this.testDataInit.createTestUser("user@abv.bg");
-        testAdmin = this.testDataInit.createTestAdmin("admin@abv.bg");}
+        testAdmin = this.testDataInit.createTestAdmin("admin@gmail.bg");}
     @AfterEach
     void tearDown(){
         testDataInit.cleanUpDatabase();

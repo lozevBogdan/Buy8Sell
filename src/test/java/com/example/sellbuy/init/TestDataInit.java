@@ -154,7 +154,9 @@ public class TestDataInit {
                 setPromo(isPromo).
                 setMessages(new HashSet<>());
 
-        return this.productRepository.save(product);
+        product =  this.productRepository.save(product);
+
+        return product;
 
 
     }
