@@ -5,15 +5,10 @@ import com.example.sellbuy.model.entity.enums.CategoryEnum;
 
 public interface CategoryService {
 
-
     void initializedCategories();
 
     CategoryEntity findByCategory(CategoryEnum category);
 
     CategoryEntity updateCategory(CategoryEntity category);
-
-    void deleteByProductId(Long id);
-
-
 
 }

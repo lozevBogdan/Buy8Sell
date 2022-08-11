@@ -18,11 +18,11 @@ import java.util.Set;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
-    private final ProductService productService;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository,@Lazy ProductService productService) {
+
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.productService = productService;
+
     }
 
     @Order(3)
@@ -52,25 +52,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.save(category);
     }
 
-    @Override
-    public void deleteByProductId(Long id) {
 
-//        CategoryEnum category = this.productService.findById(id).getCategory().getCategory();
-//
-//        CategoryEntity categoryEntity = this.findByCategory(category);
-//
-//        Set<ProductEntity> products = categoryEntity.getProducts();
-//
-//        for (ProductEntity product : products) {
-//            if(product.getId() == id){
-//                products.remove(product);
-//                break;
-//            }
-//        }
-//        categoryEntity.setProducts(products);
-//        this.updateCategory(categoryEntity);
-
-    }
 
 
 }
