@@ -66,9 +66,6 @@ public class ProductControllerTest {
     @Autowired
     private TestDataInit testDataInit;
 
-    @Autowired
-    private ModelMapper modelMapper;
-
     @BeforeEach
     void setUp(){
         testUser = this.testDataInit.createTestUser("user@abv.bg");
@@ -77,37 +74,6 @@ public class ProductControllerTest {
     void tearDown(){
         testDataInit.cleanUpDatabase();
     }
-
-//    @Inject
-//    private EntityManager em;
-//
-//    @Inject
-//    PlatformTransactionManager txManager;
-
-
-    //Unfortunately, we can't do easily @WithUserDetails with @Before,
-    // because Spring @WithUserDetails annotation will invoke Spring security context test listener,
-    // before running setUp method with @Before.
-    // In this reason we will use @BeforeTransaction, @AfterTransaction,
-    // annotated test method with @Transactional and use @Inject to inject
-    // PlatformTransactionManager txManager and  private EntityManager em;
-//    @BeforeTransaction
-//    public void setup() {
-//        new TransactionTemplate(txManager).execute(status -> {
-//            testUser = this.testDataInit.createTestUser("test@abv.bg");
-//            return null;
-//        });
-//    }
-//
-//    @AfterTransaction
-//    public void cleanup() {
-//        new TransactionTemplate(txManager).execute(status -> {
-//            // Check if the entity is managed by EntityManager.
-//            // If not, make it managed with merge() and remove it.
-//            em.remove(em.contains(testUser) ? testUser : em.merge(testUser));
-//            return null;
-//        });
-//    }
 
 
     @Test
@@ -252,54 +218,12 @@ public class ProductControllerTest {
             userDetailsServiceBeanName = "testUserDetailsService")
     void post_allProductPage_with_loggedInUser_Successfull() throws Exception {
 
-//todo:check this test
-//
-//        ProductEntity testProduct1 = this.testDataInit.createTestProduct(
-//                "Test product 1,for testing purpose",
-//                "Test Product 1",
-//                BigDecimal.valueOf(20L),
-//                LocationEnum.SOFIA_GRAD,
-//                this.testUser,
-//                CategoryEnum.ELECTRONICS,
-//                true
-//        );
-//
-//        ProductEntity testProduct2 = this.testDataInit.createTestProduct(
-//                "Test product 2,for testing purpose",
-//                "Test Product 2",
-//                BigDecimal.valueOf(10L),
-//                LocationEnum.SOFIA_GRAD,
-//                this.testUser,
-//                CategoryEnum.ELECTRONICS,
-//                false
-//        );
-//
-//        List<ProductSearchViewModel> testProducts =
-//                Stream.of(testProduct1, testProduct2).
-//                        map(p->(this.modelMapper.map(p,ProductSearchViewModel.class))).
-//                        collect(Collectors.toList());
-//
-//        ProductSearchingBindingModel productSearchingBindingModel = new ProductSearchingBindingModel().
-//                setTitle("Test Product").
-//                setLocation(null).
-//                setCategory(null).
-//                setOrderBy(null).
-//                setMax(null).
-//                setMin(null);
-//
-//
-//        when(productService.filterBy(
-//                productSearchingBindingModel,userDetailsId,false)
-//        ).
-//                thenReturn(testProducts);
-
 
         mockMvc.perform(post("/products/all").
                         param("title","Test Product").
                         with(csrf())
                 ).
                 andExpect(status().isOk()).
- //               andExpect(model().attribute("productSearchViewModelList", testProducts)).
                 andExpect((view().name("products-all")));
     }
 
@@ -309,32 +233,12 @@ public class ProductControllerTest {
     @Test
     void allProductPage_view_with_NotLoggedInUser_Successfull() throws Exception {
 
-//        ProductEntity testProduct1 = this.testDataInit.createTestProduct(
-//                "Test product 1,for testing purpose",
-//                "Test Product 1",
-//                BigDecimal.ONE,
-//                LocationEnum.SOFIA_GRAD,
-//                this.testUser,
-//                CategoryEnum.ELECTRONICS,
-//                true
-//        );
-//
-//        ProductEntity testProduct2 = this.testDataInit.createTestProduct(
-//                "Test product 2,for testing purpose",
-//                "Test Product 2",
-//                BigDecimal.TEN,
-//                LocationEnum.SOFIA_GRAD,
-//                this.testUser,
-//                CategoryEnum.ELECTRONICS,
-//                false
-//        );
 
         mockMvc.perform(post("/products/all").
                         param("title","Test Product").
                         with(csrf())
                 ).
                 andExpect(status().isOk()).
-              //  andExpect(model().attribute("productSearchViewModelList", List.of(testProduct1,testProduct2))).
                 andExpect((view().name("products-all-anonymous")));
     }
 

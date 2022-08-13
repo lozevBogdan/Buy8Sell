@@ -28,7 +28,6 @@ public class UserFavoritesControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    //@MockBean annotation will replace userService form context with mockUserService
     @MockBean
     private UserService mockUserService;
 

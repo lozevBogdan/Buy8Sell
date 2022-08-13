@@ -24,39 +24,39 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.
-                // define which requests are allowed and which not
+
                         authorizeRequests().
-                // everyone can download static resources (css, js, images)
+
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
-                // everyone can login and register
+
                         antMatchers("/","/products/all", "/products/all/promotion","/products/info/**").permitAll().
-                //only anonymous user can access this URL
+
                         antMatchers( "/users/login", "/users/register").anonymous().
-                // all other pages are available for logger in users
+
                         anyRequest().
                 authenticated().
                 and().
-                // configuration of form login
+
                         formLogin().
-                // the custom login form
+
                         loginPage("/users/login").
-                // the name of the username form field
+
                         usernameParameter("email").
-                // the name of the password form field
+
                         passwordParameter(UsernamePasswordAuthenticationFilter.
                         SPRING_SECURITY_FORM_PASSWORD_KEY).
-                // where to go in case that the login is successful
+
                         defaultSuccessUrl("/",true).
-                // where to go in case that the login failed
+
                         failureForwardUrl("/users/login-error").
                 and().
-                // configure logut
+
                         logout().
-                // which is the logout url, must be POST request
+
                         logoutUrl("/users/logout").
-                // on logout go to the home page
+
                         logoutSuccessUrl("/users/login").
-                // invalidate the session and delete the cookies
+
                         invalidateHttpSession(true).
                 deleteCookies("JSESSIONID");
 
@@ -64,7 +64,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
-    // We can not do that with annotation on SellAndBuyDetailService with @Service
+
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new SellAndBuyDetailService(userRepository);

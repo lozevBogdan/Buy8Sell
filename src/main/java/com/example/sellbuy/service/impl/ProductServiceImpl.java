@@ -589,17 +589,6 @@ public class ProductServiceImpl implements ProductService {
         return chatters;
     }
 
-    // Returning a random three promotions products and save them in cache.
-    @Cacheable("randomProducts")
-    @Override
-    public List<ProductSearchViewModel> getThreeRandomProducts() {
-        List<ProductSearchViewModel> promotionProductsViews = this.
-                filterBy(new ProductSearchingBindingModel(), null, true);
-        return this.returnThreeRandomProductsFromPromotionProductsViewsList(promotionProductsViews);
-    }
-
-
-    // Returning a random three promotions products
     private List<ProductSearchViewModel> returnThreeRandomProductsFromPromotionProductsViewsList(List<ProductSearchViewModel> promotionProductsViews) {
         List<ProductSearchViewModel> returnedThreePromotion = new LinkedList<>();
         List<Integer> lastSavedIndex = new LinkedList<>();
@@ -620,7 +609,16 @@ public class ProductServiceImpl implements ProductService {
         return this.modelMapper.map(productEntity, ProductChatViewModel.class);
     }
 
-    //    Clearing randomProducts cache in every hour
+
+    @Cacheable("randomProducts")
+    @Override
+    public List<ProductSearchViewModel> getThreeRandomProducts() {
+        List<ProductSearchViewModel> promotionProductsViews = this.
+                filterBy(new ProductSearchingBindingModel(), null, true);
+        return this.returnThreeRandomProductsFromPromotionProductsViewsList(promotionProductsViews);
+    }
+
+
     @Scheduled(cron = "0 0 * * * *")
     @CacheEvict(cacheNames = "randomProducts", allEntries = true)
     @Override
@@ -629,7 +627,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
-    //  Daily check at 1 am for an expired 30 days period after the last product update.
     @Scheduled(cron = "0 0 1 * * *")
     @Override
     public void removeExpiredProducts() {

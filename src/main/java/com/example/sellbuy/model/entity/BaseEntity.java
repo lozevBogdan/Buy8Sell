@@ -40,17 +40,15 @@ public abstract class BaseEntity {
         this.modified = modified;
     }
 
-    // this method will be called when entity is created and before put (persist) in DB
+
     @PrePersist
     public void beforeCreate(){
-        //System.out.println("BEFORE CREATE A ENTITY - PREPERSIST");
         setCreated(LocalDateTime.now());
     }
 
-    // this method will be called when already saved entity in DB is called, modified and go again i DB
+
     @PostPersist
     void onUpdate(){
-       // System.out.println("POSTPERSIST");
         setModified(LocalDateTime.now());
     }
 

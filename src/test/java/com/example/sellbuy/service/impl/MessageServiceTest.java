@@ -54,50 +54,6 @@ public class MessageServiceTest {
 
    private MessageService messageServiceToTest;
 
-// todo: check this case!!!!!!!!!!
-//    private UserEntity sender;
-//
-//    private UserEntity receiver;
-//    private ProductEntity product;
-//
-//    private MessageEntity messageBeforeSave;
-//
-//    private MessageEntity messageAfterSave;
-
-//    @BeforeEach
-//    void setUp(){
-//
-//        messageServiceToTest = new MessageServiceImpl(messageRepository,userService,modelMapper,productService);
-//
-//        sender = this.testDataInit.createTestUser("sender@abv.bg");
-//
-//        receiver = this.testDataInit.createTestUser("receiver@abv.bg");
-//
-//        product = this.testDataInit.createTestProduct(
-//                "Test product 1,for testing purpose",
-//                "Test Product 1",
-//                BigDecimal.valueOf(20L),
-//                LocationEnum.SOFIA_GRAD,
-//                receiver,
-//                CategoryEnum.ELECTRONICS,
-//                true
-//        );
-//
-//        messageBeforeSave =
-//                this.testDataInit.createMessage("Test message",sender,receiver,product);
-//        messageBeforeSave.setId(null);
-//
-//        messageAfterSave =
-//                this.testDataInit.createMessage("Test message",sender,receiver,product);
-//
-//    }
-//
-//    @AfterEach
-//    void tearDown(){
-//        this.testDataInit.cleanUpDatabase();
-//    }
-
-
     @Test
     void createAndSave_Message(){
 

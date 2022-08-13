@@ -172,9 +172,6 @@ public class AdminControllerTest {
         when(userService.getUserInfoViewModelByUserId(testUser.getId())).
                 thenReturn(userInfoViewModelUser);
 
-//        when(userService.isEmailFree(userInfoViewModelUser.getEmail())).
-//                thenReturn(true);
-
         mockMvc.perform(post("/admin/users/save/" + testUser.getId()).
                         with(csrf()).
                         param("firstName",userInfoViewModelUser.getFirstName()).

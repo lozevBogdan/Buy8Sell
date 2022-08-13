@@ -37,7 +37,7 @@ class SellAndBuyDetailsServiceTest {
     @Test
     void testLoadUserByUsername_UserExist(){
 
-        //Arrange
+
 
         UserEntity testUserEntity = new UserEntity().
                 setEmail("test@abv.bg").
@@ -53,12 +53,12 @@ class SellAndBuyDetailsServiceTest {
         when(mockUserRepo.findByEmail(testUserEntity.getEmail())).
                 thenReturn(Optional.of(testUserEntity));
 
-        //Act
+
 
         SellAndBuyUserDetails userDetails = (SellAndBuyUserDetails)
                 toTest.loadUserByUsername(testUserEntity.getEmail());
 
-        //Assert
+
 
         Assertions.assertEquals(testUserEntity.getEmail(),userDetails.getUsername());
         Assertions.assertEquals(testUserEntity.getFirstName(),userDetails.getFirstName());
@@ -71,7 +71,6 @@ class SellAndBuyDetailsServiceTest {
     @Test
     void testLoadUserByUsername_UserDoesNotExist(){
 
-        // without arrange, because mockUserRepo will return empty Optional
        Assertions.assertThrows(
                UsernameNotFoundException.class,
                ()-> toTest.loadUserByUsername("no-exist-user")

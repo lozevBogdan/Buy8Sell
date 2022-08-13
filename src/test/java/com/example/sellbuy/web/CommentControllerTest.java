@@ -88,7 +88,6 @@ public class CommentControllerTest {
                         with(csrf())
                 ).
                 andExpect(status().is3xxRedirection()).
- //               andExpect(flash().attribute("commentBindingDto",new CommentBindingDto())).
                 andExpect(redirectedUrl("/products/info/" + testProduct.getId()));
     }
 

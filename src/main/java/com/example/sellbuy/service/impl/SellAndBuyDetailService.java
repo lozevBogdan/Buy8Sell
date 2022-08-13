@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.stream.Collectors;
-//@Service - this is in case we dont inject Bean in SecurityConfig
+
 public class SellAndBuyDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;
@@ -20,7 +20,7 @@ public class SellAndBuyDetailService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    //Here we define to SpringSecurity, how to get the user!
+
     @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {

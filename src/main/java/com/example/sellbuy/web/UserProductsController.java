@@ -46,15 +46,6 @@ public class UserProductsController {
 
     @GetMapping("/favorites")
     public String getAllFavorites() {
-
-//        Set<ProductEntity> favorList = this.userService.getFavorListOf(id);
-//
-//        List<ProductSearchViewModel> productSearchViewModelList =
-//                this.userService.returnFavors(favorList, id);
-//
-//        if (!model.containsAttribute("productSearchViewModelList")) {
-//            model.addAttribute("productSearchViewModelList", productSearchViewModelList);
-//        }
         return "products-favorites";
     }
 

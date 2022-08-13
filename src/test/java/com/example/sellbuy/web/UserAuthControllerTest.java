@@ -82,14 +82,5 @@ public class UserAuthControllerTest {
     }
 
 
-//    @Test
-//    void testUserLogin_NotSuccessfull_redirectToLoginPage() throws Exception {
-//        mockMvc.perform(post("/users/login-error").
-//                        param("email","test@abv.bg")
-//                ).
-//                andExpect(status().is3xxRedirection()).
-//                andExpect(redirectedUrl("/users/login"));
-//    }
-
 }
 

@@ -71,6 +71,9 @@ public class ProductServiceTest {
 
         CommentBindingDto commentBindingDto = new CommentBindingDto().setTextContent("Test comment content.");
 
+
+
+
         when(productService.findById(product.getId())).
                 thenReturn(product);
 
@@ -82,6 +85,10 @@ public class ProductServiceTest {
 
         CommentEntity testComment = commentsServiceToTest.
                 saveComment(commentBindingDto, product.getId(), user.getId());
+
+
+
+
 
         Assertions.assertEquals(user.getEmail(),testComment.getAuthor().getEmail());
         Assertions.assertEquals(user.getFirstName(),testComment.getAuthor().getFirstName());
